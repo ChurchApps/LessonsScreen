@@ -10,9 +10,8 @@ export const SplashScreen = (props: Props) => {
 
   const checkStorage = async () => {
     CachedData.church = await CachedData.getAsyncStorage("church");
-    //if (CachedData.church) props.navigateTo("selectRoom");
-    //else props.navigateTo("selectChurch");
-    props.navigateTo("selectChurch");
+    if (CachedData.church) props.navigateTo("selectRoom");
+    else props.navigateTo("selectChurch");
   }
 
   React.useEffect(() => { checkStorage() }, [])

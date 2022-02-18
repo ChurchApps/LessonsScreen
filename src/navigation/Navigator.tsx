@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native';
 import { Styles } from '../helpers';
-import { SelectChurchScreen, SplashScreen } from '../screens';
+import { SelectChurchScreen, SelectRoomScreen, SplashScreen } from '../screens';
 
 
 export const Navigator = () => {
@@ -16,6 +16,7 @@ export const Navigator = () => {
   switch (currentScreen) {
     case "splash": screen = (<SplashScreen navigateTo={handleNavigate} />); break;
     case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} />); break;
+    case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} />); break;
   }
 
   let viewStyle = {};

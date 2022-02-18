@@ -1,9 +1,10 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import { ChurchInterface } from ".";
+import { ChurchInterface, ClassroomInterface } from ".";
 
 
 export class CachedData {
   static church: ChurchInterface;
+  static room: ClassroomInterface;
 
   static async getAsyncStorage(key: string) {
     const json = await AsyncStorage.getItem(key);
