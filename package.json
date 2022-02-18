@@ -1,0 +1,57 @@
+{
+  "name": "LessonsScreen",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/stack": "^6.0.11",
+    "appcenter": "4.3.0",
+    "appcenter-analytics": "4.3.0",
+    "appcenter-crashes": "4.3.0",
+    "axios": "^0.25.0",
+    "buffer": "^6.0.3",
+    "react": "17.0.2",
+    "react-native": "npm:react-native-tvos@^0.66.3-0",
+    "react-native-code-push": "^7.0.4",
+    "react-native-fs": "^2.18.0",
+    "react-native-keep-awake": "^4.0.0",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-sqlite-storage": "^6.0.1",
+    "react-native-swipe-gestures": "^1.0.5",
+    "react-native-tvos": "^0.66.3-0",
+    "styled-components": "^5.3.3",
+    "styled-system": "^5.1.5"
+  },
+  "devDependencies": {
+    "@babel/core": "7.16.12",
+    "@babel/runtime": "7.16.7",
+    "@react-native-community/eslint-config": "3.0.1",
+    "@types/react": "^17.0.38",
+    "@types/react-native": "^0.63.17",
+    "@types/react-native-keep-awake": "^2.0.3",
+    "@types/react-native-sqlite-storage": "^5.0.1",
+    "babel-jest": "27.4.6",
+    "eslint": "8.7.0",
+    "jest": "27.4.7",
+    "metro-react-native-babel-preset": "0.66.2",
+    "react-native-codegen": "^0.0.13",
+    "react-native-typescript-transformer": "^1.2.13",
+    "react-test-renderer": "17.0.2",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^5.0.0",
+    "tslint-react-recommended": "^1.0.15",
+    "typescript": "^4.5.5"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
