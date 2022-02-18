@@ -45,10 +45,12 @@ export const Styles = StyleSheet.create({
 
   menuScreen: { alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: "#1d1f21", width: "100%" },
   menuHeader: { height: hp("10%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#343a40", width: "100%" },
-  menuHeaderImage: { maxHeight: hp("8%"), maxWidth: hp("20%"), flex: 1, alignSelf: "center" },
+  menuHeaderImage: { height: hp("8%"), maxWidth: wp("25%"), flex: 1, alignSelf: "center" },
   menuFooter: { height: hp("8%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#343a40", padding: 5 },
   menuWrapper: { flex: 1, width: "100%" },
   menuList: { flex: 1, alignItems: "flex-start", justifyContent: 'flex-start' },
-  menuClickable: { alignItems: "flex-start", justifyContent: 'center', width: "100%", height: hp("8%"), paddingLeft: wp("1%") }
+  menuClickable: { alignItems: "flex-start", justifyContent: 'center', width: "100%", height: hp("8%"), paddingLeft: wp("1%") },
+
+  textInputStyle: { alignItems: 'center', justifyContent: 'center', fontSize: hp('4%'), color: 'black', backgroundColor: "white", padding: 4 }
 
 })

@@ -1,14 +1,24 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react'
 import { Image, View } from 'react-native'
-import { Styles } from "../helpers";
+import { CachedData, Styles } from "../helpers";
 
 type Props = { navigateTo(page: string): void; };
 
 export const SplashScreen = (props: Props) => {
   console.log("***SPLASH***")
 
+  const checkStorage = async () => {
+    CachedData.church = await CachedData.getAsyncStorage("church");
+    //if (CachedData.church) props.navigateTo("selectRoom");
+    //else props.navigateTo("selectChurch");
+    props.navigateTo("selectChurch");
+  }
+
+  React.useEffect(() => { checkStorage() }, [])
+
   return (
+
 
     <View style={Styles.splashMaincontainer}>
       <Image source={require('../images/logo.png')} style={Styles.splashImage} resizeMode="contain" />

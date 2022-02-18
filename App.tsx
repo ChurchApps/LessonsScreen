@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
 import { Navigator } from './src/navigation/Navigator'
 import CodePush from 'react-native-code-push'
+import { EnvironmentHelper } from './src/helpers/EnvironmentHelper';
 
 
 const CODE_PUSH_OPTIONS = {
   checkFrequency: CodePush.CheckFrequency.ON_APP_START
 }
+
+
+EnvironmentHelper.init();
 
 const app = () => {
 
