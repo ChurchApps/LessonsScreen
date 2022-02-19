@@ -1,17 +1,17 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, LogBox, ActivityIndicator } from 'react-native'
+import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, ActivityIndicator } from 'react-native'
 import { ApiHelper, CachedData, ChurchInterface, Styles } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 type Props = { navigateTo(page: string): void; };
 
 export const SelectChurchScreen = (props: Props) => {
-  LogBox.ignoreLogs(['new NativeEventEmitter']);
-  console.log("***SELECT CHURCH***")
+
   const [churches, setChurches] = React.useState<ChurchInterface[]>([]);
   const [searchText, setSearchText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  let textRef: TextInput = null;
 
   const searchApiCall = (text: String) => {
     if (text.length < 4) {
@@ -20,7 +20,6 @@ export const SelectChurchScreen = (props: Props) => {
     } else {
       setLoading(true);
       ApiHelper.get("/churches/search/?name=" + text + "&app=Lessons&include=logoSquare", "AccessApi").then(data => {
-        //console.log(data);
         setLoading(false);
         setChurches(data);
       })
@@ -58,8 +57,10 @@ export const SelectChurchScreen = (props: Props) => {
     </>);
   }
 
+  const init = () => { if (textRef) textRef.focus(); }
 
   useEffect(() => { searchApiCall(searchText) }, [searchText])
+  useEffect(init, [])
 
   return (
     <View style={Styles.menuScreen}>
@@ -71,7 +72,7 @@ export const SelectChurchScreen = (props: Props) => {
       </View>
 
       <View style={{ ...Styles.menuWrapper, flex: 10 }}>
-        <TextInput style={{ ...Styles.textInputStyle, width: wp("50%"), marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} />
+        <TextInput style={{ ...Styles.textInputStyle, width: wp("50%"), marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r} />
       </View>
 
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>

@@ -7,7 +7,6 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 type Props = { navigateTo(page: string): void; };
 
 export const SelectRoomScreen = (props: Props) => {
-  console.log("***SELECT ROOM***")
   const [rooms, setRooms] = React.useState<ClassroomInterface[]>([]);
   const [loading, setLoading] = React.useState(false);
 

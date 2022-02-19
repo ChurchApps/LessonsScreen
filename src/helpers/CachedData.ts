@@ -48,12 +48,10 @@ export class CachedData {
 
   static async load(file: PlaylistFileInterface) {
     const fullPath = this.getFilePath(file.url);
-    console.log(fullPath);
     if (!await RNFS.exists(fullPath)) await this.download(file, fullPath);
   }
 
   private static async download(file: PlaylistFileInterface, diskPath: string) {
-    console.log("Downloaing...")
     const idx = diskPath.lastIndexOf("/");
     const folder = diskPath.substring(0, idx);
     if (!await RNFS.exists(folder)) await RNFS.mkdir(folder);

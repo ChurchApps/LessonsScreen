@@ -8,7 +8,6 @@ export const Navigator = () => {
   const [currentScreen, setCurrentScreen] = React.useState("splash");
 
   const handleNavigate = (page: string) => {
-    console.log(page);
     setCurrentScreen(page);
   }
 

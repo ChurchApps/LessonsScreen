@@ -6,8 +6,6 @@ import { CachedData, Styles } from "../helpers";
 type Props = { navigateTo(page: string): void; };
 
 export const SplashScreen = (props: Props) => {
-  console.log("***SPLASH***")
-
   const checkStorage = async () => {
     CachedData.church = await CachedData.getAsyncStorage("church");
     if (CachedData.church) props.navigateTo("selectRoom");

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Navigator } from './src/navigation/Navigator'
 import CodePush from 'react-native-code-push'
 import { EnvironmentHelper } from './src/helpers/EnvironmentHelper';
+import { LogBox } from 'react-native';
 
 
 const CODE_PUSH_OPTIONS = {
@@ -12,6 +13,7 @@ const CODE_PUSH_OPTIONS = {
 EnvironmentHelper.init();
 
 const app = () => {
+  LogBox.ignoreLogs(['new NativeEventEmitter']);
 
   useEffect(() => { CodePush.sync({ installMode: CodePush.InstallMode.IMMEDIATE }, syncWithCodePush); }, [])
 

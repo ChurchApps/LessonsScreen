@@ -8,12 +8,10 @@ export class EnvironmentHelper {
   static init = () => {
     EnvironmentHelper.initProd();
 
-    console.log("INIT");
     ApiHelper.apiConfigs = [
       { keyName: "AccessApi", url: EnvironmentHelper.AccessApi, jwt: "", permisssions: [] },
       { keyName: "LessonsApi", url: EnvironmentHelper.LessonsApi, jwt: "", permisssions: [] }
     ]
-
 
     //leaving for now as a hack.  For some reason outputting the value makes the difference of whether it's actually populated or not.
     console.log(JSON.stringify(ApiHelper.apiConfigs[1].url));
