@@ -26,7 +26,7 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const handleStart = () => {
-    props.navigateTo("lesson");
+    props.navigateTo("player");
   }
 
 
@@ -66,6 +66,7 @@ export const DownloadScreen = (props: Props) => {
 
   const startDownload = () => {
     const files = getFiles();
+    CachedData.messageFiles = files;
     setReady(false);
     CachedData.prefetch(files, updateCounts).then(() => { setReady(true) });
   }

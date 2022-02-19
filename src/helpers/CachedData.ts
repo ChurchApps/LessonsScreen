@@ -5,6 +5,8 @@ import RNFS from "react-native-fs";
 export class CachedData {
   static church: ChurchInterface;
   static room: ClassroomInterface;
+  static messageFiles: PlaylistFileInterface[];
+
   static totalCachableItems: number = 0;
   static cachedItems: number = 0;
   static cachePath = RNFS.CachesDirectoryPath;
