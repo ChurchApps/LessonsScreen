@@ -1,10 +1,13 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import { ChurchInterface, ClassroomInterface } from ".";
-
+import { ChurchInterface, ClassroomInterface, PlaylistFileInterface } from ".";
+import RNFS from "react-native-fs";
 
 export class CachedData {
   static church: ChurchInterface;
   static room: ClassroomInterface;
+  static totalCachableItems: number = 0;
+  static cachedItems: number = 0;
+  static cachePath = RNFS.CachesDirectoryPath;
 
   static async getAsyncStorage(key: string) {
     const json = await AsyncStorage.getItem(key);
@@ -14,6 +17,41 @@ export class CachedData {
 
   static async setAsyncStorage(key: string, obj: any) {
     await AsyncStorage.setItem(key, JSON.stringify(obj));
+  }
+
+  static async prefetch(files: PlaylistFileInterface[], changeCallback: (cached: number, total: number) => void) {
+    this.cachedItems = 0;
+    let i = 0;
+    this.totalCachableItems = files.length;
+    changeCallback(this.cachedItems, this.totalCachableItems);
+
+    for (const f of files) {
+      try {
+        await this.load(f);
+      } catch (e) {
+        console.log("Download Failed: " + e.toString());
+      }
+      i++;
+      this.cachedItems = i;
+      changeCallback(this.cachedItems, this.totalCachableItems);
+    }
+  }
+
+
+  static async load(file: PlaylistFileInterface) {
+    const fileName = file.name.split("?");
+    const fullPath = RNFS.CachesDirectoryPath + "/" + fileName;
+    console.log(fullPath)
+    if (!await RNFS.exists(fullPath)) await this.download(file, fullPath);
+  }
+
+  private static async download(file: PlaylistFileInterface, diskPath: string) {
+    console.log("Downloaing...")
+    const idx = diskPath.lastIndexOf("/");
+    const folder = diskPath.substring(0, idx);
+    if (!await RNFS.exists(folder)) await RNFS.mkdir(folder);
+    const downloadResponse = RNFS.downloadFile({ fromUrl: file.url, toFile: diskPath });
+    await downloadResponse.promise;
   }
 
 }

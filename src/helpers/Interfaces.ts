@@ -9,3 +9,7 @@ export interface IPermission { api: string, contentType: string, action: string 
 export interface RolePermissionInterface { id?: string, churchId?: string, roleId?: string, apiName?: string, contentType?: string, contentId?: string, action?: string }
 
 export interface ClassroomInterface { id?: string; churchId?: string; name?: string; }
+
+export interface PlaylistInterface { lessonName: string, venueName: string, messages: PlaylistMessageInterface[] }
+export interface PlaylistMessageInterface { name: string, files: PlaylistFileInterface[] }
+export interface PlaylistFileInterface { name: string, url: string, seconds: number }
