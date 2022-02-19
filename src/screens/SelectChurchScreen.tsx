@@ -1,12 +1,13 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, Alert, ActivityIndicator } from 'react-native'
+import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, LogBox, ActivityIndicator } from 'react-native'
 import { ApiHelper, CachedData, ChurchInterface, Styles } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 type Props = { navigateTo(page: string): void; };
 
 export const SelectChurchScreen = (props: Props) => {
+  LogBox.ignoreLogs(['new NativeEventEmitter']);
   console.log("***SELECT CHURCH***")
   const [churches, setChurches] = React.useState<ChurchInterface[]>([]);
   const [searchText, setSearchText] = React.useState("");

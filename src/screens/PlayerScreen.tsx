@@ -77,6 +77,7 @@ export const PlayerScreen = (props: Props) => {
   }
 
   const handleMessageSelect = (index: number) => {
+    setShowSelectMessage(false);
     setMessageIndex(index);
     startTimer();
   }

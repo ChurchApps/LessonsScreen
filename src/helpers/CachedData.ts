@@ -39,11 +39,16 @@ export class CachedData {
     }
   }
 
+  static getFilePath(url: string) {
+    const parts = url.split("?")[0].split("/");
+    parts.splice(0, 3);
+    const fullPath = RNFS.CachesDirectoryPath + "/" + parts.join("/");
+    return fullPath;
+  }
 
   static async load(file: PlaylistFileInterface) {
-    const fileName = file.name.split("?");
-    const fullPath = RNFS.CachesDirectoryPath + "/" + fileName;
-    console.log(fullPath)
+    const fullPath = this.getFilePath(file.url);
+    console.log(fullPath);
     if (!await RNFS.exists(fullPath)) await this.download(file, fullPath);
   }
 
