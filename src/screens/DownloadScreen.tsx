@@ -1,6 +1,6 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator } from 'react-native'
+import { Image, View, Text, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, CachedData, ClassroomInterface, PlaylistFileInterface, PlaylistInterface, Styles } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
@@ -11,6 +11,8 @@ export const DownloadScreen = (props: Props) => {
   const [totalItems, setTotalItems] = React.useState(CachedData.totalCachableItems);
   const [cachedItems, setCachedItems] = React.useState(CachedData.cachedItems);
   const [ready, setReady] = React.useState(false);
+  const [refreshKey, setRefreshKey] = React.useState("");
+  let refreshTimer: number = null;
 
   const updateCounts = (cached: number, total: number): void => {
     setCachedItems(cached);
@@ -36,8 +38,8 @@ export const DownloadScreen = (props: Props) => {
       if (ready && cachedItems === totalItems) {
         return (<>
           <Text style={Styles.bigWhiteText}>Lesson Ready</Text>
-          <Text style={{ ...Styles.smallWhiteText }}>{playlist.lessonName}: {playlist.venueName}</Text>
-          <TouchableHighlight style={{ ...Styles.menuClickable, backgroundColor: "#0086d1", width: wp("30%"), marginTop: hp("5%") }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }}>
+          <Text style={{ ...Styles.smallWhiteText }}>{playlist.lessonTitle}: {playlist.venueName}</Text>
+          <TouchableHighlight style={{ ...Styles.menuClickable, backgroundColor: "#0086d1", width: wp("30%"), marginTop: hp("5%") }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
             <Text style={{ ...Styles.whiteText, width: "100%" }}>Start Lesson</Text>
           </TouchableHighlight>
         </>);
@@ -59,8 +61,10 @@ export const DownloadScreen = (props: Props) => {
   const loadData = () => {
     CachedData.getAsyncStorage("playlist").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setPlaylist(playlist) });
     ApiHelper.get("/classrooms/playlist/" + CachedData.room.id, "LessonsApi").then(data => {
-      setPlaylist(data);
-      CachedData.setAsyncStorage("playlist", playlist);
+      if (!playlist || JSON.stringify(playlist) !== JSON.stringify(data)) {
+        setPlaylist(data);
+        CachedData.setAsyncStorage("playlist", playlist);
+      }
     });
   }
 
@@ -71,7 +75,25 @@ export const DownloadScreen = (props: Props) => {
     CachedData.prefetch(files, updateCounts).then(() => { setReady(true) });
   }
 
-  useEffect(loadData, [])
+  const destroy = () => {
+    if (refreshTimer) window.clearInterval(refreshTimer);
+    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
+  }
+
+  const init = () => {
+    refreshTimer = window.setInterval(() => {
+      setRefreshKey(new Date().getTime().toString());
+    }, 60 * 60 * 1000);
+    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    return destroy;
+  }
+
+  const handleBack = () => {
+    props.navigateTo("selectRoom");
+  }
+
+  useEffect(init, [])
+  useEffect(loadData, [refreshKey])
   useEffect(startDownload, [playlist])
 
   return (
@@ -80,9 +102,8 @@ export const DownloadScreen = (props: Props) => {
         <View style={{ flex: 1, flexDirection: "row", paddingLeft: 10 }}>
           <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
         </View>
-        <Text style={{ ...Styles.whiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Downloading</Text>
       </View>
-      <View style={{ ...Styles.menuWrapper, flex: 20 }}>
+      <View style={{ ...Styles.menuWrapper, flex: 20, alignContent: "center", justifyContent: "center" }}>
         {getContent()}
       </View>
 

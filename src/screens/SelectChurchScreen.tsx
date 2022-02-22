@@ -36,7 +36,7 @@ export const SelectChurchScreen = (props: Props) => {
   const renderItem: ListRenderItem<ChurchInterface> = (data) => {
     const church = data.item;
     return (
-      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(church) }}>
+      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(church) }} hasTVPreferredFocus={data.index === 0} >
         <Text style={Styles.whiteText}>{church.name}</Text>
       </TouchableHighlight>
     )
@@ -68,10 +68,10 @@ export const SelectChurchScreen = (props: Props) => {
         <View style={{ flex: 1, flexDirection: "row", paddingLeft: 10 }}>
           <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
         </View>
-        <Text style={{ ...Styles.whiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Find Your Church</Text>
+        <Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Find Your Church</Text>
       </View>
 
-      <View style={{ ...Styles.menuWrapper, flex: 10 }}>
+      <View style={{ ...Styles.menuWrapper, flex: 5 }}>
         <TextInput style={{ ...Styles.textInputStyle, width: wp("50%"), marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r} />
       </View>
 

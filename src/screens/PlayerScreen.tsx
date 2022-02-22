@@ -57,11 +57,13 @@ export const PlayerScreen = (props: Props) => {
   const goForward = () => {
     let idx = messageIndex + 1;
     if (idx < CachedData.messageFiles.length) setMessageIndex(idx)
+    else handleBack();
   }
 
   const goBack = () => {
     let idx = messageIndex - 1;
     if (idx >= 0) setMessageIndex(idx);
+    else handleBack();
   }
 
   const stopTimer = () => {

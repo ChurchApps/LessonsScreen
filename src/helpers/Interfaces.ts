@@ -10,6 +10,6 @@ export interface RolePermissionInterface { id?: string, churchId?: string, roleI
 
 export interface ClassroomInterface { id?: string; churchId?: string; name?: string; }
 
-export interface PlaylistInterface { lessonName: string, venueName: string, messages: PlaylistMessageInterface[] }
+export interface PlaylistInterface { lessonName: string, lessonTitle: string, venueName: string, messages: PlaylistMessageInterface[] }
 export interface PlaylistMessageInterface { name: string, files: PlaylistFileInterface[] }
 export interface PlaylistFileInterface { name: string, url: string, seconds: number }

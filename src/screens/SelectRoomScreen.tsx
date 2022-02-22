@@ -1,6 +1,6 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator } from 'react-native'
+import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, CachedData, ClassroomInterface, Styles } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
@@ -19,8 +19,9 @@ export const SelectRoomScreen = (props: Props) => {
 
   const renderItem: ListRenderItem<ClassroomInterface> = (data) => {
     const room = data.item;
+    data.index
     return (
-      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(room) }}>
+      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(room) }} hasTVPreferredFocus={data.index === 0} >
         <Text style={Styles.whiteText}>{room.name}</Text>
       </TouchableHighlight>
     )
@@ -29,7 +30,7 @@ export const SelectRoomScreen = (props: Props) => {
 
   const getSearchResult = () => {
     if (rooms.length > 0) {
-      return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }}  ></FlatList>)
+      return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }} hasTVPreferredFocus={true}  ></FlatList>)
     } else {
       if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
       else return (<>
@@ -49,7 +50,22 @@ export const SelectRoomScreen = (props: Props) => {
     });
   }
 
-  useEffect(loadData, [])
+
+  const handleBack = () => {
+    props.navigateTo("selectChurch");
+  }
+
+  const destroy = () => {
+    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
+  }
+
+  const init = () => {
+    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    loadData();
+    return destroy;
+  }
+
+  useEffect(init, [])
 
   return (
     <View style={Styles.menuScreen}>
@@ -57,7 +73,7 @@ export const SelectRoomScreen = (props: Props) => {
         <View style={{ flex: 1, flexDirection: "row", paddingLeft: 10 }}>
           <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
         </View>
-        <Text style={{ ...Styles.whiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Select a Classroom</Text>
+        <Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Select a Classroom</Text>
       </View>
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>
         {getSearchResult()}
