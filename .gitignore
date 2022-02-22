@@ -1,6 +1,7 @@
 *.bat
 *.hprof
 /dist
+appcenter-config.json
 
 # OSX
 #
