@@ -31,6 +31,11 @@ export const DownloadScreen = (props: Props) => {
     props.navigateTo("player");
   }
 
+  const getVersion = () => {
+    var pkg = require('../../package.json');
+    return <Text style={{ ...Styles.smallWhiteText, fontSize: 12, paddingBottom: 5, color: "#777777", paddingTop: 15 }}>Version: {pkg.version}</Text>
+  }
+
 
   const getContent = () => {
     if (!playlist) return <ActivityIndicator size='small' color='gray' animating={true} />
@@ -42,6 +47,7 @@ export const DownloadScreen = (props: Props) => {
           <TouchableHighlight style={{ ...Styles.menuClickable, backgroundColor: "#0086d1", width: wp("30%"), marginTop: hp("5%") }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
             <Text style={{ ...Styles.whiteText, width: "100%" }}>Start Lesson</Text>
           </TouchableHighlight>
+          {getVersion()}
         </>);
 
       }

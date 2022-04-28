@@ -39,7 +39,7 @@ export const Message = (props: Props) => {
 
   const getVideo = () => {
     const filePath = "file://" + CachedData.getFilePath(props.file.url);
-    return (<Video source={{ uri: filePath }} resizeMode="cover" style={{ width: wp("100%"), height: hp("100%") }} />)
+    return (<Video source={{ uri: filePath }} repeat={props.file.loopVideo} resizeMode="cover" style={{ width: wp("100%"), height: hp("100%") }} />)
   }
 
   const getImage = () => {

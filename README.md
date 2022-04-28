@@ -18,3 +18,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 3. Run 'cd android' followed by 'gradlew bundleRelease' to produce the release bundle.
 4. Run 'cd..' followed by 'react-native run-android --variant=release' to generate an apk file.  You can close the node window when it completes.
 5. The apk file is located at 'android/app/build/outputs/apk/release/app-release.apk'.  Publish it to the Amazon and Google Play stores.
+
+## Codepush release
+1. Update version number in package.json
+2. Run 'appcenter codepush release-react -a Live-Church-Solutions/LessonsScreen -d Production'

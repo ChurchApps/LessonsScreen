@@ -12,4 +12,4 @@ export interface ClassroomInterface { id?: string; churchId?: string; name?: str
 
 export interface PlaylistInterface { lessonName: string, lessonTitle: string, venueName: string, messages: PlaylistMessageInterface[] }
 export interface PlaylistMessageInterface { name: string, files: PlaylistFileInterface[] }
-export interface PlaylistFileInterface { name: string, url: string, seconds: number }
+export interface PlaylistFileInterface { name: string, url: string, seconds: number, loopVideo: boolean }
