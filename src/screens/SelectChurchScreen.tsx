@@ -1,7 +1,7 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
 import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, ActivityIndicator } from 'react-native'
-import { ApiHelper, CachedData, ChurchInterface, Styles } from "../helpers";
+import { ApiHelper, CachedData, ChurchInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 type Props = { navigateTo(page: string): void; };
@@ -57,7 +57,10 @@ export const SelectChurchScreen = (props: Props) => {
     </>);
   }
 
-  const init = () => { if (textRef) textRef.focus(); }
+  const init = () => {
+    Utilities.trackEvent("Select Church Screen");
+    if (textRef) textRef.focus();
+  }
 
   useEffect(() => { searchApiCall(searchText) }, [searchText])
   useEffect(init, [])

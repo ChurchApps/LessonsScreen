@@ -1,6 +1,6 @@
 import React from 'react'
 import { HWKeyEvent, TVMenuControl, BackHandler, useTVEventHandler, Pressable } from 'react-native'
-import { CachedData } from "../helpers";
+import { CachedData, Utilities } from "../helpers";
 import { PlayerHelper } from '../helpers/PlayerHelper';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import KeepAwake from "react-native-keep-awake";
@@ -14,6 +14,7 @@ export const PlayerScreen = (props: Props) => {
   const [messageIndex, setMessageIndex] = React.useState(0);
 
   const init = () => {
+    Utilities.trackEvent("Player Screen");
     TVMenuControl.enableTVMenuKey();
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return () => {

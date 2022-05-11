@@ -1,7 +1,7 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
 import { Image, View, Text, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
-import { ApiHelper, CachedData, ClassroomInterface, PlaylistFileInterface, PlaylistInterface, Styles } from "../helpers";
+import { ApiHelper, CachedData, ClassroomInterface, PlaylistFileInterface, PlaylistInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 type Props = { navigateTo(page: string): void; };
@@ -28,6 +28,7 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const handleStart = () => {
+    Utilities.trackEvent("Start Lesson", { lesson: playlist?.lessonTitle });
     props.navigateTo("player");
   }
 
@@ -87,6 +88,7 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const init = () => {
+    Utilities.trackEvent("Download Screen");
     refreshTimer = window.setInterval(() => {
       setRefreshKey(new Date().getTime().toString());
     }, 60 * 60 * 1000);
