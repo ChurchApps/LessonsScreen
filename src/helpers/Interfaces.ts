@@ -1,5 +1,5 @@
 export interface ApiConfig { keyName: string, url: string, jwt: string, permisssions: RolePermissionInterface[] }
-export type ApiListType = "AccessApi" | "MembershipApi" | "AttendanceApi" | "B1Api" | "GivingApi" | "LessonsApi";
+export type ApiListType = "MembershipApi" | "AttendanceApi" | "B1Api" | "GivingApi" | "LessonsApi";
 
 export interface ApiInterface { name: string, keyName?: string, permissions: RolePermissionInterface[], jwt: string }
 export interface ChurchAppInterface { id?: string, churchId?: string, appName?: string }

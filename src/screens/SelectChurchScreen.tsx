@@ -19,7 +19,7 @@ export const SelectChurchScreen = (props: Props) => {
 
     } else {
       setLoading(true);
-      ApiHelper.get("/churches/search/?name=" + text + "&app=Lessons&include=logoSquare", "AccessApi").then(data => {
+      ApiHelper.get("/churches/search/?name=" + text + "&app=Lessons&include=logoSquare", "MembershipApi").then(data => {
         setLoading(false);
         setChurches(data);
       })
