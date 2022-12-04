@@ -19,8 +19,10 @@ export const SelectChurchScreen = (props: Props) => {
 
     } else {
       setLoading(true);
-      ApiHelper.get("/churches/search/?name=" + text + "&app=Lessons&include=logoSquare", "MembershipApi").then(data => {
+      ApiHelper.getAnonymous("/churches/search/?name=" + text + "&app=Lessons&include=logoSquare", "MembershipApi").then(data => {
+        console.log("****Made it")
         setLoading(false);
+        console.log("****Made it2")
         setChurches(data);
       })
     }
@@ -50,6 +52,7 @@ export const SelectChurchScreen = (props: Props) => {
   const getSearchResult = () => {
     if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
     if (churches.length > 0) {
+      console.log("****FLatlist")
       return (<FlatList data={churches} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }}  ></FlatList>)
     } else return (<>
       <Text style={Styles.bigWhiteText}>Find Your Church</Text>
