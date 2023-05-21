@@ -37,11 +37,18 @@ export const Styles = StyleSheet.create({
   splashMaincontainer: { alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: "#000000" },
   splashImage: { maxWidth: wp('70%'), alignSelf: 'center' },
 
+  H1: { color: "#FFFFFF", fontSize: wp('5%'), fontFamily: StyleConstants.RobotoBold },
+  H2: { color: "#FFFFFF", fontSize: wp('3.5%'), fontFamily: StyleConstants.RobotoBold, fontWeight: "bold" },
+  H3: { color: "#FFFFFF", fontSize: wp('3%'), fontFamily: StyleConstants.RobotoBold, fontWeight: "400" },
+  
+
   messageImage: { maxWidth: wp('40%'), alignSelf: 'center' },
   bigWhiteText: { color: "#FFFFFF", fontSize: wp('5%'), textAlign: "center" },
   giantWhiteText: { color: "#FFFFFF", fontSize: wp('15%'), textAlign: "center" },
   whiteText: { color: "#FFFFFF", fontSize: wp('3%'), textAlign: "center" },
   smallWhiteText: { color: "#FFFFFF", fontSize: wp('2%'), textAlign: "center" },
+  smallerWhiteText: { color: "#FFFFFF", fontSize: wp('1.5%') },
+  
 
   menuScreen: { alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: "#1d1f21", width: "100%" },
   menuHeader: { height: hp("10%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#343a40", width: "100%" },
@@ -50,6 +57,7 @@ export const Styles = StyleSheet.create({
   menuWrapper: { flex: 1, width: "100%" },
   menuList: { flex: 1, alignItems: "flex-start", justifyContent: 'flex-start' },
   menuClickable: { alignItems: "flex-start", justifyContent: 'center', width: "100%", height: hp("8%"), paddingLeft: wp("1%") },
+  smallMenuClickable: { alignItems: "flex-start", width: "100%", height: hp("6%"), justifyContent: "center", fontFamily: StyleConstants.RobotoBold, fontWeight:"bold" },
 
   textInputStyle: { alignItems: 'center', justifyContent: 'center', fontSize: hp('4%'), color: 'black', backgroundColor: "white", padding: 4 }
 
