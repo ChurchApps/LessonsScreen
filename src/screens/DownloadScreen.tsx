@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from 'react-native'
 import { ApiHelper, CachedData, ClassroomInterface, PlaylistFileInterface, PlaylistInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 
 type Props = { navigateTo(page: string): void; };
 
@@ -120,7 +121,7 @@ const background = {uri: playlist?.lessonImage};
     
     <View style={{...Styles.menuScreen, flex:1, flexDirection:"row" }}>
     <ImageBackground source={background} resizeMode="cover" style={{flex:1, width:"100%"}}>  
-      <View style={{ flex:1, backgroundColor:"rgba(0,0,0,0.4)", justifyContent:"flex-end" }}>
+      <LinearGradient colors={['rgba(0, 0, 0, 1)', 'rgba(0, 0, 0, 0)']} start={{x: 0, y: 1}} end={{x: 1, y: 0}} style={{flex:1}} >
         <View style={{flex:9, justifyContent:"flex-end", flexDirection:"column"}}>
           <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:wp("5%")}}>
             <View style={{maxWidth:"60%"}}>
@@ -130,7 +131,7 @@ const background = {uri: playlist?.lessonImage};
         </View>
         
         <View style={{flex:1}}></View>
-      </View>
+        </LinearGradient>
       </ImageBackground>
 
     </View>

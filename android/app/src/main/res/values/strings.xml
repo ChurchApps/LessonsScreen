@@ -2,5 +2,5 @@
   <string name="app_name">Lessons.church</string>
   <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
   <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
-  <string moduleConfig="true" name="CodePushDeploymentKey"></string>
+  <string moduleConfig="true" name="CodePushDeploymentKey">yOc7LLMb8cX3AQxe_8IJMjZNoXqdIqKpvIugi</string>
 </resources>
