@@ -15,3 +15,7 @@ export interface PlaylistMessageInterface { name: string, files: PlaylistFileInt
 export interface PlaylistFileInterface { name: string, url: string, seconds: number, loopVideo: boolean }
 
 export interface ProgramInterface { id?: string, churchId?: string, providerId?: string, name?: string, slug?: string, image?: string, shortDescription?: string, description?: string, videoEmbedUrl: string, live?: boolean, aboutSection?: string }
+export interface StudyInterface { id?: string, churchId?: string, programId?: string, name?: string, slug?: string, image?: string, shortDescription?: string, description?: string, videoEmbedUrl?: string, sort?: number, live?: boolean}
+export interface LessonInterface { id?: string, churchId?: string, studyId?: string, name?: string, slug?: string, title?: string, sort?: number, image?: string, live?: boolean, description?: string, videoEmbedUrl?: string }
+
+

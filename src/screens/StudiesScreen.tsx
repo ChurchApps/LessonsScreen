@@ -1,14 +1,14 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
-import { ApiHelper, ProgramInterface, Styles, Utilities } from "../helpers";
+import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, ImageBackground, BackHandler } from 'react-native'
+import { ApiHelper, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-type Props = { navigateTo(page: string, data?:any): void; };
+type Props = { navigateTo(page: string, data?:any): void; program:ProgramInterface };
 
-export const ProgramsScreen = (props: Props) => {
+export const StudiesScreen = (props: Props) => {
 
-  const [programs, setPrograms] = React.useState<ProgramInterface[]>([]);
+  const [studies, setStudies] = React.useState<StudyInterface[]>([]);
   const [loading, setLoading] = React.useState(false);
 
   const styles:any = {
@@ -24,22 +24,21 @@ export const ProgramsScreen = (props: Props) => {
       padding: 10,
     }
   };
-
   
   const loadData = () => {
-    ApiHelper.get("/programs/public", "LessonsApi").then(data => { setPrograms(data); setLoading(false); });
+    ApiHelper.get("/studies/public/program/" + props.program.id, "LessonsApi").then(data => { setStudies(data); setLoading(false); });
   }
 
-  const handleSelect = (program: ProgramInterface) => {
-    props.navigateTo("studies", {program: program});
+  const handleSelect = (study: StudyInterface) => {
+    props.navigateTo("lessons", {program: props.program, study: study});
   }
 
   const getCard = (data:any) => {
     
-    const program = data.item as ProgramInterface;
+    const study = data.item as StudyInterface;
     return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(program)  }} hasTVPreferredFocus={data.index===0}>
-        <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(study)  }} hasTVPreferredFocus={data.index===0}>
+        <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
       </TouchableHighlight>
     )
   }
@@ -50,7 +49,7 @@ export const ProgramsScreen = (props: Props) => {
       return(
       <View style={styles.list}>
         <FlatList
-            data={programs}
+            data={studies}
             numColumns={3}
             renderItem={getCard}
             keyExtractor={(item) => item.id}
@@ -59,18 +58,17 @@ export const ProgramsScreen = (props: Props) => {
       )
     }
   }
-
   
   const handleBack = () => {
-    props.navigateTo("splash");
+    props.navigateTo("programs");
   }
 
   const destroy = () => {
     BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
   }
-  
+
   const init = () => {
-    Utilities.trackEvent("Program Screen");
+    Utilities.trackEvent("Studies Screen");
     loadData();
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return destroy;
@@ -84,7 +82,7 @@ export const ProgramsScreen = (props: Props) => {
         <View style={{ flex: 1, flexDirection: "row", paddingLeft: 10 }}>
           <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
         </View>
-        <Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Select a Program</Text>
+        <Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Select a Study</Text>
       </View>
 
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>
