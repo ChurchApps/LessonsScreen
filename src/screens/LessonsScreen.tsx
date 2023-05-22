@@ -32,7 +32,7 @@ export const LessonsScreen = (props: Props) => {
   }
 
   const handleSelect = (lesson: LessonInterface) => {
-    props.navigateTo("lesson", {program: props.program, study: props.study, lesson: lesson});
+    props.navigateTo("lessonDetails", {program: props.program, study: props.study, lesson: lesson});
   }
 
   const getCard = (data:any) => {
@@ -46,15 +46,6 @@ export const LessonsScreen = (props: Props) => {
         </View>
       </TouchableHighlight>
     )
-    /*
-    return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(lesson)  }} hasTVPreferredFocus={data.index===0}>
-        <View>
-          <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: lesson.image }} />
-          <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{lesson.title}</Text>
-        </View>
-      </TouchableHighlight>
-    )*/
   }
 
   const getCards = () => {

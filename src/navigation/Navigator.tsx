@@ -5,6 +5,7 @@ import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, Pla
 import { ProgramsScreen } from '../screens/ProgramsScreen';
 import { StudiesScreen } from '../screens/StudiesScreen';
 import { LessonsScreen } from '../screens/LessonsScreen';
+import { LessonDetailsScreen } from '../screens/LessonDetailsScreen';
 
 
 export const Navigator = () => {
@@ -27,6 +28,7 @@ export const Navigator = () => {
     case "programs": screen = (<ProgramsScreen navigateTo={handleNavigate} />); break;
     case "studies": screen = (<StudiesScreen navigateTo={handleNavigate} program={currentData?.program} />); break;
     case "lessons": screen = (<LessonsScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} />); break;
+    case "lessonDetails": screen = (<LessonDetailsScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} lesson={currentData?.lesson} />); break;
   }
 
   let viewStyle = {};
