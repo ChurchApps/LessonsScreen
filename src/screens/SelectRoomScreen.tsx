@@ -43,6 +43,8 @@ export const SelectRoomScreen = (props: Props) => {
   const loadData = () => {
     CachedData.getAsyncStorage("rooms").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setRooms(cached) });
     setLoading(true);
+
+    console.log("/classrooms/public/church/" + CachedData.church.id)
     ApiHelper.get("/classrooms/public/church/" + CachedData.church.id, "LessonsApi").then(data => {
       setRooms(data);
       CachedData.setAsyncStorage("rooms", rooms);

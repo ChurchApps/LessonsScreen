@@ -13,3 +13,5 @@ export interface ClassroomInterface { id?: string; churchId?: string; name?: str
 export interface PlaylistInterface { lessonName: string, lessonTitle: string, lessonImage:string, lessonDescription:string, venueName: string, messages: PlaylistMessageInterface[] }
 export interface PlaylistMessageInterface { name: string, files: PlaylistFileInterface[] }
 export interface PlaylistFileInterface { name: string, url: string, seconds: number, loopVideo: boolean }
+
+export interface ProgramInterface { id?: string, churchId?: string, providerId?: string, name?: string, slug?: string, image?: string, shortDescription?: string, description?: string, videoEmbedUrl: string, live?: boolean, aboutSection?: string }
