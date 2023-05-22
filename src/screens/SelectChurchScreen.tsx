@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, ActivityIndicator } from 'react-native'
 import { ApiHelper, CachedData, ChurchInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { MenuHeader } from '../components';
 
 type Props = { navigateTo(page: string): void; };
 
@@ -70,12 +71,7 @@ export const SelectChurchScreen = (props: Props) => {
 
   return (
     <View style={Styles.menuScreen}>
-      <View style={{ ...Styles.menuHeader, flexDirection: "row" }}>
-        <View style={{ flex: 1, flexDirection: "row", paddingLeft: 10 }}>
-          <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
-        </View>
-        <Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Find Your Church</Text>
-      </View>
+      <MenuHeader headerText="Find Your Church" />
 
       <View style={{ ...Styles.menuWrapper, flex: 5 }}>
         <TextInput style={{ ...Styles.textInputStyle, width: wp("50%"), marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r} />

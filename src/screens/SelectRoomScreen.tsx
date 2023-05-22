@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, CachedData, ClassroomInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { MenuHeader } from '../components';
 
 type Props = { navigateTo(page: string): void; };
 
@@ -72,12 +73,7 @@ export const SelectRoomScreen = (props: Props) => {
 
   return (
     <View style={Styles.menuScreen}>
-      <View style={{ ...Styles.menuHeader, flexDirection: "row" }}>
-        <View style={{ flex: 1, flexDirection: "row", paddingLeft: 10 }}>
-          <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
-        </View>
-        <Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>Select a Classroom</Text>
-      </View>
+      <MenuHeader headerText="Select a Classroom" />
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>
         {getSearchResult()}
       </View>

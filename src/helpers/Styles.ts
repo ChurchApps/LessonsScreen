@@ -51,7 +51,7 @@ export const Styles = StyleSheet.create({
   
 
   menuScreen: { alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: "#1d1f21", width: "100%" },
-  menuHeader: { height: hp("10%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#343a40", width: "100%" },
+  menuHeader: { height: hp("10%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#1d70b8", width: "100%" },
   menuHeaderImage: { height: hp("8%"), maxWidth: wp("25%"), flex: 1, alignSelf: "center" },
   menuFooter: { height: hp("8%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#343a40", padding: 5 },
   menuWrapper: { flex: 1, width: "100%" },

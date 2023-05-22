@@ -139,23 +139,4 @@ const background = {uri: playlist?.lessonImage};
     
   )
 
-  /*
-   return (
-    <View style={{...Styles.menuScreen, flex:1 }}>
-      <ImageBackground source={background} resizeMode="cover" style={{flex:1, justifyContent:"center"}} />
-      <View style={{ ...Styles.menuHeader, flexDirection: "row" }}>
-        <View style={{ flex: 1, flexDirection: "row", paddingLeft: 10 }}>
-          <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
-        </View>
-      </View>
-      <View style={{ ...Styles.menuWrapper, flex: 20, alignContent: "center", justifyContent: "center" }}>
-        {getContent()}
-      </View>
-
-    </View>
-  )
-  */
-
-
-
 }
