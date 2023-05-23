@@ -9,8 +9,14 @@ export const SplashScreen = (props: Props) => {
   const checkStorage = async () => {
     Utilities.trackEvent("Splash Screen");
     CachedData.church = await CachedData.getAsyncStorage("church");
+    props.navigateTo("programs");
+    
+    /*
     if (CachedData.church) props.navigateTo("selectRoom");
-    else props.navigateTo("selectChurch");
+    else props.navigateTo("mode");*/
+
+    props.navigateTo("mode");
+    
   }
 
   React.useEffect(() => { checkStorage() }, [])

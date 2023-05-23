@@ -3,6 +3,7 @@ import { Styles } from '../helpers';
 import { View, Text, Image, FlatList, ListRenderItem, TouchableHighlight } from 'react-native';
 import { CachedData } from "../helpers";
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { MenuHeader } from './MenuHeader';
 type Props = { onSelect: (index: number) => void };
 
 export const SelectMessage = (props: Props) => {
@@ -29,12 +30,7 @@ export const SelectMessage = (props: Props) => {
 
   return (
     <View style={Styles.menuScreen}>
-      <View style={{ ...Styles.menuHeader, flexDirection: "row" }}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
-        </View>
-        <Text style={{ ...Styles.whiteText, flex: 1, alignSelf: "center" }}>Select a Message</Text>
-      </View>
+      <MenuHeader headerText="Select a Message" />
       <View style={Styles.menuWrapper}>
         <FlatList data={messages} renderItem={renderItem} keyExtractor={(item) => item.index.toString() || ""} style={{ width: wp("100%") }}  ></FlatList>
       </View>
