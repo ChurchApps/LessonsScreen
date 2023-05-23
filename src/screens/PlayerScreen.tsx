@@ -99,7 +99,7 @@ export const PlayerScreen = (props: Props) => {
       <GestureRecognizer onSwipeLeft={handleRight} onSwipeRight={handleLeft} onSwipeDown={handleUp} onSwipeUp={handleBack} config={config} style={{ flex: 1 }} >
         <Pressable onPress={handlePlayPause}>
           <KeepAwake />
-          <Message file={CachedData.messageFiles[messageIndex]} downloaded={props.lesson===null} />
+          <Message file={CachedData.messageFiles[messageIndex]} downloaded={!props.lesson} />
         </Pressable>
       </GestureRecognizer >
 
