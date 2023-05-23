@@ -1,6 +1,6 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, ActivityIndicator } from 'react-native'
+import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, CachedData, ChurchInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { MenuHeader } from '../components';
@@ -21,9 +21,7 @@ export const SelectChurchScreen = (props: Props) => {
     } else {
       setLoading(true);
       ApiHelper.getAnonymous("/churches/search/?name=" + text + "&app=Lessons&include=logoSquare", "MembershipApi").then(data => {
-        console.log("****Made it")
         setLoading(false);
-        console.log("****Made it2")
         setChurches(data);
       })
     }
@@ -53,7 +51,6 @@ export const SelectChurchScreen = (props: Props) => {
   const getSearchResult = () => {
     if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
     if (churches.length > 0) {
-      console.log("****FLatlist")
       return (<FlatList data={churches} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }}  ></FlatList>)
     } else return (<>
       <Text style={Styles.bigWhiteText}>Find Your Church</Text>
@@ -61,9 +58,19 @@ export const SelectChurchScreen = (props: Props) => {
     </>);
   }
 
+  const handleBack = () => {
+    props.navigateTo("splash");
+  }
+
+  const destroy = () => {
+    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
+  }
+
   const init = () => {
     Utilities.trackEvent("Select Church Screen");
     if (textRef) textRef.focus();
+    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    return destroy;
   }
 
   useEffect(() => { searchApiCall(searchText) }, [searchText])

@@ -1,6 +1,5 @@
-//import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
+import { Image, View, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, ProgramInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { MenuHeader } from '../components';

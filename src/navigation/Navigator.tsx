@@ -6,6 +6,7 @@ import { ProgramsScreen } from '../screens/ProgramsScreen';
 import { StudiesScreen } from '../screens/StudiesScreen';
 import { LessonsScreen } from '../screens/LessonsScreen';
 import { LessonDetailsScreen } from '../screens/LessonDetailsScreen';
+import { ModeScreen } from '../screens/ModeScreen';
 
 
 export const Navigator = () => {
@@ -20,6 +21,7 @@ export const Navigator = () => {
   let screen = <></>
   switch (currentScreen) {
     case "splash": screen = (<SplashScreen navigateTo={handleNavigate} />); break;
+    case "mode": screen = (<ModeScreen navigateTo={handleNavigate} />); break;
     case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} />); break;
     case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} />); break;
     case "download": screen = (<DownloadScreen navigateTo={handleNavigate} />); break;
