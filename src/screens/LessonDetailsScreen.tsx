@@ -1,17 +1,29 @@
-//import AsyncStorage from '@react-native-community/async-storage';
-import { StyleSheet } from 'react-native'
 import React, { useEffect } from 'react'
 import { View, Text, TouchableHighlight, BackHandler, ImageBackground } from 'react-native'
-import { LessonInterface, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
+import { ApiHelper, CachedData, LessonInterface, PlaylistFileInterface, PlaylistInterface, ProgramInterface, StudyInterface, Styles, Utilities, VenueInterface } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 
 type Props = { navigateTo(page: string, data?:any): void; program: ProgramInterface, study: StudyInterface, lesson:LessonInterface };
 
 export const LessonDetailsScreen = (props: Props) => {
-  const handleStart = () => {
+  const [venues, setVenues] = React.useState<VenueInterface[]>([]);
+
+  const handleStart = (venueId:string) => {
     Utilities.trackEvent("Stream Lesson", { lesson: props.lesson?.title });
-    props.navigateTo("player");
+    ApiHelper.get("/venues/playlist/" + venueId, "LessonsApi").then(data => {
+      CachedData.setAsyncStorage("playlist", data);
+      CachedData.messageFiles = getFiles(data);
+      props.navigateTo("player", { program: props.program, study: props.study, lesson: props.lesson });
+    });
+  }
+
+  const getFiles = (playlist:PlaylistInterface) => {
+    const result: PlaylistFileInterface[] = [];
+    playlist?.messages?.forEach(m => {
+      m.files?.forEach(f => { result.push(f) })
+    });
+    return result;
   }
 
   const getVersion = () => {
@@ -19,16 +31,34 @@ export const LessonDetailsScreen = (props: Props) => {
     return <Text style={{ ...Styles.smallWhiteText, textAlign:"left", fontSize: 12, paddingBottom: 15, color: "#999999", paddingTop: 15 }}>Version: {pkg.version}</Text>
   }
 
+  
+  const loadData = () => {
+    ApiHelper.get("/venues/public/lesson/" + props.lesson.id, "LessonsApi").then(data => { 
+      setVenues(data); 
+    });
+  }
+
+  /*
+  const loadPlaylist = () => {
+    
+  }*/
+
+
 
   const getContent = () => {
+    const buttons:JSX.Element[] = [];
+    venues?.forEach((v, idx) => { 
+      buttons.push(<TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: wp("35%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart(v.id) }} hasTVPreferredFocus={idx===0}>
+      <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>{v.name}</Text>
+    </TouchableHighlight>)
+
+    });
 
       return (<>
           <Text style={Styles.H2}>{props.lesson?.name}:</Text>
           <Text style={Styles.H3}>{props.lesson?.title}</Text>
           <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{props.lesson?.description}</Text>
-          <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: wp("14%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
-            <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Stream Lesson</Text>
-          </TouchableHighlight>
+          {buttons}
           {getVersion()}
         </>);
 
@@ -41,6 +71,7 @@ export const LessonDetailsScreen = (props: Props) => {
   const init = () => {
     Utilities.trackEvent("Lesson Details Screen");
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    loadData();
     return destroy;
   }
 

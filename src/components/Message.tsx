@@ -5,7 +5,8 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import Video from 'react-native-video';
 
 type Props = {
-  file: PlaylistFileInterface
+  file: PlaylistFileInterface,
+  downloaded: boolean
 };
 
 
@@ -21,6 +22,8 @@ export const Message = (props: Props) => {
         result = "video"
         break;
     }
+
+    console.log("Message Type:", result, props.file.url.split("?")[0])
     return result;
   }
 
@@ -38,12 +41,12 @@ export const Message = (props: Props) => {
   }
 
   const getVideo = () => {
-    const filePath = "file://" + CachedData.getFilePath(props.file.url);
+    const filePath = (props.downloaded) ? "file://" + CachedData.getFilePath(props.file.url) : props.file.url;
     return (<Video source={{ uri: filePath }} repeat={props.file.loopVideo} resizeMode="cover" style={{ width: wp("100%"), height: hp("100%") }} />)
   }
 
   const getImage = () => {
-    const filePath = "file://" + CachedData.getFilePath(props.file.url);
+    const filePath = (props.downloaded) ? "file://" + CachedData.getFilePath(props.file.url) : props.file.url;
     return (<Image source={{ uri: filePath }} style={{ width: wp("100%"), height: hp("100%") }} />);
   }
 

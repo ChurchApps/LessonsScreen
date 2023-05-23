@@ -1,12 +1,12 @@
 import React from 'react'
 import { HWKeyEvent, TVMenuControl, BackHandler, useTVEventHandler, Pressable } from 'react-native'
-import { CachedData, Utilities } from "../helpers";
+import { CachedData, LessonInterface, ProgramInterface, StudyInterface, Utilities } from "../helpers";
 import { PlayerHelper } from '../helpers/PlayerHelper';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import KeepAwake from "react-native-keep-awake";
 import { Message, SelectMessage } from '../components';
 
-type Props = { navigateTo(page: string): void; };
+type Props = { navigateTo(page: string, data?:any): void; program?: ProgramInterface, study?: StudyInterface, lesson?:LessonInterface };
 
 export const PlayerScreen = (props: Props) => {
 
@@ -47,10 +47,12 @@ export const PlayerScreen = (props: Props) => {
   const handleLeft = () => { stopTimer(); goBack(); startTimer(); }
   const handleRight = () => { stopTimer(); goForward(); startTimer(); }
   const handleUp = () => { if (!showSelectMessage) { stopTimer(); setShowSelectMessage(true); } }
+  
   const handleBack = () => {
     if (!showSelectMessage) {
       stopTimer();
-      props.navigateTo("download");
+      if (props.lesson) props.navigateTo("lessonDetails", {program: props.program, study: props.study, lesson: props.lesson});
+      else props.navigateTo("download");
     }
   }
 
@@ -97,7 +99,7 @@ export const PlayerScreen = (props: Props) => {
       <GestureRecognizer onSwipeLeft={handleRight} onSwipeRight={handleLeft} onSwipeDown={handleUp} onSwipeUp={handleBack} config={config} style={{ flex: 1 }} >
         <Pressable onPress={handlePlayPause}>
           <KeepAwake />
-          <Message file={CachedData.messageFiles[messageIndex]} />
+          <Message file={CachedData.messageFiles[messageIndex]} downloaded={props.lesson===null} />
         </Pressable>
       </GestureRecognizer >
 

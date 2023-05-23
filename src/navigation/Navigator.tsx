@@ -23,7 +23,7 @@ export const Navigator = () => {
     case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} />); break;
     case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} />); break;
     case "download": screen = (<DownloadScreen navigateTo={handleNavigate} />); break;
-    case "player": screen = (<PlayerScreen navigateTo={handleNavigate} />); break;
+    case "player": screen = (<PlayerScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} lesson={currentData?.lesson} />); break;
 
     case "programs": screen = (<ProgramsScreen navigateTo={handleNavigate} />); break;
     case "studies": screen = (<StudiesScreen navigateTo={handleNavigate} program={currentData?.program} />); break;
