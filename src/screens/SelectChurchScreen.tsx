@@ -12,6 +12,7 @@ export const SelectChurchScreen = (props: Props) => {
   const [churches, setChurches] = React.useState<ChurchInterface[]>([]);
   const [searchText, setSearchText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [autoFocus, setAutoFocus] = React.useState(false);
   let textRef: TextInput = null;
 
   const searchApiCall = (text: String) => {
@@ -59,7 +60,10 @@ export const SelectChurchScreen = (props: Props) => {
   }
 
   const handleBack = () => {
-    props.navigateTo("splash");
+    CachedData.church = null;
+    CachedData.setAsyncStorage("church", null).then(() => {
+      props.navigateTo("splash");
+    });
   }
 
   const destroy = () => {
@@ -68,20 +72,24 @@ export const SelectChurchScreen = (props: Props) => {
 
   const init = () => {
     Utilities.trackEvent("Select Church Screen");
-    if (textRef) textRef.focus();
+    if (textRef) setTimeout(() => {
+      setAutoFocus(true);
+    }, 1000); 
+    
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return destroy;
   }
 
   useEffect(() => { searchApiCall(searchText) }, [searchText])
   useEffect(init, [])
+  useEffect(() => { if (autoFocus) textRef.focus() }, [autoFocus]);
 
   return (
     <View style={Styles.menuScreen}>
       <MenuHeader headerText="Find Your Church" />
 
       <View style={{ ...Styles.menuWrapper, flex: 5 }}>
-        <TextInput style={{ ...Styles.textInputStyle, width: wp("50%"), marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r} />
+        <TextInput autoFocus={autoFocus} style={{ ...Styles.textInputStyle, width: wp("50%"), marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r} />
       </View>
 
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>

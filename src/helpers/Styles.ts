@@ -34,7 +34,7 @@ export class StyleConstants {
 
 export const Styles = StyleSheet.create({
   //Splash
-  splashMaincontainer: { alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: "#000000" },
+  splashMaincontainer: { alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: "#29235c" },
   splashImage: { maxWidth: wp('70%'), alignSelf: 'center' },
 
   H1: { color: "#FFFFFF", fontSize: wp('5%'), fontFamily: StyleConstants.RobotoBold },
@@ -59,6 +59,6 @@ export const Styles = StyleSheet.create({
   menuClickable: { alignItems: "flex-start", justifyContent: 'center', width: "100%", height: hp("8%"), paddingLeft: wp("1%") },
   smallMenuClickable: { alignItems: "flex-start", width: "100%", height: hp("6%"), justifyContent: "center", fontFamily: StyleConstants.RobotoBold, fontWeight:"bold" },
 
-  textInputStyle: { alignItems: 'center', justifyContent: 'center', fontSize: hp('4%'), color: 'black', backgroundColor: "white", padding: 4 }
+  textInputStyle: { alignItems: 'center', justifyContent: 'center', fontSize: hp('4%'), backgroundColor: "white", padding: 4 }
 
 })
