@@ -39,7 +39,10 @@ export const StudiesScreen = (props: Props) => {
     const study = data.item as StudyInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(study)  }} hasTVPreferredFocus={data.index===0}>
-        <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
+        <View style={{width:"100%"}}>
+          <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
+          <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{study.name}</Text>
+        </View>
       </TouchableHighlight>
     )
   }
