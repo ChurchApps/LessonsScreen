@@ -78,7 +78,7 @@ export const PlayerScreen = (props: Props) => {
 
   const startTimer = () => {
     if (PlayerHelper.timer) clearTimeout(PlayerHelper.timer);
-    PlayerHelper.timer = setTimeout(goForward, CachedData.messageFiles[messageIndex].seconds * 1000)
+    if (!CachedData.messageFiles[messageIndex].loopVideo) PlayerHelper.timer = setTimeout(goForward, CachedData.messageFiles[messageIndex].seconds * 1000)
   }
 
   const handleMessageSelect = (index: number) => {
