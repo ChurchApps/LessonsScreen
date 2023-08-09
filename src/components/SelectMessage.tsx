@@ -1,8 +1,8 @@
 import React from 'react'
 import { Styles } from '../helpers';
-import { View, Text, Image, FlatList, ListRenderItem, TouchableHighlight } from 'react-native';
+import { View, Text, FlatList, ListRenderItem, TouchableHighlight } from 'react-native';
 import { CachedData } from "../helpers";
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from './MenuHeader';
 type Props = { onSelect: (index: number) => void };
 

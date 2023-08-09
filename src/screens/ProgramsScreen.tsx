@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Image, View, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, ProgramInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from '../components';
 
 type Props = { navigateTo(page: string, data?:any): void; };

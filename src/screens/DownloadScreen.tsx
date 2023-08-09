@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from 'react-native'
 import { ApiHelper, CachedData, ClassroomInterface, PlaylistFileInterface, PlaylistInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import LinearGradient from 'react-native-linear-gradient';
 
 type Props = { navigateTo(page: string): void; };

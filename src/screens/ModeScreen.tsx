@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import { Text, View, FlatList, TouchableHighlight, BackHandler } from 'react-native'
 import { Styles, Utilities } from "../helpers";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from '../components';
 
 type Props = { navigateTo(page: string, data?:any): void; };
 
 export const ModeScreen = (props: Props) => {
-
   const modes = ["Classroom", "Browse"];
 
   const styles:any = {
@@ -58,6 +57,7 @@ export const ModeScreen = (props: Props) => {
           numColumns={3}
           renderItem={getCard}
           keyExtractor={(item) => item}
+          style={{ width: wp("100%") }}
         />  
     </View>
     )

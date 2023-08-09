@@ -1,8 +1,8 @@
 //import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, ImageBackground, BackHandler } from 'react-native'
+import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from '../components';
 
 type Props = { navigateTo(page: string, data?:any): void; program:ProgramInterface };

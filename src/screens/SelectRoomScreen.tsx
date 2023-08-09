@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { Image, View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, CachedData, ClassroomInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from '../components';
 
 type Props = { navigateTo(page: string): void; };

@@ -1,7 +1,7 @@
 import React from 'react'
 import { CachedData, PlaylistFileInterface } from '../helpers';
 import { Image } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from '../helpers/CustomReactNativeResponsiveScreen';
 import Video from 'react-native-video';
 
 type Props = {

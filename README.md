@@ -27,3 +27,12 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 1. Update version number in package.json
 2. Run 'appcenter codepush release-react -a Live-Church-Solutions/LessonsScreen -d Production'
+
+# Testing on Windows
+
+1. Install Windows Susbystem for Android
+2. Intall Amazon App Store for Windows and open it.
+3. Run `adb connect 127.0.0.1:58526`
+4. Start the React Native server with `npm start`
+5. In Android Study, select `Microsoft...` as the device and click Run.
+6. Run `adb shell input keyevent 82` to open the developer menu. Go to settings, Debug server host and enter YourIP:8081. Restart the app via Android Studio.
