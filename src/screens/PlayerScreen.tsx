@@ -1,5 +1,5 @@
 import React from 'react'
-import { HWKeyEvent, TVMenuControl, BackHandler, useTVEventHandler, Pressable } from 'react-native'
+import { HWKeyEvent, TVMenuControl, BackHandler, useTVEventHandler, Pressable, TextInput } from 'react-native'
 import { CachedData, LessonInterface, ProgramInterface, StudyInterface, Utilities } from "../helpers";
 import { PlayerHelper } from '../helpers/PlayerHelper';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -12,6 +12,9 @@ export const PlayerScreen = (props: Props) => {
 
   const [showSelectMessage, setShowSelectMessage] = React.useState(false);
   const [messageIndex, setMessageIndex] = React.useState(0);
+  const [paused, setPaused] = React.useState(false);
+  const [triggerPauseCheck, setTriggerPauseCheck] = React.useState(0);
+  
 
   const init = () => {
     Utilities.trackEvent("Player Screen");
@@ -24,23 +27,41 @@ export const PlayerScreen = (props: Props) => {
   }
 
   const handlePlayPause = () => {
-    if (PlayerHelper.timer) stopTimer(); else startTimer();
-    //todo: Pause the video
+    PlayerHelper.pendingPause = false;
+    if (PlayerHelper.timer) {
+      stopTimer(); 
+      setPaused(true);
+    } else {
+      startTimer();
+      setPaused(false);
+    }
   }
 
   const handleRemotePress = async (pendingKey: string) => {
     switch (pendingKey) {
-      case "right": handleRight(); break;
-      case "left": handleLeft(); break;
-      case "up": handleUp(); break;
+      case "right": 
+      case "fastForward":
+        handleRight(); 
+        break;
+      case "left": 
+      case "rewind":
+        handleLeft(); 
+        break;
+      case "up": 
+        handleUp();  
+        break;
       case "previous":
       case "info":
       case "down":
-        handleBack(); break;
-      case "select": handlePlayPause(); break;
+        handleBack(); 
+        break;
+      case "select": 
+      case "playPause": 
+        handlePlayPause(); 
         break;
     }
   }
+
 
   useTVEventHandler((evt: HWKeyEvent) => { handleRemotePress(evt.eventType); });
 
@@ -58,12 +79,14 @@ export const PlayerScreen = (props: Props) => {
 
 
   const goForward = () => {
+    if (paused) setPaused(false);
     let idx = messageIndex + 1;
     if (idx < CachedData.messageFiles.length) setMessageIndex(idx)
     else handleBack();
   }
 
   const goBack = () => {
+    if (paused) setPaused(false);
     let idx = messageIndex - 1;
     if (idx >= 0) setMessageIndex(idx);
     else handleBack();
@@ -82,27 +105,34 @@ export const PlayerScreen = (props: Props) => {
   }
 
   const handleMessageSelect = (index: number) => {
+    if (paused) setPaused(false);
     setShowSelectMessage(false);
     setMessageIndex(index);
     startTimer();
   }
 
+  const handlePressablePress = () => {
+    setTriggerPauseCheck(Math.random());
+  }
+
   React.useEffect(init, [])
   React.useEffect(startTimer, [messageIndex])
+  React.useEffect(() => {
+    if (PlayerHelper.pendingPause) handlePlayPause();
+  }, [triggerPauseCheck]);;
 
   if (showSelectMessage) {
     return <SelectMessage onSelect={handleMessageSelect} />
   } else {
     const config = { velocityThreshold: 0.3, directionalOffsetThreshold: 80 };
     return (
-
       <GestureRecognizer onSwipeLeft={handleRight} onSwipeRight={handleLeft} onSwipeDown={handleUp} onSwipeUp={handleBack} config={config} style={{ flex: 1 }} >
-        <Pressable onPress={handlePlayPause}>
+        <Pressable onPress={handlePressablePress}>
           <KeepAwake />
-          <Message file={CachedData.messageFiles[messageIndex]} downloaded={!props.lesson} />
+          <Message file={CachedData.messageFiles[messageIndex]} downloaded={!props.lesson} paused={paused}  />
+          <TextInput autoFocus={true} style={{ display:"none" }} showSoftInputOnFocus={false} returnKeyType="none" />
         </Pressable>
       </GestureRecognizer >
-
     )
   }
 

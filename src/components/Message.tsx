@@ -6,7 +6,8 @@ import Video from 'react-native-video';
 
 type Props = {
   file: PlaylistFileInterface,
-  downloaded: boolean
+  downloaded: boolean,
+  paused: boolean
 };
 
 
@@ -23,7 +24,7 @@ export const Message = (props: Props) => {
         break;
     }
 
-    console.log("Message Type:", result, props.file.url.split("?")[0])
+    //console.log("Message Type:", result, props.file.url.split("?")[0])
     return result;
   }
 
@@ -42,7 +43,7 @@ export const Message = (props: Props) => {
 
   const getVideo = () => {
     const filePath = (props.downloaded) ? "file://" + CachedData.getFilePath(props.file.url) : props.file.url;
-    return (<Video source={{ uri: filePath }} repeat={props.file.loopVideo} resizeMode="cover" style={{ width: wp("100%"), height: hp("100%") }} poster={(props.downloaded) ? "" : "https://lessons.church/images/loading.png"} />)
+    return (<Video source={{ uri: filePath }} repeat={props.file.loopVideo} resizeMode="cover" style={{ width: wp("100%"), height: hp("100%") }} poster={(props.downloaded) ? "" : "https://lessons.church/images/loading.png"} paused={props.paused} />)
   }
 
   const getImage = () => {
