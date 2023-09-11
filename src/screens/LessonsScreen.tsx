@@ -1,4 +1,3 @@
-//import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react'
 import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, LessonInterface, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
