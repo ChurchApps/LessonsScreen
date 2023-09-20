@@ -1,5 +1,5 @@
 import React from 'react'
-import { HWKeyEvent, TVMenuControl, BackHandler, useTVEventHandler, Pressable, TextInput } from 'react-native'
+import { HWEvent, TVEventControl, BackHandler, useTVEventHandler, Pressable, TextInput } from 'react-native'
 import { CachedData, LessonInterface, ProgramInterface, StudyInterface, Utilities } from "../helpers";
 import { PlayerHelper } from '../helpers/PlayerHelper';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -18,10 +18,10 @@ export const PlayerScreen = (props: Props) => {
 
   const init = () => {
     Utilities.trackEvent("Player Screen");
-    TVMenuControl.enableTVMenuKey();
+    TVEventControl.enableTVMenuKey();
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return () => {
-      TVMenuControl.disableTVMenuKey();
+      TVEventControl.disableTVMenuKey();
       BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
     }
   }
@@ -63,7 +63,7 @@ export const PlayerScreen = (props: Props) => {
   }
 
 
-  useTVEventHandler((evt: HWKeyEvent) => { handleRemotePress(evt.eventType); });
+  useTVEventHandler((evt: HWEvent) => { handleRemotePress(evt.eventType); });
 
   const handleLeft = () => { stopTimer(); goBack(); startTimer(); }
   const handleRight = () => { stopTimer(); goForward(); startTimer(); }
