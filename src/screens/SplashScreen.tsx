@@ -2,6 +2,7 @@
 import React from 'react'
 import { Image, View } from 'react-native'
 import { CachedData, Styles, Utilities } from "../helpers";
+import SoundPlayer from "react-native-sound-player";
 
 type Props = { navigateTo(page: string): void; };
 
@@ -15,7 +16,14 @@ export const SplashScreen = (props: Props) => {
     
   }
 
-  React.useEffect(() => { checkStorage() }, [])
+  React.useEffect(() => { 
+    SoundPlayer.playSoundFile('launch', 'mp3')
+    setTimeout(() => {
+      checkStorage();  
+    }, 1800);
+    
+    
+   }, [])
 
   return (
 
