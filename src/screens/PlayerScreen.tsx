@@ -1,10 +1,11 @@
-import React from 'react'
-import { HWEvent, TVEventControl, BackHandler, useTVEventHandler, Pressable, TextInput } from 'react-native'
-import { CachedData, LessonInterface, ProgramInterface, StudyInterface, Utilities } from "../helpers";
-import { PlayerHelper } from '../helpers/PlayerHelper';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import React from "react"
+import { HWEvent, TVEventControl, BackHandler, useTVEventHandler, Pressable, TextInput } from "react-native"
+import { LessonInterface, ProgramInterface, StudyInterface } from "@churchapps/mobilehelper";
+import { CachedData, Utilities } from "../helpers";
+import { PlayerHelper } from "../helpers/PlayerHelper";
+import GestureRecognizer from "react-native-swipe-gestures";
 import KeepAwake from "react-native-keep-awake";
-import { Message, SelectMessage } from '../components';
+import { Message, SelectMessage } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; program?: ProgramInterface, study?: StudyInterface, lesson?:LessonInterface };
 

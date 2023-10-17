@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import { Text, View, FlatList, TouchableHighlight, BackHandler } from 'react-native'
+import React, { useEffect } from "react"
+import { Text, View, FlatList, TouchableHighlight, BackHandler } from "react-native"
 import { CachedData, Styles, Utilities } from "../helpers";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
-import { MenuHeader } from '../components';
+import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; };
 

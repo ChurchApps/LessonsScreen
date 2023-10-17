@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
-import { View, Text, TouchableHighlight, BackHandler, ImageBackground } from 'react-native'
-import { ApiHelper, CachedData, LessonInterface, PlaylistFileInterface, PlaylistInterface, ProgramInterface, StudyInterface, Styles, Utilities, VenueInterface } from "../helpers";
+import React, { useEffect } from "react"
+import { View, Text, TouchableHighlight, BackHandler, ImageBackground } from "react-native"
+import { ApiHelper, LessonInterface, PlaylistFileInterface, PlaylistInterface, ProgramInterface, StudyInterface, VenueInterface } from "@churchapps/mobilehelper";
+import { CachedData, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from "react-native-linear-gradient";
 
 type Props = { navigateTo(page: string, data?:any): void; program: ProgramInterface, study: StudyInterface, lesson:LessonInterface };
 

@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
-import { CachedData, Styles } from '../helpers';
-import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, PlayerScreen } from '../screens';
-import { ProgramsScreen } from '../screens/ProgramsScreen';
-import { StudiesScreen } from '../screens/StudiesScreen';
-import { LessonsScreen } from '../screens/LessonsScreen';
-import { LessonDetailsScreen } from '../screens/LessonDetailsScreen';
-import { SettingsScreen } from '../screens/SettingsScreen';
-import { listenOrientationChange, removeOrientationListener, widthPercentageToDP as wp, heightPercentageToDP as hp } from '../helpers/CustomReactNativeResponsiveScreen';
-import { View } from 'react-native';
-import { NavWrapper } from './NavWrapper';
+import React, { useEffect } from "react"
+import { CachedData, Styles } from "../helpers";
+import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, PlayerScreen } from "../screens";
+import { ProgramsScreen } from "../screens/ProgramsScreen";
+import { StudiesScreen } from "../screens/StudiesScreen";
+import { LessonsScreen } from "../screens/LessonsScreen";
+import { LessonDetailsScreen } from "../screens/LessonDetailsScreen";
+import { SettingsScreen } from "../screens/SettingsScreen";
+import { listenOrientationChange, removeOrientationListener, widthPercentageToDP as wp, heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
+import { View } from "react-native";
+import { NavWrapper } from "./NavWrapper";
 
 export const Navigator = () => {
   const [currentScreen, setCurrentScreen] = React.useState("splash");

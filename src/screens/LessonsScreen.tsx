@@ -1,9 +1,10 @@
 
-import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
-import { ApiHelper, LessonInterface, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
+import React, { useEffect } from "react"
+import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
+import { ApiHelper, LessonInterface, ProgramInterface, StudyInterface } from "@churchapps/mobilehelper";
+import { Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
-import { MenuHeader } from '../components';
+import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; program: ProgramInterface, study: StudyInterface };
 

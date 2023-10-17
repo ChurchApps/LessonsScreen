@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ChurchInterface, ClassroomInterface, PlaylistFileInterface } from ".";
+import { ChurchInterface, ClassroomInterface, PlaylistFileInterface } from "@churchapps/mobilehelper";
 import RNFS from "react-native-fs";
 
 export class CachedData {

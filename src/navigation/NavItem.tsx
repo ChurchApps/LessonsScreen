@@ -1,9 +1,9 @@
-import { View, Text, TouchableHighlight } from 'react-native';
-import { Styles } from '../helpers';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from '../helpers/CustomReactNativeResponsiveScreen';
-import { useState } from 'react';
-import React from 'react';
+import { View, Text, TouchableHighlight } from "react-native";
+import { Styles } from "../helpers";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
+import { useState } from "react";
+import React from "react";
 
 type Props = {
   icon:string,

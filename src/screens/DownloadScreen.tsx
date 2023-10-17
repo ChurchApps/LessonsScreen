@@ -1,9 +1,10 @@
-//import AsyncStorage from '@react-native-community/async-storage';
-import React, { useEffect } from 'react'
-import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from 'react-native'
-import { ApiHelper, CachedData, ClassroomInterface, PlaylistFileInterface, PlaylistInterface, Styles, Utilities } from "../helpers";
+//import AsyncStorage from "@react-native-community/async-storage";
+import React, { useEffect } from "react"
+import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native"
+import { ApiHelper, ClassroomInterface, PlaylistFileInterface, PlaylistInterface } from "@churchapps/mobilehelper";
+import { CachedData, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from "react-native-linear-gradient";
 
 type Props = { navigateTo(page: string): void; };
 

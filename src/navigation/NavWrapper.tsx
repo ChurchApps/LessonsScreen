@@ -1,10 +1,10 @@
-import { View, Image, findNodeHandle } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from '../helpers/CustomReactNativeResponsiveScreen';
+import { View, Image, findNodeHandle } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 
-import { CachedData } from '../helpers';
-import { useRef, useState } from 'react';
-import { NavItem } from './NavItem';
-import React from 'react';
+import { CachedData } from "../helpers";
+import { useRef, useState } from "react";
+import { NavItem } from "./NavItem";
+import React from "react";
 
 type Props = { screen: React.JSX.Element, navigateTo(page: string): void; };
 

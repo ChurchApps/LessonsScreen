@@ -1,8 +1,9 @@
-import React from 'react'
-import { CachedData, PlaylistFileInterface } from '../helpers';
-import { Image } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from '../helpers/CustomReactNativeResponsiveScreen';
-import Video from 'react-native-video';
+import React from "react"
+import { CachedData } from "../helpers";
+import { PlaylistFileInterface } from "@churchapps/mobilehelper";
+import { Image } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
+import Video from "react-native-video";
 
 type Props = {
   file: PlaylistFileInterface,

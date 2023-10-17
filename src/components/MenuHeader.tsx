@@ -1,6 +1,6 @@
-import React from 'react'
-import { Styles } from '../helpers';
-import { View, Text, Image } from 'react-native';
+import React from "react"
+import { Styles } from "../helpers";
+import { View, Text, Image } from "react-native";
 
 type Props = { headerText: string };
 

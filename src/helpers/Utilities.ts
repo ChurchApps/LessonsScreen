@@ -1,6 +1,6 @@
 
-import Analytics from 'appcenter-analytics';
-import { CachedData } from './CachedData';
+import Analytics from "appcenter-analytics";
+import { CachedData } from "./CachedData";
 
 
 export class Utilities {

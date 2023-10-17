@@ -1,9 +1,10 @@
-//import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
-import { ApiHelper, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
+//import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect } from "react"
+import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
+import { ApiHelper, ProgramInterface, StudyInterface } from "@churchapps/mobilehelper";
+import { Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
-import { MenuHeader } from '../components';
+import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; program:ProgramInterface };
 
