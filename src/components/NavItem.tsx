@@ -11,7 +11,9 @@ type Props = {
   selected:boolean, 
   expanded:boolean, 
   setExpanded: (expanded:boolean) => void,
-  onPress?: () => void
+  onPress?: () => void,
+  nextFocusDown?: any,
+  nextFocusUp?: any,
 };
 
 export const NavItem = React.forwardRef((props: Props, ref) => {
@@ -36,7 +38,7 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
   
 
   return (
-    <TouchableHighlight underlayColor={"#03a9f4"} onPress={() => { if (props.onPress) props.onPress(); }} hasTVPreferredFocus={false} onFocus={() => { handleFocusChange(true); }} onBlur={() => { handleFocusChange(false) }} style={{marginTop:wp("1%")}}>
+    <TouchableHighlight underlayColor={"#03a9f4"} onPress={() => { if (props.onPress) props.onPress(); }} hasTVPreferredFocus={false} onFocus={() => { handleFocusChange(true); }} onBlur={() => { handleFocusChange(false) }} style={{marginTop:wp("1%")}} ref={ref as React.MutableRefObject<TouchableHighlight>} nextFocusDown={props.nextFocusDown || null} nextFocusUp={props.nextFocusUp} >
       <View style={{display:"flex", flexDirection:"row"}}>
         <Icon name={props.icon} color={color} style={iconStyle} size={hp("5%")} />
         {(props.expanded) && (<Text style={{ ...Styles.smallWhiteText, color:color, flex:8, textAlign:"left", marginTop:hp("1%") }}>{props.text}</Text>)}
