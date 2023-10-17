@@ -16,7 +16,7 @@ export const LessonsScreen = (props: Props) => {
     list: {
       flex: 1,
       marginHorizontal: "auto",
-      width: wp("100%")
+      width: "100%"
     },
     item: {
       flex: 1,

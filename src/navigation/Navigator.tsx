@@ -5,7 +5,7 @@ import { ProgramsScreen } from '../screens/ProgramsScreen';
 import { StudiesScreen } from '../screens/StudiesScreen';
 import { LessonsScreen } from '../screens/LessonsScreen';
 import { LessonDetailsScreen } from '../screens/LessonDetailsScreen';
-import { ModeScreen } from '../screens/ModeScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 import { listenOrientationChange, removeOrientationListener, widthPercentageToDP as wp, heightPercentageToDP as hp } from '../helpers/CustomReactNativeResponsiveScreen';
 import { View } from 'react-native';
 import { NavWrapper } from '../components/NavWrapper';
@@ -23,7 +23,7 @@ export const Navigator = () => {
   let screen = <></>
   switch (currentScreen) {
     case "splash": screen = (<SplashScreen navigateTo={handleNavigate} />); break;
-    case "mode": screen = (<ModeScreen navigateTo={handleNavigate} />); break;
+    case "settings": screen = (<SettingsScreen navigateTo={handleNavigate} />); break;
     case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} />); break;
     case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} />); break;
     case "download": screen = (<DownloadScreen navigateTo={handleNavigate} />); break;
@@ -53,7 +53,9 @@ export const Navigator = () => {
   useEffect(init, []);
   if (dimensions!=="1,1") console.log(dimensions);
 
-  if (currentScreen === "splash") {
+  const fullScreenScreens = ["splash", "player", "download", "lessonDetails"];
+
+  if (fullScreenScreens.indexOf(currentScreen)>-1) {
   return (<View style={Styles.splashMaincontainer}>
       <View style={[viewStyle]}>
         {screen}

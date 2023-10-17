@@ -39,7 +39,7 @@ export const ProgramsScreen = (props: Props) => {
     const program = data.item as ProgramInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(program)  }} hasTVPreferredFocus={data.index===0}>
-        <Image style={{ height:hp("30%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
+        <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
       </TouchableHighlight>
     )
   }
@@ -79,12 +79,11 @@ export const ProgramsScreen = (props: Props) => {
   useEffect(init, [])
 
   return (
-    <View style={Styles.menuScreen}>
+    <View style={{ ...Styles.menuScreen }}>
       <MenuHeader headerText="Browse Programs" />
       <View style={{ ...Styles.menuWrapper, flex: 90 }}>
         {getCards()}
       </View>
-
     </View>
   )
   

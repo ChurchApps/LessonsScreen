@@ -54,8 +54,7 @@ export const SelectChurchScreen = (props: Props) => {
     if (churches.length > 0) {
       return (<FlatList data={churches} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }}  ></FlatList>)
     } else return (<>
-      <Text style={Styles.bigWhiteText}>Find Your Church</Text>
-      <Text style={{ ...Styles.smallWhiteText, maxWidth: wp("50%") }}>{getNoResultsMessage()}</Text>
+      <Text style={{ ...Styles.smallWhiteText, width:"100%" }}>{getNoResultsMessage()}</Text>
     </>);
   }
 
@@ -89,7 +88,7 @@ export const SelectChurchScreen = (props: Props) => {
       <MenuHeader headerText="Find Your Church" />
 
       <View style={{ ...Styles.menuWrapper, flex: 5 }}>
-        <TextInput autoFocus={autoFocus} style={{ ...Styles.textInputStyle, width: wp("50%"), marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r}  returnKeyType="none" />
+        <TextInput autoFocus={autoFocus} style={{ ...Styles.textInputStyle, width: "100%", marginTop: hp("4%"), marginBottom: hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType='default' placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r}  returnKeyType="none" />
       </View>
 
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>

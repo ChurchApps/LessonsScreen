@@ -39,7 +39,7 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
     <TouchableHighlight underlayColor={"#03a9f4"} onPress={() => { if (props.onPress) props.onPress(); }} hasTVPreferredFocus={false} onFocus={() => { handleFocusChange(true); }} onBlur={() => { handleFocusChange(false) }} style={{marginTop:wp("1%")}}>
       <View style={{display:"flex", flexDirection:"row"}}>
         <Icon name={props.icon} color={color} style={iconStyle} size={hp("5%")} />
-        {(props.expanded) && (<Text style={{ ...Styles.whiteText, color:color, flex:8, textAlign:"left" }}>{props.text}</Text>)}
+        {(props.expanded) && (<Text style={{ ...Styles.smallWhiteText, color:color, flex:8, textAlign:"left", marginTop:hp("1%") }}>{props.text}</Text>)}
       </View>
     </TouchableHighlight>
   )

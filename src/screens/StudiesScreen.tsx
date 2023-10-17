@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
+import { heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from '../components';
 
 type Props = { navigateTo(page: string, data?:any): void; program:ProgramInterface };
@@ -16,7 +16,7 @@ export const StudiesScreen = (props: Props) => {
     list: {
       flex: 1,
       marginHorizontal: "auto",
-      width: wp("100%")
+      width: "100%"
     },
     item: {
       flex: 1,

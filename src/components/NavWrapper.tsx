@@ -1,5 +1,5 @@
 import { View, Image, Text, TouchableHighlight, findNodeHandle } from 'react-native';
-import { heightPercentageToDP as hp } from '../helpers/CustomReactNativeResponsiveScreen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from '../helpers/CustomReactNativeResponsiveScreen';
 
 import { CachedData, Styles } from '../helpers';
 import { useRef, useState } from 'react';
@@ -43,7 +43,7 @@ export const NavWrapper = (props: Props) => {
           <NavItem icon={"video-library"} text={"Browse"} expanded={expanded} setExpanded={changeExpanded} selected={true} onPress={() => { props.navigateTo("programs"); }} />
         </View>
         <View style={{ marginBottom:hp("2%") }}>
-          <NavItem icon={"settings"} text={"Settings"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={() => { props.navigateTo("selectChurch") }} />
+          <NavItem icon={"settings"} text={"Settings"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={() => { props.navigateTo("settings") }} />
         </View>
       </View>
     )
@@ -55,8 +55,10 @@ export const NavWrapper = (props: Props) => {
       <View style={{flex:barWidth, backgroundColor: "#000000" }} >
         {getContent()}
       </View>
-      <View style={{flex:(100-barWidth), alignItems:"flex-start", height:hp("100%")}}   >
-          {props.screen}
+      <View style={{flex:(100-barWidth), alignItems:"flex-start", height:hp("100%")}}>
+          <View style={{width:wp("93%"), height:hp("100%")}}>
+            {props.screen}
+          </View>
       </View>
   </View>
   )
