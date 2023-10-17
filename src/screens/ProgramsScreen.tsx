@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Image, View, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
+import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
 import { ApiHelper, ProgramInterface, Styles, Utilities } from "../helpers";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from '../components';
@@ -15,7 +15,7 @@ export const ProgramsScreen = (props: Props) => {
     list: {
       flex: 1,
       marginHorizontal: "auto",
-      width: wp("100%")
+      width: "100%"
     },
     item: {
       flex: 1,
@@ -39,7 +39,7 @@ export const ProgramsScreen = (props: Props) => {
     const program = data.item as ProgramInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(program)  }} hasTVPreferredFocus={data.index===0}>
-        <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
+        <Image style={{ height:hp("30%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
       </TouchableHighlight>
     )
   }
@@ -80,13 +80,13 @@ export const ProgramsScreen = (props: Props) => {
 
   return (
     <View style={Styles.menuScreen}>
-      <MenuHeader headerText="Select a Program" />
-
-      <View style={{ ...Styles.menuWrapper, flex: 20 }}>
+      <MenuHeader headerText="Browse Programs" />
+      <View style={{ ...Styles.menuWrapper, flex: 90 }}>
         {getCards()}
       </View>
 
     </View>
   )
+  
 
 }

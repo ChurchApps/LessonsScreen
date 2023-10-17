@@ -12,7 +12,7 @@ export const SplashScreen = (props: Props) => {
     CachedData.church = await CachedData.getAsyncStorage("church");
     
     if (CachedData.church) props.navigateTo("selectRoom");
-    else props.navigateTo("mode");
+    else props.navigateTo("programs");
     
   }
 

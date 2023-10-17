@@ -8,6 +8,7 @@ import { LessonDetailsScreen } from '../screens/LessonDetailsScreen';
 import { ModeScreen } from '../screens/ModeScreen';
 import { listenOrientationChange, removeOrientationListener, widthPercentageToDP as wp, heightPercentageToDP as hp } from '../helpers/CustomReactNativeResponsiveScreen';
 import { View } from 'react-native';
+import { NavWrapper } from '../components/NavWrapper';
 
 export const Navigator = () => {
   const [currentScreen, setCurrentScreen] = React.useState("splash");
@@ -52,12 +53,16 @@ export const Navigator = () => {
   useEffect(init, []);
   if (dimensions!=="1,1") console.log(dimensions);
 
-  return (
-    <View style={Styles.splashMaincontainer}>
+  if (currentScreen === "splash") {
+  return (<View style={Styles.splashMaincontainer}>
       <View style={[viewStyle]}>
         {screen}
       </View>
-    </View>
-  )
+    </View>)
+  } else {
+    return (<View style={Styles.maincontainer}>
+        <NavWrapper screen={screen} navigateTo={handleNavigate} />
+      </View>);
+  }
 
 }

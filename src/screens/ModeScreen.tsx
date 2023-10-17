@@ -14,7 +14,7 @@ export const ModeScreen = (props: Props) => {
       flex: 1,
       marginTop: hp("30%"),
       marginHorizontal: "auto",
-      width: wp("100%"),
+      width: "100%",
       justifyContent: "center"
     },
     item: {
@@ -57,7 +57,7 @@ export const ModeScreen = (props: Props) => {
           numColumns={3}
           renderItem={getCard}
           keyExtractor={(item) => item}
-          style={{ width: wp("100%") }}
+          style={{ width: "100%" }}
         />  
     </View>
     )
@@ -79,9 +79,10 @@ export const ModeScreen = (props: Props) => {
 
   useEffect(init, [])
 
+  //return (<Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>This is a test of menu header text that just goes on and on. This is a test of menu header text that just goes on and on</Text>)
   return (
-    <View style={Styles.menuScreen}>
-      <MenuHeader headerText="Select Mode" />
+    <View style={{ flex:1, width:"100%"}}>
+      
 
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>
         {getCards()}

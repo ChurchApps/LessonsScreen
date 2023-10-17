@@ -23,7 +23,12 @@ const listenOrientationChange = (that:any, callback:() => void) => {
 };
 
 const removeOrientationListener = () => {
-  Dimensions.removeEventListener('change', () => {});
+  try {
+    Dimensions.removeEventListener('change', () => {});  
+  } catch (error) {
+    console.log(error);
+  }
+  
 };
 
 export {

@@ -46,6 +46,7 @@
     "@types/react-native-dotenv": "^0.2.0",
     "@types/react-native-keep-awake": "^2.0.3",
     "@types/react-native-sqlite-storage": "^6.0.0",
+    "@types/react-native-vector-icons": "^6.4.15",
     "@types/react-native-video": "^5.0.15",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.7.0",
