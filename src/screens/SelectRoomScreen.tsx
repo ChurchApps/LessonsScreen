@@ -22,7 +22,7 @@ export const SelectRoomScreen = (props: Props) => {
     const room = data.item;
     data.index
     return (
-      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(room) }} hasTVPreferredFocus={data.index === 0} >
+      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(room) }} hasTVPreferredFocus={data.index === 0}>
         <Text style={Styles.whiteText}>{room.name}</Text>
       </TouchableHighlight>
     )
@@ -31,9 +31,9 @@ export const SelectRoomScreen = (props: Props) => {
 
   const getSearchResult = () => {
     if (rooms.length > 0) {
-      return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }} hasTVPreferredFocus={true}  ></FlatList>)
+      return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }} hasTVPreferredFocus={true}></FlatList>)
     } else {
-      if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
+      if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
       else return (<>
         <Text style={Styles.bigWhiteText}>No classrooms found</Text>
         <Text style={{ ...Styles.smallWhiteText, maxWidth: wp("50%") }}>Configure your classrooms at lessons.church.</Text>

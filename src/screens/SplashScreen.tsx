@@ -10,26 +10,28 @@ export const SplashScreen = (props: Props) => {
   const checkStorage = async () => {
     Utilities.trackEvent("Splash Screen");
     CachedData.church = await CachedData.getAsyncStorage("church");
-    
+
     if (CachedData.church) props.navigateTo("selectRoom");
     else props.navigateTo("programs");
-    
+
   }
 
-  React.useEffect(() => { 
+  React.useEffect(() => {
     SoundPlayer.playSoundFile('launch', 'mp3')
     setTimeout(() => {
-      checkStorage();  
+      checkStorage();
     }, 1800);
-    
-    
-   }, [])
+
+
+  }, [])
+
+   const logoImage = require('../images/logo.png'); //eslint-disable-line
 
   return (
 
 
     <View style={Styles.splashMaincontainer}>
-      <Image source={require('../images/logo.png')} style={Styles.splashImage} resizeMode="contain" />
+      <Image source={logoImage} style={Styles.splashImage} resizeMode="contain" />
     </View>
 
   )

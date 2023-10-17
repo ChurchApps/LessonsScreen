@@ -25,7 +25,7 @@ export const StudiesScreen = (props: Props) => {
       padding: 10,
     }
   };
-  
+
   const loadData = () => {
     ApiHelper.get("/studies/public/program/" + props.program.id, "LessonsApi").then(data => { setStudies(data); setLoading(false); });
   }
@@ -35,7 +35,7 @@ export const StudiesScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-    
+
     const study = data.item as StudyInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(study)  }} hasTVPreferredFocus={data.index===0}>
@@ -48,21 +48,21 @@ export const StudiesScreen = (props: Props) => {
   }
 
   const getCards = () => {
-    if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
+    if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
     else {
       return(
-      <View style={styles.list}>
-        <FlatList
+        <View style={styles.list}>
+          <FlatList
             data={studies}
             numColumns={3}
             renderItem={getCard}
             keyExtractor={(item) => item.id}
-          />  
-      </View>
+          />
+        </View>
       )
     }
   }
-  
+
   const handleBack = () => {
     props.navigateTo("programs");
   }

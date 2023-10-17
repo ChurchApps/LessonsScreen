@@ -8,13 +8,11 @@ type Props = { onSelect: (index: number) => void };
 
 export const SelectMessage = (props: Props) => {
 
-  const renderItem: ListRenderItem<{ index: number, name: string }> = (data) => {
-    return (
-      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { props.onSelect(data.item.index) }}>
-        <Text style={Styles.whiteText}>{data.item.name}</Text>
-      </TouchableHighlight>
-    )
-  }
+  const renderItem: ListRenderItem<{ index: number, name: string }> = (data) => (
+    <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { props.onSelect(data.item.index) }}>
+      <Text style={Styles.whiteText}>{data.item.name}</Text>
+    </TouchableHighlight>
+  )
 
   const determineMessages = () => {
     const result: { index: number, name: string }[] = []
@@ -32,7 +30,7 @@ export const SelectMessage = (props: Props) => {
     <View style={Styles.menuScreen}>
       <MenuHeader headerText="Select a Message" />
       <View style={Styles.menuWrapper}>
-        <FlatList data={messages} renderItem={renderItem} keyExtractor={(item) => item.index.toString() || ""} style={{ width: wp("100%") }}  ></FlatList>
+        <FlatList data={messages} renderItem={renderItem} keyExtractor={(item) => item.index.toString() || ""} style={{ width: wp("100%") }}></FlatList>
       </View>
     </View>
   )

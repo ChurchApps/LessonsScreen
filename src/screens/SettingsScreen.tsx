@@ -7,8 +7,8 @@ import { MenuHeader } from '../components';
 type Props = { navigateTo(page: string, data?:any): void; };
 
 export const SettingsScreen = (props: Props) => {
-  
-  var pkg = require('../../package.json');
+
+  let pkg = require('../../package.json');
   const appVersion = pkg.version;
 
   const handleBack = () => {
@@ -18,7 +18,7 @@ export const SettingsScreen = (props: Props) => {
   const destroy = () => {
     BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
   }
-  
+
   const init = () => {
     Utilities.trackEvent("Mode Screen");
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
@@ -34,24 +34,24 @@ export const SettingsScreen = (props: Props) => {
       <View style={{flex:10, width:"100%", paddingLeft:"3%" }}>
         <View style={{flexDirection:"row", marginTop:hp("2%") }}>
           <View style={{flex:20}}>
-            <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>App Version:</Text>  
+            <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>App Version:</Text>
           </View>
           <View style={{flex:80}}>
-            <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>{appVersion}</Text>  
+            <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>{appVersion}</Text>
           </View>
         </View>
         <View style={{flexDirection:"row", marginTop:hp("2%") }}>
           <View style={{flex:20, paddingTop:"1%"}}>
-            <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>Your Church:</Text>  
+            <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>Your Church:</Text>
           </View>
           <View style={{flex:80}}>
-            <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { props.navigateTo("selectChurch") }} hasTVPreferredFocus={true} >
-              <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>{CachedData.church?.name || "None"}</Text>  
+            <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { props.navigateTo("selectChurch") }} hasTVPreferredFocus={true}>
+              <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>{CachedData.church?.name || "None"}</Text>
             </TouchableHighlight>
           </View>
         </View>
       </View>
-      
+
 
     </View>
   )

@@ -6,7 +6,7 @@ import { CachedData } from './CachedData';
 export class Utilities {
 
   static trackEvent(name: string, data?: any) {
-    var pkg = require('../../package.json');
+    let pkg = require('../../package.json');
 
     const props = (data) ? data : {}
     props.church = CachedData.church?.name;

@@ -25,7 +25,7 @@ export const ProgramsScreen = (props: Props) => {
     }
   };
 
-  
+
   const loadData = () => {
     ApiHelper.get("/programs/public", "LessonsApi").then(data => { setPrograms(data); setLoading(false); });
   }
@@ -35,7 +35,7 @@ export const ProgramsScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-    
+
     const program = data.item as ProgramInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(program)  }} hasTVPreferredFocus={data.index===0}>
@@ -45,22 +45,22 @@ export const ProgramsScreen = (props: Props) => {
   }
 
   const getCards = () => {
-    if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
+    if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
     else {
       return(
-      <View style={styles.list}>
-        <FlatList
+        <View style={styles.list}>
+          <FlatList
             data={programs}
             numColumns={3}
             renderItem={getCard}
             keyExtractor={(item) => item.id}
-          />  
-      </View>
+          />
+        </View>
       )
     }
   }
 
-  
+
   const handleBack = () => {
     props.navigateTo("splash");
   }
@@ -68,7 +68,7 @@ export const ProgramsScreen = (props: Props) => {
   const destroy = () => {
     BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
   }
-  
+
   const init = () => {
     Utilities.trackEvent("Program Screen");
     loadData();
@@ -86,6 +86,6 @@ export const ProgramsScreen = (props: Props) => {
       </View>
     </View>
   )
-  
+
 
 }

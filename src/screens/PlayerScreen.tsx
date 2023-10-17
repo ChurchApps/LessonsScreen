@@ -14,7 +14,7 @@ export const PlayerScreen = (props: Props) => {
   const [messageIndex, setMessageIndex] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
   const [triggerPauseCheck, setTriggerPauseCheck] = React.useState(0);
-  
+
 
   const init = () => {
     Utilities.trackEvent("Player Screen");
@@ -29,7 +29,7 @@ export const PlayerScreen = (props: Props) => {
   const handlePlayPause = () => {
     PlayerHelper.pendingPause = false;
     if (PlayerHelper.timer) {
-      stopTimer(); 
+      stopTimer();
       setPaused(true);
     } else {
       startTimer();
@@ -39,25 +39,25 @@ export const PlayerScreen = (props: Props) => {
 
   const handleRemotePress = async (pendingKey: string) => {
     switch (pendingKey) {
-      case "right": 
+      case "right":
       case "fastForward":
-        handleRight(); 
+        handleRight();
         break;
-      case "left": 
+      case "left":
       case "rewind":
-        handleLeft(); 
+        handleLeft();
         break;
-      case "up": 
-        handleUp();  
+      case "up":
+        handleUp();
         break;
       case "previous":
       case "info":
       case "down":
-        handleBack(); 
+        handleBack();
         break;
-      case "select": 
-      case "playPause": 
-        handlePlayPause(); 
+      case "select":
+      case "playPause":
+        handlePlayPause();
         break;
     }
   }
@@ -68,7 +68,7 @@ export const PlayerScreen = (props: Props) => {
   const handleLeft = () => { stopTimer(); goBack(); startTimer(); }
   const handleRight = () => { stopTimer(); goForward(); startTimer(); }
   const handleUp = () => { if (!showSelectMessage) { stopTimer(); setShowSelectMessage(true); } }
-  
+
   const handleBack = () => {
     if (!showSelectMessage) {
       stopTimer();
@@ -119,20 +119,20 @@ export const PlayerScreen = (props: Props) => {
   React.useEffect(startTimer, [messageIndex])
   React.useEffect(() => {
     if (PlayerHelper.pendingPause) handlePlayPause();
-  }, [triggerPauseCheck]);;
+  }, [triggerPauseCheck]);
 
   if (showSelectMessage) {
     return <SelectMessage onSelect={handleMessageSelect} />
   } else {
     const config = { velocityThreshold: 0.3, directionalOffsetThreshold: 80 };
     return (
-      <GestureRecognizer onSwipeLeft={handleRight} onSwipeRight={handleLeft} onSwipeDown={handleUp} onSwipeUp={handleBack} config={config} style={{ flex: 1 }} >
+      <GestureRecognizer onSwipeLeft={handleRight} onSwipeRight={handleLeft} onSwipeDown={handleUp} onSwipeUp={handleBack} config={config} style={{ flex: 1 }}>
         <Pressable onPress={handlePressablePress}>
           <KeepAwake />
           <Message file={CachedData.messageFiles[messageIndex]} downloaded={!props.lesson} paused={paused}  />
           <TextInput autoFocus={true} style={{ display:"none" }} showSoftInputOnFocus={false} returnKeyType="none" />
         </Pressable>
-      </GestureRecognizer >
+      </GestureRecognizer>
     )
   }
 

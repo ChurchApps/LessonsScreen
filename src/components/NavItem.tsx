@@ -5,19 +5,20 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from '../helper
 import { useState } from 'react';
 import React from 'react';
 
-type Props = { 
-  icon:string, 
-  text:string, 
-  selected:boolean, 
-  expanded:boolean, 
+type Props = {
+  icon:string,
+  text:string,
+  selected:boolean,
+  expanded:boolean,
   setExpanded: (expanded:boolean) => void,
   onPress?: () => void,
   nextFocusDown?: any,
   nextFocusUp?: any,
 };
 
+//eslint-disable-next-line
 export const NavItem = React.forwardRef((props: Props, ref) => {
-  
+
   const [highlighted, setHighlighted] = useState(false);
 
   const handleFocusChange = (focused:boolean) => {
@@ -35,10 +36,10 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
     marginTop:hp("1.5%")
   }
 
-  
+
 
   return (
-    <TouchableHighlight underlayColor={"#03a9f4"} onPress={() => { if (props.onPress) props.onPress(); }} hasTVPreferredFocus={false} onFocus={() => { handleFocusChange(true); }} onBlur={() => { handleFocusChange(false) }} style={{marginTop:wp("1%")}} ref={ref as React.MutableRefObject<TouchableHighlight>} nextFocusDown={props.nextFocusDown || null} nextFocusUp={props.nextFocusUp} >
+    <TouchableHighlight underlayColor={"#03a9f4"} onPress={() => { if (props.onPress) props.onPress(); }} hasTVPreferredFocus={false} onFocus={() => { handleFocusChange(true); }} onBlur={() => { handleFocusChange(false) }} style={{marginTop:wp("1%")}} ref={ref as React.MutableRefObject<TouchableHighlight>} nextFocusDown={props.nextFocusDown} nextFocusUp={props.nextFocusUp}>
       <View style={{display:"flex", flexDirection:"row"}}>
         <Icon name={props.icon} color={color} style={iconStyle} size={hp("5%")} />
         {(props.expanded) && (<Text style={{ ...Styles.smallWhiteText, color:color, flex:8, textAlign:"left", marginTop:hp("1%") }}>{props.text}</Text>)}

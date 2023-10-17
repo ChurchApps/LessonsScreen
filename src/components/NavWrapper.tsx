@@ -1,17 +1,18 @@
-import { View, Image, Text, TouchableHighlight, findNodeHandle } from 'react-native';
+import { View, Image, findNodeHandle } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from '../helpers/CustomReactNativeResponsiveScreen';
 
-import { CachedData, Styles } from '../helpers';
+import { CachedData } from '../helpers';
 import { useRef, useState } from 'react';
 import { NavItem } from './NavItem';
+import React from 'react';
 
-type Props = { screen: JSX.Element, navigateTo(page: string): void; };
+type Props = { screen: React.JSX.Element, navigateTo(page: string): void; };
 
 export const NavWrapper = (props: Props) => {
   const [expanded, setExpanded] = useState(CachedData.navExpanded);
   const settingsRef = useRef(null);
   const browseRef = useRef(null);
-  
+
 
   //blur then focus focus nav bar to flicker without this
   const changeExpanded = (expanded:boolean) => {
@@ -28,39 +29,37 @@ export const NavWrapper = (props: Props) => {
 
 
   let barWidth = 7;
-  
+
   if (expanded) barWidth = 20;
 
   const logo = (expanded) ? require('../images/logo-sidebar.png') : require('../images/logo-icon.png');
 
 
-  
-  const getContent = () => {
-    return (
-      <View style={{display:"flex", flexDirection:"column", height:hp("100%"), width:"100%",  }} accessible={true}>
-        <View style={{flex:1}}>
-          <Image source={logo} style={{height:hp("8%"), maxWidth:"90%", maxHeight:hp("6.9%"), alignSelf: "center", marginTop:hp("1%") }} resizeMode="contain" />
-          <NavItem icon={"church"} text={"My Church"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={handleChurchClick} />
-          <NavItem icon={"video-library"} text={"Browse"} expanded={expanded} setExpanded={changeExpanded} selected={true} onPress={() => { props.navigateTo("programs"); }} ref={browseRef} nextFocusDown={findNodeHandle(settingsRef.current)} />
-        </View>
-        <View style={{ marginBottom:hp("2%") }}>
-          <NavItem icon={"settings"} text={"Settings"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={() => { props.navigateTo("settings") }} ref={settingsRef} nextFocusUp={findNodeHandle(browseRef.current)}  />
-        </View>
-      </View>
-    )
-  }
 
-//#29235c
+  const getContent = () => (
+    <View style={{display:"flex", flexDirection:"column", height:hp("100%"), width:"100%",  }} accessible={true}>
+      <View style={{flex:1}}>
+        <Image source={logo} style={{height:hp("8%"), maxWidth:"90%", maxHeight:hp("6.9%"), alignSelf: "center", marginTop:hp("1%") }} resizeMode="contain" />
+        <NavItem icon={"church"} text={"My Church"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={handleChurchClick} />
+        <NavItem icon={"video-library"} text={"Browse"} expanded={expanded} setExpanded={changeExpanded} selected={true} onPress={() => { props.navigateTo("programs"); }} ref={browseRef} nextFocusDown={findNodeHandle(settingsRef.current)} />
+      </View>
+      <View style={{ marginBottom:hp("2%") }}>
+        <NavItem icon={"settings"} text={"Settings"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={() => { props.navigateTo("settings") }} ref={settingsRef} nextFocusUp={findNodeHandle(browseRef.current)}  />
+      </View>
+    </View>
+  )
+
+  //#29235c
   return (
     <View style={{ display:"flex", flexDirection:"row"}}>
-      <View style={{flex:barWidth, backgroundColor: "#000000" }} >
+      <View style={{flex:barWidth, backgroundColor: "#000000" }}>
         {getContent()}
       </View>
       <View style={{flex:(100-barWidth), alignItems:"flex-start", height:hp("100%")}}>
-          <View style={{width:wp("93%"), height:hp("100%")}}>
-            {props.screen}
-          </View>
+        <View style={{width:wp("93%"), height:hp("100%")}}>
+          {props.screen}
+        </View>
       </View>
-  </View>
+    </View>
   )
 }

@@ -42,7 +42,7 @@ export const Styles = StyleSheet.create({
   H1: { color: "#FFFFFF", fontSize: hp('4.5%'), fontFamily: StyleConstants.RobotoBold },
   H2: { color: "#FFFFFF", fontSize: wp('3.5%'), fontFamily: StyleConstants.RobotoBold, fontWeight: "bold" },
   H3: { color: "#FFFFFF", fontSize: wp('3%'), fontFamily: StyleConstants.RobotoBold, fontWeight: "400" },
-  
+
 
   messageImage: { maxWidth: wp('40%'), alignSelf: 'center' },
   bigWhiteText: { color: "#FFFFFF", fontSize: wp('5%'), textAlign: "center" },
@@ -51,12 +51,12 @@ export const Styles = StyleSheet.create({
   smallWhiteText: { color: "#FFFFFF", fontSize: wp('2%'), textAlign: "center" },
   smallerWhiteText: { color: "#FFFFFF", fontSize: wp('1.5%') },
 
-    
+
 
   menuScreen: { alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: "#000000", width: "100%" },
-  
+
   menuHeader: { height: hp("10%"), flexDirection: "column", color: "#FFFFFF", width: "100%" },
-  
+
 
   menuFooter: { height: hp("8%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#343a40", padding: 5 },
   menuWrapper: { flex: 1, width:"100%" },

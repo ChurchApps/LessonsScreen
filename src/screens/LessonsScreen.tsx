@@ -26,7 +26,7 @@ export const LessonsScreen = (props: Props) => {
     }
   };
 
-  
+
   const loadData = () => {
     ApiHelper.get("/lessons/public/study/" + props.study.id, "LessonsApi").then(data => { setLessons(data); setLoading(false); });
   }
@@ -36,7 +36,7 @@ export const LessonsScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-    
+
     const lesson = data.item as LessonInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(lesson)  }} hasTVPreferredFocus={data.index===0}>
@@ -49,17 +49,17 @@ export const LessonsScreen = (props: Props) => {
   }
 
   const getCards = () => {
-    if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
+    if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
     else {
       return(
-      <View style={styles.list}>
-        <FlatList
+        <View style={styles.list}>
+          <FlatList
             data={lessons}
             numColumns={3}
             renderItem={getCard}
             keyExtractor={(item) => item.id}
-          />  
-      </View>
+          />
+        </View>
       )
     }
   }

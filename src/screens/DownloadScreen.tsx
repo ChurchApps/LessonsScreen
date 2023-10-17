@@ -34,24 +34,24 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const getVersion = () => {
-    var pkg = require('../../package.json');
+    let pkg = require('../../package.json');
     return <Text style={{ ...Styles.smallWhiteText, textAlign:"left", fontSize: 12, paddingBottom: 15, color: "#999999", paddingTop: 15 }}>Version: {pkg.version}</Text>
   }
 
 
   const getContent = () => {
-    if (!playlist) return <ActivityIndicator size='small' color='gray' animating={true} />
+    if (!playlist) return <ActivityIndicator size="small" color="gray" animating={true} />
     else {
       if (ready && cachedItems === totalItems) {
         return (<>
-            <Text style={Styles.H2}>{playlist.lessonName}:</Text>
-            <Text style={Styles.H3}>{playlist.lessonTitle}</Text>
-            <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{playlist.lessonDescription}</Text>
-            <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: wp("14%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
-              <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Start Lesson</Text>
-            </TouchableHighlight>
-            {getVersion()}
-          </>);
+          <Text style={Styles.H2}>{playlist.lessonName}:</Text>
+          <Text style={Styles.H3}>{playlist.lessonTitle}</Text>
+          <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{playlist.lessonDescription}</Text>
+          <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: wp("14%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
+            <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Start Lesson</Text>
+          </TouchableHighlight>
+          {getVersion()}
+        </>);
 
       }
       else {
@@ -60,11 +60,11 @@ export const DownloadScreen = (props: Props) => {
             <Text style={Styles.H2}>{playlist.lessonName}:</Text>
             <Text style={Styles.H3}>{playlist.lessonTitle}</Text>
             <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{playlist.lessonDescription}</Text>
-            <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#999999", width: wp("28%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#999999"} >
+            <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#999999", width: wp("28%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#999999"}>
               <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Downloading item {cachedItems} of {totalItems}</Text>
             </TouchableHighlight>
             {getVersion()}
-        </>
+          </>
         );
       }
     }
@@ -85,8 +85,8 @@ export const DownloadScreen = (props: Props) => {
     const files = getFiles();
     CachedData.messageFiles = files;
     setReady(false);
-    CachedData.prefetch(files, updateCounts).then(() => { 
-      setReady(true) 
+    CachedData.prefetch(files, updateCounts).then(() => {
+      setReady(true)
     });
   }
 
@@ -112,32 +112,32 @@ export const DownloadScreen = (props: Props) => {
   useEffect(loadData, [refreshKey])
   useEffect(startDownload, [playlist])
 
-  
-  
-const background = {uri: playlist?.lessonImage};
+
+
+  const background = {uri: playlist?.lessonImage};
 
   return (
-  
-    
+
+
     <View style={{...Styles.menuScreen, flex:1, flexDirection:"row" }}>
-    <ImageBackground source={background} resizeMode="cover" style={{flex:1, width:"100%"}}>  
-      <LinearGradient colors={['rgba(0, 0, 0, 1)', 'rgba(0, 0, 0, 0)']} start={{x: 0, y: 1}} end={{x: 1, y: 0}} style={{flex:1}} >
-        <View style={{flex:9, justifyContent:"flex-end", flexDirection:"column"}}>
-          <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:wp("5%")}}>
-            <View style={{maxWidth:"60%"}}>
-              {getContent()}
+      <ImageBackground source={background} resizeMode="cover" style={{flex:1, width:"100%"}}>
+        <LinearGradient colors={['rgba(0, 0, 0, 1)', 'rgba(0, 0, 0, 0)']} start={{x: 0, y: 1}} end={{x: 1, y: 0}} style={{flex:1}}>
+          <View style={{flex:9, justifyContent:"flex-end", flexDirection:"column"}}>
+            <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:wp("5%")}}>
+              <View style={{maxWidth:"60%"}}>
+                {getContent()}
+              </View>
             </View>
           </View>
-        </View>
-        
-        <View style={{flex:1}}></View>
+
+          <View style={{flex:1}}></View>
         </LinearGradient>
       </ImageBackground>
 
     </View>
-    
-  
-    
+
+
+
   )
 
 }

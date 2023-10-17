@@ -38,8 +38,8 @@ export const Navigator = () => {
   let viewStyle = {};
 
   const init = () => {
-    listenOrientationChange(this, () => { 
-      setDimensions(wp("100%") + "," + hp("100%")) 
+    listenOrientationChange(this, () => {
+      setDimensions(wp("100%") + "," + hp("100%"))
     });
 
     return destroy;
@@ -56,15 +56,15 @@ export const Navigator = () => {
   const fullScreenScreens = ["splash", "player", "download", "lessonDetails"];
 
   if (fullScreenScreens.indexOf(currentScreen)>-1) {
-  return (<View style={Styles.splashMaincontainer}>
+    return (<View style={Styles.splashMaincontainer}>
       <View style={[viewStyle]}>
         {screen}
       </View>
     </View>)
   } else {
     return (<View style={Styles.maincontainer}>
-        <NavWrapper screen={screen} navigateTo={handleNavigate} />
-      </View>);
+      <NavWrapper screen={screen} navigateTo={handleNavigate} />
+    </View>);
   }
 
 }

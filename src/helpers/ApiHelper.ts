@@ -40,7 +40,7 @@ export class ApiHelper {
     const config = this.getConfig(apiName);
     if (config === undefined) return;
     try {
-      const requestOptions = { method: 'GET', headers: { 'Authorization': 'Bearer ' + config.jwt } };
+      const requestOptions = { method: 'GET', headers: { Authorization: 'Bearer ' + config.jwt } };
       return fetch(config.url + path, requestOptions).then(response => response.json())
     } catch (e) {
       throw (e);
@@ -63,7 +63,7 @@ export class ApiHelper {
     if (config === undefined) return;
     const requestOptions = {
       method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + config.jwt, 'Content-Type': 'application/json' },
+      headers: { Authorization: 'Bearer ' + config.jwt, 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     };
     return fetch(config.url + path, requestOptions).then(response => response.json())
@@ -74,7 +74,7 @@ export class ApiHelper {
     if (config === undefined) return;
     const requestOptions = {
       method: 'DELETE',
-      headers: { 'Authorization': 'Bearer ' + config.jwt }
+      headers: { Authorization: 'Bearer ' + config.jwt }
     };
     return fetch(config.url + path, requestOptions);
   }
