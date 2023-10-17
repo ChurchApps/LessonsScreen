@@ -12,6 +12,7 @@ export class CachedData {
   static cachePath = RNFS.CachesDirectoryPath;
 
   static navExpanded = false;
+  static currentScreen = "";
 
   static async getAsyncStorage(key: string) {
     const json = await AsyncStorage.getItem(key);

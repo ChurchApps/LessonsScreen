@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Styles } from '../helpers';
+import { CachedData, Styles } from '../helpers';
 import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, PlayerScreen } from '../screens';
 import { ProgramsScreen } from '../screens/ProgramsScreen';
 import { StudiesScreen } from '../screens/StudiesScreen';
@@ -8,7 +8,7 @@ import { LessonDetailsScreen } from '../screens/LessonDetailsScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { listenOrientationChange, removeOrientationListener, widthPercentageToDP as wp, heightPercentageToDP as hp } from '../helpers/CustomReactNativeResponsiveScreen';
 import { View } from 'react-native';
-import { NavWrapper } from '../components/NavWrapper';
+import { NavWrapper } from './NavWrapper';
 
 export const Navigator = () => {
   const [currentScreen, setCurrentScreen] = React.useState("splash");
@@ -18,6 +18,7 @@ export const Navigator = () => {
   const handleNavigate = (page: string, data?:any) => {
     if (data) setCurrentData(data); else setCurrentData(null);
     setCurrentScreen(page);
+    CachedData.currentScreen = page;
   }
 
   let screen = <></>

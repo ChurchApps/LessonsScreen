@@ -34,17 +34,29 @@ export const NavWrapper = (props: Props) => {
 
   const logo = (expanded) ? require('../images/logo-sidebar.png') : require('../images/logo-icon.png');
 
+  let highlightedItem = "browse";
+  switch (CachedData.currentScreen) {
+    case "selectRoom":
+    case "selectChurch":
+    case "download":
+    case "player":
+      highlightedItem = "church";
+      break;
+    case "settings":
+      highlightedItem = "settings";
+      break;
+  }
 
 
   const getContent = () => (
     <View style={{display:"flex", flexDirection:"column", height:hp("100%"), width:"100%",  }} accessible={true}>
       <View style={{flex:1}}>
         <Image source={logo} style={{height:hp("8%"), maxWidth:"90%", maxHeight:hp("6.9%"), alignSelf: "center", marginTop:hp("1%") }} resizeMode="contain" />
-        <NavItem icon={"church"} text={"My Church"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={handleChurchClick} />
-        <NavItem icon={"video-library"} text={"Browse"} expanded={expanded} setExpanded={changeExpanded} selected={true} onPress={() => { props.navigateTo("programs"); }} ref={browseRef} nextFocusDown={findNodeHandle(settingsRef.current)} />
+        <NavItem icon={"church"} text={"My Church"} expanded={expanded} setExpanded={changeExpanded} selected={highlightedItem==="church"} onPress={handleChurchClick} />
+        <NavItem icon={"video-library"} text={"Browse"} expanded={expanded} setExpanded={changeExpanded} selected={highlightedItem==="browse"} onPress={() => { props.navigateTo("programs"); }} ref={browseRef} nextFocusDown={findNodeHandle(settingsRef.current)} />
       </View>
       <View style={{ marginBottom:hp("2%") }}>
-        <NavItem icon={"settings"} text={"Settings"} expanded={expanded} setExpanded={changeExpanded} selected={false} onPress={() => { props.navigateTo("settings") }} ref={settingsRef} nextFocusUp={findNodeHandle(browseRef.current)}  />
+        <NavItem icon={"settings"} text={"Settings"} expanded={expanded} setExpanded={changeExpanded} selected={highlightedItem==="settings"} onPress={() => { props.navigateTo("settings") }} ref={settingsRef} nextFocusUp={findNodeHandle(browseRef.current)}  />
       </View>
     </View>
   )
