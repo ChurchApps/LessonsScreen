@@ -1,6 +1,6 @@
 //import AsyncStorage from "@react-native-community/async-storage";
 import React, { useEffect } from "react"
-import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native"
+import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground, Dimensions } from "react-native"
 import { ApiHelper, ClassroomInterface, PlaylistFileInterface, PlaylistInterface } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
 import { DimensionHelper } from "@churchapps/mobilehelper";
@@ -14,6 +14,7 @@ export const DownloadScreen = (props: Props) => {
   const [cachedItems, setCachedItems] = React.useState(CachedData.cachedItems);
   const [ready, setReady] = React.useState(false);
   const [refreshKey, setRefreshKey] = React.useState("");
+  const [loadFailed, setLoadFailed] = React.useState(false);
   let refreshTimer: number = null;
 
   const updateCounts = (cached: number, total: number): void => {
@@ -76,6 +77,7 @@ export const DownloadScreen = (props: Props) => {
     CachedData.getAsyncStorage("playlist").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setPlaylist(playlist) });
     ApiHelper.get("/classrooms/playlist/" + CachedData.room.id, "LessonsApi").then(data => {
       if (!playlist || JSON.stringify(playlist) !== JSON.stringify(data)) {
+        if (data===null) setLoadFailed(true);
         setPlaylist(data);
         CachedData.setAsyncStorage("playlist", playlist);
       }
@@ -117,7 +119,13 @@ export const DownloadScreen = (props: Props) => {
 
   const background = {uri: playlist?.lessonImage};
 
-  return (
+  if (loadFailed) {
+    return (<View style={{...Styles.menuScreen, flex:1, width:DimensionHelper.wp("100%"), flexDirection:"column" }}>
+      <Text style={{...Styles.bigWhiteText, flex:1, verticalAlign:"bottom"}}>The schedule could not be loaded.</Text>
+      <Text style={{...Styles.whiteText, flex:1}}>Make sure a lesson is scheduled for this class.</Text>
+    </View>);
+
+  } else return (
 
 
     <View style={{...Styles.menuScreen, flex:1, flexDirection:"row" }}>

@@ -19,7 +19,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 1. Make sure the environment variables point to the production servers in EnvironmentHelper.ts
 2. Increment the version number in android/app/build.gradle
-3. Run 'cd android' followed by 'gradlew bundleRelease' to produce the release bundle.
+3. Run 'cd android' followed by 'gradlew bundleRelease' to produce the release bundle. (If fails, File->Invalidate Caches in Android Studio)
 4. Run 'cd..' followed by 'react-native run-android --variant=release' to generate an apk file. You can close the node window when it completes.
 5. The apk file is located at 'android/app/build/outputs/apk/release/app-release.apk'. Publish it to the Amazon and Google Play stores.
 

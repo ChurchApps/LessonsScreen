@@ -60,9 +60,7 @@ export const SelectChurchScreen = (props: Props) => {
 
   const handleBack = () => {
     CachedData.church = null;
-    CachedData.setAsyncStorage("church", null).then(() => {
-      props.navigateTo("splash");
-    });
+    props.navigateTo("splash");
   }
 
   const destroy = () => {

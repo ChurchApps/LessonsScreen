@@ -55,7 +55,7 @@ export const SelectRoomScreen = (props: Props) => {
 
 
   const handleBack = () => {
-    props.navigateTo("selectChurch");
+    //props.navigateTo("selectChurch");
   }
 
   const destroy = () => {
