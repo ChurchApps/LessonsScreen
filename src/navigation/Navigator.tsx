@@ -6,7 +6,7 @@ import { StudiesScreen } from "../screens/StudiesScreen";
 import { LessonsScreen } from "../screens/LessonsScreen";
 import { LessonDetailsScreen } from "../screens/LessonDetailsScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
-import { listenOrientationChange, removeOrientationListener, widthPercentageToDP as wp, heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
+import { DimensionHelper } from "@churchapps/mobilehelper";
 import { View } from "react-native";
 import { NavWrapper } from "./NavWrapper";
 
@@ -39,15 +39,15 @@ export const Navigator = () => {
   let viewStyle = {};
 
   const init = () => {
-    listenOrientationChange(this, () => {
-      setDimensions(wp("100%") + "," + hp("100%"))
+    DimensionHelper.listenOrientationChange(this, () => {
+      setDimensions(DimensionHelper.wp("100%") + "," + DimensionHelper.hp("100%"))
     });
 
     return destroy;
   }
 
   const destroy = () => {
-    removeOrientationListener();
+    DimensionHelper.removeOrientationListener();
     //Dimensions.removeEventListener('change', () => {});
   }
 

@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native"
 import { ApiHelper, ClassroomInterface, PlaylistFileInterface, PlaylistInterface } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
+import { DimensionHelper } from "@churchapps/mobilehelper";
 import LinearGradient from "react-native-linear-gradient";
 
 type Props = { navigateTo(page: string): void; };
@@ -48,7 +48,7 @@ export const DownloadScreen = (props: Props) => {
           <Text style={Styles.H2}>{playlist.lessonName}:</Text>
           <Text style={Styles.H3}>{playlist.lessonTitle}</Text>
           <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{playlist.lessonDescription}</Text>
-          <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: wp("14%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
+          <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: DimensionHelper.wp("14%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
             <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Start Lesson</Text>
           </TouchableHighlight>
           {getVersion()}
@@ -61,7 +61,7 @@ export const DownloadScreen = (props: Props) => {
             <Text style={Styles.H2}>{playlist.lessonName}:</Text>
             <Text style={Styles.H3}>{playlist.lessonTitle}</Text>
             <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{playlist.lessonDescription}</Text>
-            <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#999999", width: wp("28%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#999999"}>
+            <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#999999", width: DimensionHelper.wp("28%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#999999"}>
               <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Downloading item {cachedItems} of {totalItems}</Text>
             </TouchableHighlight>
             {getVersion()}
@@ -124,7 +124,7 @@ export const DownloadScreen = (props: Props) => {
       <ImageBackground source={background} resizeMode="cover" style={{flex:1, width:"100%"}}>
         <LinearGradient colors={['rgba(0, 0, 0, 1)', 'rgba(0, 0, 0, 0)']} start={{x: 0, y: 1}} end={{x: 1, y: 0}} style={{flex:1}}>
           <View style={{flex:9, justifyContent:"flex-end", flexDirection:"column"}}>
-            <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:wp("5%")}}>
+            <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:DimensionHelper.wp("5%")}}>
               <View style={{maxWidth:"60%"}}>
                 {getContent()}
               </View>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
-import { Text, View, FlatList, TouchableHighlight, BackHandler } from "react-native"
+import { Text, View, TouchableHighlight, BackHandler } from "react-native"
 import { CachedData, Styles, Utilities } from "../helpers";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
+import { DimensionHelper } from "@churchapps/mobilehelper";
 import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; };
@@ -32,7 +32,7 @@ export const SettingsScreen = (props: Props) => {
     <View style={Styles.menuScreen}>
       <MenuHeader headerText="Settings" />
       <View style={{flex:10, width:"100%", paddingLeft:"3%" }}>
-        <View style={{flexDirection:"row", marginTop:hp("2%") }}>
+        <View style={{flexDirection:"row", marginTop:DimensionHelper.hp("2%") }}>
           <View style={{flex:20}}>
             <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>App Version:</Text>
           </View>
@@ -40,7 +40,7 @@ export const SettingsScreen = (props: Props) => {
             <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>{appVersion}</Text>
           </View>
         </View>
-        <View style={{flexDirection:"row", marginTop:hp("2%") }}>
+        <View style={{flexDirection:"row", marginTop:DimensionHelper.hp("2%") }}>
           <View style={{flex:20, paddingTop:"1%"}}>
             <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>Your Church:</Text>
           </View>

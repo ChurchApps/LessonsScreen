@@ -1,8 +1,7 @@
 import React, { useEffect } from "react"
 import { Image, View, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
-import { ApiHelper, ProgramInterface } from "@churchapps/mobilehelper";
+import { ApiHelper, ProgramInterface, DimensionHelper } from "@churchapps/mobilehelper";
 import { Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; };
@@ -40,7 +39,7 @@ export const ProgramsScreen = (props: Props) => {
     const program = data.item as ProgramInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(program)  }} hasTVPreferredFocus={data.index===0}>
-        <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
+        <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
       </TouchableHighlight>
     )
   }

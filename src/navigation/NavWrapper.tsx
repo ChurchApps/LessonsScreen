@@ -1,5 +1,5 @@
 import { View, Image, findNodeHandle } from "react-native";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
+import { DimensionHelper } from "@churchapps/mobilehelper";
 
 import { CachedData } from "../helpers";
 import { useRef, useState } from "react";
@@ -49,13 +49,13 @@ export const NavWrapper = (props: Props) => {
 
 
   const getContent = () => (
-    <View style={{display:"flex", flexDirection:"column", height:hp("100%"), width:"100%",  }} accessible={true}>
+    <View style={{display:"flex", flexDirection:"column", height:DimensionHelper.hp("100%"), width:"100%",  }} accessible={true}>
       <View style={{flex:1}}>
-        <Image source={logo} style={{height:hp("8%"), maxWidth:"90%", maxHeight:hp("6.9%"), alignSelf: "center", marginTop:hp("1%") }} resizeMode="contain" />
+        <Image source={logo} style={{height:DimensionHelper.hp("8%"), maxWidth:"90%", maxHeight:DimensionHelper.hp("6.9%"), alignSelf: "center", marginTop:DimensionHelper.hp("1%") }} resizeMode="contain" />
         <NavItem icon={"church"} text={"My Church"} expanded={expanded} setExpanded={changeExpanded} selected={highlightedItem==="church"} onPress={handleChurchClick} />
         <NavItem icon={"video-library"} text={"Browse"} expanded={expanded} setExpanded={changeExpanded} selected={highlightedItem==="browse"} onPress={() => { props.navigateTo("programs"); }} ref={browseRef} nextFocusDown={findNodeHandle(settingsRef.current)} />
       </View>
-      <View style={{ marginBottom:hp("2%") }}>
+      <View style={{ marginBottom:DimensionHelper.hp("2%") }}>
         <NavItem icon={"settings"} text={"Settings"} expanded={expanded} setExpanded={changeExpanded} selected={highlightedItem==="settings"} onPress={() => { props.navigateTo("settings") }} ref={settingsRef} nextFocusUp={findNodeHandle(browseRef.current)}  />
       </View>
     </View>
@@ -67,8 +67,8 @@ export const NavWrapper = (props: Props) => {
       <View style={{flex:barWidth, backgroundColor: "#000000" }}>
         {getContent()}
       </View>
-      <View style={{flex:(100-barWidth), alignItems:"flex-start", height:hp("100%")}}>
-        <View style={{width:wp("93%"), height:hp("100%")}}>
+      <View style={{flex:(100-barWidth), alignItems:"flex-start", height:DimensionHelper.hp("100%")}}>
+        <View style={{width:DimensionHelper.wp("93%"), height:DimensionHelper.hp("100%")}}>
           {props.screen}
         </View>
       </View>

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react"
 import { View, Text, TouchableHighlight, BackHandler, ImageBackground } from "react-native"
-import { ApiHelper, LessonInterface, PlaylistFileInterface, PlaylistInterface, ProgramInterface, StudyInterface, VenueInterface } from "@churchapps/mobilehelper";
+import { ApiHelper, LessonInterface, PlaylistFileInterface, PlaylistInterface, ProgramInterface, StudyInterface, VenueInterface, DimensionHelper } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import LinearGradient from "react-native-linear-gradient";
 
 type Props = { navigateTo(page: string, data?:any): void; program: ProgramInterface, study: StudyInterface, lesson:LessonInterface };
@@ -39,17 +38,10 @@ export const LessonDetailsScreen = (props: Props) => {
     });
   }
 
-  /*
-  const loadPlaylist = () => {
-
-  }*/
-
-
-
   const getContent = () => {
     const buttons:JSX.Element[] = [];
     venues?.forEach((v, idx) => {
-      buttons.push(<TouchableHighlight key={v.id} style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: wp("35%"), marginTop: hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart(v.id) }} hasTVPreferredFocus={idx===0}>
+      buttons.push(<TouchableHighlight key={v.id} style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: DimensionHelper.wp("35%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart(v.id) }} hasTVPreferredFocus={idx===0}>
         <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>{v.name}</Text>
       </TouchableHighlight>)
 
@@ -92,7 +84,7 @@ export const LessonDetailsScreen = (props: Props) => {
 
 
           <View style={{flex:9, justifyContent:"flex-end", flexDirection:"column"}}>
-            <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:wp("5%")}}>
+            <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:DimensionHelper.wp("5%")}}>
               <View style={{maxWidth:"60%"}}>
                 {getContent()}
               </View>

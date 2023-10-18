@@ -1,9 +1,8 @@
 //import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react"
 import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
-import { ApiHelper, ProgramInterface, StudyInterface } from "@churchapps/mobilehelper";
+import { ApiHelper, ProgramInterface, StudyInterface, DimensionHelper } from "@churchapps/mobilehelper";
 import { Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; program:ProgramInterface };
@@ -41,7 +40,7 @@ export const StudiesScreen = (props: Props) => {
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(study)  }} hasTVPreferredFocus={data.index===0}>
         <View style={{width:"100%"}}>
-          <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
+          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
           <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{study.name}</Text>
         </View>
       </TouchableHighlight>

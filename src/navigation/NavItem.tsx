@@ -1,9 +1,9 @@
 import { View, Text, TouchableHighlight } from "react-native";
 import { Styles } from "../helpers";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
 import { useState } from "react";
 import React from "react";
+import { DimensionHelper } from "@churchapps/mobilehelper";
 
 type Props = {
   icon:string,
@@ -32,17 +32,15 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
   const iconStyle = {
     color: color,
     flex:2,
-    marginLeft:wp("1.5%"),
-    marginTop:hp("1.5%")
+    marginLeft:DimensionHelper.wp("1.5%"),
+    marginTop:DimensionHelper.hp("1.5%")
   }
 
-
-
   return (
-    <TouchableHighlight underlayColor={"#03a9f4"} onPress={() => { if (props.onPress) props.onPress(); }} hasTVPreferredFocus={false} onFocus={() => { handleFocusChange(true); }} onBlur={() => { handleFocusChange(false) }} style={{marginTop:wp("1%")}} ref={ref as React.MutableRefObject<TouchableHighlight>} nextFocusDown={props.nextFocusDown} nextFocusUp={props.nextFocusUp}>
+    <TouchableHighlight underlayColor={"#03a9f4"} onPress={() => { if (props.onPress) props.onPress(); }} hasTVPreferredFocus={false} onFocus={() => { handleFocusChange(true); }} onBlur={() => { handleFocusChange(false) }} style={{marginTop:DimensionHelper.wp("1%")}} ref={ref as React.MutableRefObject<TouchableHighlight>} nextFocusDown={props.nextFocusDown} nextFocusUp={props.nextFocusUp}>
       <View style={{display:"flex", flexDirection:"row"}}>
-        <Icon name={props.icon} color={color} style={iconStyle} size={hp("5%")} />
-        {(props.expanded) && (<Text style={{ ...Styles.smallWhiteText, color:color, flex:8, textAlign:"left", marginTop:hp("1%") }}>{props.text}</Text>)}
+        <Icon name={props.icon} color={color} style={iconStyle} size={DimensionHelper.hp("5%")} />
+        {(props.expanded) && (<Text style={{ ...Styles.smallWhiteText, color:color, flex:8, textAlign:"left", marginTop:DimensionHelper.hp("1%") }}>{props.text}</Text>)}
       </View>
     </TouchableHighlight>
   )
