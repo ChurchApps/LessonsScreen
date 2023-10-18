@@ -1,36 +1,6 @@
 import { StyleSheet } from "react-native"
-import { DimensionHelper } from "@churchapps/mobilehelper";
+import { DimensionHelper, StyleConstants } from "@churchapps/mobilehelper";
 
-export class StyleConstants {
-
-
-  static fontSize = DimensionHelper.wp("4%")
-
-  //Colors
-  static baseColor = "#24B8FE"
-  static baseColor1 = "#08A1CD"
-  static blueColor = "#2196F3"
-  static darkColor = "#3c3c3c";
-  static blackColor = "black";
-  static grayColor = "gray";
-  static lightGrayColor = "lightgray";
-  static whiteColor = "white";
-  static yellowColor = "#FEAA24";
-  static greenColor = "#70DC87";
-  static redColor = "#B0120C";
-  static cyanColor = "#1C9BA0";
-  static darkPink = "	#FF69B4";
-  static ghostWhite = "#F6F6F8"
-
-  //Font
-  static RobotoBold = "Roboto-Bold";
-  static RobotoBlack = "Roboto-Black";
-  static RobotoItalic = "Roboto-Italic";
-  static RobotoLight = "Roboto-Light";
-  static RobotoMedium = "Roboto-Medium";
-  static RobotoRegular = "Roboto-Regular";
-  static RobotoThin = "Roboto-Thin";
-}
 
 export const Styles = StyleSheet.create({
   //Splash
