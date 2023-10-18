@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ChurchInterface, ClassroomInterface, PlaylistFileInterface } from ".";
+import { ChurchInterface, ClassroomInterface, PlaylistFileInterface } from "@churchapps/mobilehelper";
 import RNFS from "react-native-fs";
 
 export class CachedData {
@@ -10,6 +10,9 @@ export class CachedData {
   static totalCachableItems: number = 0;
   static cachedItems: number = 0;
   static cachePath = RNFS.CachesDirectoryPath;
+
+  static navExpanded = false;
+  static currentScreen = "";
 
   static async getAsyncStorage(key: string) {
     const json = await AsyncStorage.getItem(key);

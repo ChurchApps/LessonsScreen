@@ -1,9 +1,9 @@
 
-import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
-import { ApiHelper, LessonInterface, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
-import { MenuHeader } from '../components';
+import React, { useEffect } from "react"
+import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
+import { ApiHelper, LessonInterface, ProgramInterface, StudyInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { Styles, Utilities } from "../helpers";
+import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; program: ProgramInterface, study: StudyInterface };
 
@@ -16,7 +16,7 @@ export const LessonsScreen = (props: Props) => {
     list: {
       flex: 1,
       marginHorizontal: "auto",
-      width: wp("100%")
+      width: "100%"
     },
     item: {
       flex: 1,
@@ -26,7 +26,7 @@ export const LessonsScreen = (props: Props) => {
     }
   };
 
-  
+
   const loadData = () => {
     ApiHelper.get("/lessons/public/study/" + props.study.id, "LessonsApi").then(data => { setLessons(data); setLoading(false); });
   }
@@ -36,12 +36,12 @@ export const LessonsScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-    
+
     const lesson = data.item as LessonInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(lesson)  }} hasTVPreferredFocus={data.index===0}>
         <View style={{width:"100%"}}>
-          <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: lesson.image }} />
+          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: lesson.image }} />
           <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{lesson.title}</Text>
         </View>
       </TouchableHighlight>
@@ -49,17 +49,17 @@ export const LessonsScreen = (props: Props) => {
   }
 
   const getCards = () => {
-    if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
+    if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
     else {
       return(
-      <View style={styles.list}>
-        <FlatList
+        <View style={styles.list}>
+          <FlatList
             data={lessons}
             numColumns={3}
             renderItem={getCard}
             keyExtractor={(item) => item.id}
-          />  
-      </View>
+          />
+        </View>
       )
     }
   }

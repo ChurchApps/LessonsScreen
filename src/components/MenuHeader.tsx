@@ -1,16 +1,11 @@
-import React from 'react'
-import { Styles } from '../helpers';
-import { View, Text, Image } from 'react-native';
+import React from "react"
+import { Styles } from "../helpers";
+import { View, Text, Image } from "react-native";
 
 type Props = { headerText: string };
 
-export const MenuHeader = (props: Props) => {
-  return (
-      <View style={{ ...Styles.menuHeader, flexDirection: "row" }}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <Image source={require('../images/logo.png')} style={Styles.menuHeaderImage} resizeMode="contain" />
-        </View>
-        <Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>{props.headerText}</Text>
-      </View>
-  )
-}
+export const MenuHeader = (props: Props) => (
+  <View style={{ ...Styles.menuHeader, flexDirection: "row" }}>
+    <Text style={{ ...Styles.H1, flex: 1, alignSelf: "center", textAlign: "center" }}>{props.headerText}</Text>
+  </View>
+)

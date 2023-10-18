@@ -1,9 +1,9 @@
-//import AsyncStorage from '@react-native-community/async-storage';
-import React, { useEffect } from 'react'
-import {  View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator, BackHandler } from 'react-native'
-import { ApiHelper, CachedData, ClassroomInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
-import { MenuHeader } from '../components';
+//import AsyncStorage from "@react-native-community/async-storage";
+import React, { useEffect } from "react"
+import {  View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator, BackHandler } from "react-native"
+import { ApiHelper, ClassroomInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { CachedData, Styles, Utilities } from "../helpers";
+import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string): void; };
 
@@ -22,7 +22,7 @@ export const SelectRoomScreen = (props: Props) => {
     const room = data.item;
     data.index
     return (
-      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(room) }} hasTVPreferredFocus={data.index === 0} >
+      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(room) }} hasTVPreferredFocus={data.index === 0}>
         <Text style={Styles.whiteText}>{room.name}</Text>
       </TouchableHighlight>
     )
@@ -31,12 +31,12 @@ export const SelectRoomScreen = (props: Props) => {
 
   const getSearchResult = () => {
     if (rooms.length > 0) {
-      return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: wp("100%") }} hasTVPreferredFocus={true}  ></FlatList>)
+      return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: DimensionHelper.wp("100%") }} hasTVPreferredFocus={true}></FlatList>)
     } else {
-      if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
+      if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
       else return (<>
         <Text style={Styles.bigWhiteText}>No classrooms found</Text>
-        <Text style={{ ...Styles.smallWhiteText, maxWidth: wp("50%") }}>Configure your classrooms at lessons.church.</Text>
+        <Text style={{ ...Styles.smallWhiteText, maxWidth: DimensionHelper.wp("50%") }}>Configure your classrooms at lessons.church.</Text>
       </>);
     }
   }
@@ -55,7 +55,7 @@ export const SelectRoomScreen = (props: Props) => {
 
 
   const handleBack = () => {
-    props.navigateTo("selectChurch");
+    //props.navigateTo("selectChurch");
   }
 
   const destroy = () => {

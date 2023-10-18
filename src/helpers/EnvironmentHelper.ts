@@ -1,5 +1,5 @@
 import { ACCESS_API, LESSONS_API } from "@env"
-import { ApiHelper } from "./ApiHelper"
+import { ApiHelper } from "@churchapps/mobilehelper"
 
 export class EnvironmentHelper {
   public static MembershipApi = "";

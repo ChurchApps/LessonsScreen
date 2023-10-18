@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
-import { Styles } from '../helpers';
-import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, PlayerScreen } from '../screens';
-import { ProgramsScreen } from '../screens/ProgramsScreen';
-import { StudiesScreen } from '../screens/StudiesScreen';
-import { LessonsScreen } from '../screens/LessonsScreen';
-import { LessonDetailsScreen } from '../screens/LessonDetailsScreen';
-import { ModeScreen } from '../screens/ModeScreen';
-import { listenOrientationChange, removeOrientationListener, widthPercentageToDP as wp, heightPercentageToDP as hp } from '../helpers/CustomReactNativeResponsiveScreen';
-import { View } from 'react-native';
+import React, { useEffect } from "react"
+import { CachedData, Styles } from "../helpers";
+import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, PlayerScreen } from "../screens";
+import { ProgramsScreen } from "../screens/ProgramsScreen";
+import { StudiesScreen } from "../screens/StudiesScreen";
+import { LessonsScreen } from "../screens/LessonsScreen";
+import { LessonDetailsScreen } from "../screens/LessonDetailsScreen";
+import { SettingsScreen } from "../screens/SettingsScreen";
+import { DimensionHelper } from "@churchapps/mobilehelper";
+import { View } from "react-native";
+import { NavWrapper } from "./NavWrapper";
 
 export const Navigator = () => {
   const [currentScreen, setCurrentScreen] = React.useState("splash");
@@ -17,12 +18,13 @@ export const Navigator = () => {
   const handleNavigate = (page: string, data?:any) => {
     if (data) setCurrentData(data); else setCurrentData(null);
     setCurrentScreen(page);
+    CachedData.currentScreen = page;
   }
 
   let screen = <></>
   switch (currentScreen) {
     case "splash": screen = (<SplashScreen navigateTo={handleNavigate} />); break;
-    case "mode": screen = (<ModeScreen navigateTo={handleNavigate} />); break;
+    case "settings": screen = (<SettingsScreen navigateTo={handleNavigate} />); break;
     case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} />); break;
     case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} />); break;
     case "download": screen = (<DownloadScreen navigateTo={handleNavigate} />); break;
@@ -37,27 +39,33 @@ export const Navigator = () => {
   let viewStyle = {};
 
   const init = () => {
-    listenOrientationChange(this, () => { 
-      setDimensions(wp("100%") + "," + hp("100%")) 
+    DimensionHelper.listenOrientationChange(this, () => {
+      setDimensions(DimensionHelper.wp("100%") + "," + DimensionHelper.hp("100%"))
     });
 
     return destroy;
   }
 
   const destroy = () => {
-    removeOrientationListener();
+    DimensionHelper.removeOrientationListener();
     //Dimensions.removeEventListener('change', () => {});
   }
 
   useEffect(init, []);
   if (dimensions!=="1,1") console.log(dimensions);
 
-  return (
-    <View style={Styles.splashMaincontainer}>
+  const fullScreenScreens = ["splash", "player", "download", "lessonDetails"];
+
+  if (fullScreenScreens.indexOf(currentScreen)>-1) {
+    return (<View style={Styles.splashMaincontainer}>
       <View style={[viewStyle]}>
         {screen}
       </View>
-    </View>
-  )
+    </View>)
+  } else {
+    return (<View style={Styles.maincontainer}>
+      <NavWrapper screen={screen} navigateTo={handleNavigate} />
+    </View>);
+  }
 
 }

@@ -1,9 +1,9 @@
-//import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect } from 'react'
-import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from 'react-native'
-import { ApiHelper, ProgramInterface, StudyInterface, Styles, Utilities } from "../helpers";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "../helpers/CustomReactNativeResponsiveScreen";
-import { MenuHeader } from '../components';
+//import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect } from "react"
+import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
+import { ApiHelper, ProgramInterface, StudyInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { Styles, Utilities } from "../helpers";
+import { MenuHeader } from "../components";
 
 type Props = { navigateTo(page: string, data?:any): void; program:ProgramInterface };
 
@@ -16,7 +16,7 @@ export const StudiesScreen = (props: Props) => {
     list: {
       flex: 1,
       marginHorizontal: "auto",
-      width: wp("100%")
+      width: "100%"
     },
     item: {
       flex: 1,
@@ -25,7 +25,7 @@ export const StudiesScreen = (props: Props) => {
       padding: 10,
     }
   };
-  
+
   const loadData = () => {
     ApiHelper.get("/studies/public/program/" + props.program.id, "LessonsApi").then(data => { setStudies(data); setLoading(false); });
   }
@@ -35,12 +35,12 @@ export const StudiesScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-    
+
     const study = data.item as StudyInterface;
     return (
       <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(study)  }} hasTVPreferredFocus={data.index===0}>
         <View style={{width:"100%"}}>
-          <Image style={{ height:hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
+          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
           <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{study.name}</Text>
         </View>
       </TouchableHighlight>
@@ -48,21 +48,21 @@ export const StudiesScreen = (props: Props) => {
   }
 
   const getCards = () => {
-    if (loading) return <ActivityIndicator size='small' color='gray' animating={loading} />
+    if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
     else {
       return(
-      <View style={styles.list}>
-        <FlatList
+        <View style={styles.list}>
+          <FlatList
             data={studies}
             numColumns={3}
             renderItem={getCard}
             keyExtractor={(item) => item.id}
-          />  
-      </View>
+          />
+        </View>
       )
     }
   }
-  
+
   const handleBack = () => {
     props.navigateTo("programs");
   }
