@@ -1,5 +1,7 @@
 package church.lessons.screen;
 
+import android.app.Activity;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +22,12 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     hideNavigationBar();
+    stopBackgroundAudio();
+  }
+
+  protected void stopBackgroundAudio() {
+    AudioManager am = (AudioManager) this.getSystemService(Activity.AUDIO_SERVICE);
+    int result = am.requestAudioFocus(null,  AudioManager.STREAM_MUSIC,  AudioManager.AUDIOFOCUS_GAIN);
   }
 
   @Override

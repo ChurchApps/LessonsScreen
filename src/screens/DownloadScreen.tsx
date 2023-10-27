@@ -117,7 +117,7 @@ export const DownloadScreen = (props: Props) => {
 
 
 
-  const background = {uri: playlist?.lessonImage};
+  const background = {uri: playlist?.lessonImage || "about:blank"};
 
   if (loadFailed) {
     return (<View style={{...Styles.menuScreen, flex:1, width:DimensionHelper.wp("100%"), flexDirection:"column" }}>
