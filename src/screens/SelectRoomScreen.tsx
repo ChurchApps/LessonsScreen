@@ -30,7 +30,7 @@ export const SelectRoomScreen = (props: Props) => {
 
 
   const getSearchResult = () => {
-    if (rooms.length > 0) {
+    if (rooms && rooms.length > 0) {
       return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: DimensionHelper.wp("100%") }} hasTVPreferredFocus={true}></FlatList>)
     } else {
       if (loading) return <ActivityIndicator size="small" color="gray" animating={loading} />
@@ -55,7 +55,7 @@ export const SelectRoomScreen = (props: Props) => {
 
 
   const handleBack = () => {
-    //props.navigateTo("selectChurch");
+    props.navigateTo("splash");
   }
 
   const destroy = () => {
