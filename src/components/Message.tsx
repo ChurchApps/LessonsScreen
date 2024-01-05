@@ -15,6 +15,7 @@ type Props = {
 export const Message = (props: Props) => {
 
   const getMessageType = () => {
+    if(props?.file != undefined || props.file != null ){
     const parts = props.file.url.split("?")[0].split(".");
     const ext = parts[parts.length - 1];
     let result = "image"
@@ -27,6 +28,7 @@ export const Message = (props: Props) => {
 
     //console.log("Message Type:", result, props.file.url.split("?")[0])
     return result;
+  }
   }
 
   const getContent = () => {

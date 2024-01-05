@@ -8,13 +8,19 @@ type Props = { navigateTo(page: string, data?:any): void; program: ProgramInterf
 
 export const LessonDetailsScreen = (props: Props) => {
   const [venues, setVenues] = React.useState<VenueInterface[]>([]);
+  const [showMessage, setShowMessage] = React.useState(false);
 
   const handleStart = (venueId:string) => {
     Utilities.trackEvent("Stream Lesson", { lesson: props.lesson?.title });
     ApiHelper.get("/venues/playlist/" + venueId, "LessonsApi").then(data => {
       CachedData.setAsyncStorage("playlist", data);
       CachedData.messageFiles = getFiles(data);
+      if( CachedData.messageFiles.length<=0  ){
+        setShowMessage(true)
+      }
+      if(CachedData.messageFiles.length>0){
       props.navigateTo("player", { program: props.program, study: props.study, lesson: props.lesson });
+      }
     });
   }
 
@@ -84,6 +90,11 @@ export const LessonDetailsScreen = (props: Props) => {
 
 
           <View style={{flex:9, justifyContent:"flex-end", flexDirection:"column"}}>
+          { showMessage ?
+              <View style={{  width: DimensionHelper.wp("100%"), alignItems:'center', justifyContent:'flex-start' , flex:4.5 }}>
+                <Text style={{ ...Styles.bigWhiteText, paddingVertical: DimensionHelper.hp("20%")  }}>No Media Found for this lesson</Text>
+              </View> : null
+            }
             <View style={{justifyContent:"flex-start", flexDirection:"row", paddingLeft:DimensionHelper.wp("5%")}}>
               <View style={{maxWidth:"60%"}}>
                 {getContent()}
