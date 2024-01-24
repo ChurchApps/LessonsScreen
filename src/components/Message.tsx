@@ -1,12 +1,12 @@
 import React from "react"
 import { CachedData } from "../helpers";
-import { PlaylistFileInterface } from "@churchapps/mobilehelper";
+import { LessonPlaylistFileInterface } from "@churchapps/mobilehelper";
 import { Image } from "react-native";
 import { DimensionHelper } from "@churchapps/mobilehelper";
 import Video from "react-native-video";
 
 type Props = {
-  file: PlaylistFileInterface,
+  file: LessonPlaylistFileInterface,
   downloaded: boolean,
   paused: boolean
 };

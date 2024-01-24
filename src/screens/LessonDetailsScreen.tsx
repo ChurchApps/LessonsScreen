@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { View, Text, TouchableHighlight, BackHandler, ImageBackground } from "react-native"
-import { ApiHelper, LessonInterface, PlaylistFileInterface, PlaylistInterface, ProgramInterface, StudyInterface, VenueInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { ApiHelper, LessonInterface, LessonPlaylistFileInterface, LessonPlaylistInterface, ProgramInterface, StudyInterface, VenueInterface, DimensionHelper } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -18,8 +18,8 @@ export const LessonDetailsScreen = (props: Props) => {
     });
   }
 
-  const getFiles = (playlist:PlaylistInterface) => {
-    const result: PlaylistFileInterface[] = [];
+  const getFiles = (playlist:LessonPlaylistInterface) => {
+    const result: LessonPlaylistFileInterface[] = [];
     playlist?.messages?.forEach(m => {
       m.files?.forEach(f => { result.push(f) })
     });
