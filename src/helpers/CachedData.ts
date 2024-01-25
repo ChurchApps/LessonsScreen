@@ -13,6 +13,7 @@ export class CachedData {
 
   static navExpanded = false;
   static currentScreen = "";
+  static resolution: "720" | "1080" = "720";
 
   static async getAsyncStorage(key: string) {
     const json = await AsyncStorage.getItem(key);

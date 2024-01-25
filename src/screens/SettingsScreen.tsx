@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { Text, View, TouchableHighlight, BackHandler } from "react-native"
+import React, { useEffect, useState } from "react"
+import { Text, View, TouchableHighlight, BackHandler, Switch } from "react-native"
 import { CachedData, Styles, Utilities } from "../helpers";
 import { DimensionHelper } from "@churchapps/mobilehelper";
 import { MenuHeader } from "../components";
@@ -10,6 +10,13 @@ export const SettingsScreen = (props: Props) => {
 
   let pkg = require('../../package.json');
   const appVersion = pkg.version;
+  const [resolution, setResolution] = useState(CachedData.resolution);
+  const toggleSwitch = () => {
+    const val = (resolution==="720") ? "1080" : "720"
+    setResolution(val) ;
+    CachedData.resolution = resolution==="720" ? "1080" : "720";
+    CachedData.setAsyncStorage("resolution", CachedData.resolution);
+  }
 
   const handleBack = () => {
     props.navigateTo("splash");
@@ -33,23 +40,45 @@ export const SettingsScreen = (props: Props) => {
       <MenuHeader headerText="Settings" />
       <View style={{flex:10, width:"100%", paddingLeft:"3%" }}>
         <View style={{flexDirection:"row", marginTop:DimensionHelper.hp("2%") }}>
-          <View style={{flex:20}}>
+          <View style={{flex:25}}>
             <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>App Version:</Text>
           </View>
-          <View style={{flex:80}}>
+          <View style={{flex:75}}>
             <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>{appVersion}</Text>
           </View>
         </View>
         <View style={{flexDirection:"row", marginTop:DimensionHelper.hp("2%") }}>
-          <View style={{flex:20, paddingTop:"1%"}}>
+          <View style={{flex:25, paddingTop:"1%"}}>
             <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>Your Church:</Text>
           </View>
-          <View style={{flex:80}}>
+          <View style={{flex:75}}>
             <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { props.navigateTo("selectChurch") }} hasTVPreferredFocus={true}>
               <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>{CachedData.church?.name || "None"}</Text>
             </TouchableHighlight>
           </View>
         </View>
+        <View style={{flexDirection:"row", marginTop:DimensionHelper.hp("2%") }}>
+          <View style={{flex:25, paddingTop:"1%"}}>
+            <Text style={{ ...Styles.smallWhiteText, textAlign: "left" }}>Higher Resolution:</Text>
+          </View>
+          <View style={{flex:75}}>
+            <Switch
+              trackColor={{false: '#767577', true: '#81b0ff'}}
+              thumbColor={'#03a9f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={resolution==="1080"}
+            />
+          </View>
+        </View>
+        <View style={{flexDirection:"row", marginTop:DimensionHelper.hp("2%") }}>
+          <View style={{flex:50}}>
+          </View>
+          <View style={{flex:50}}>
+            <Text style={{ ...Styles.smallerWhiteText, textAlign: "right", color: "#CCC", fontSize:DimensionHelper.wp("1.25%") }}>Higher resolutions take longer to download and are not necessary for most churches.  Only enable if video quality is not currently acceptable.</Text>
+          </View>
+        </View>
+
       </View>
 
 

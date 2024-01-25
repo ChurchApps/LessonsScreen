@@ -71,16 +71,20 @@ export const DownloadScreen = (props: Props) => {
     }
   }
 
-
   const loadData = () => {
     CachedData.getAsyncStorage("playlist").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setPlaylist(playlist) });
-    ApiHelper.get("/classrooms/playlist/" + CachedData.room.id, "LessonsApi").then(data => {
+
+    const date = new Date();
+    let playlistUrl = "/classrooms/playlist/" + CachedData.room.id;
+    playlistUrl += "?resolution=" + CachedData.resolution;
+    playlistUrl += "?date=" + date.toISOString().split("T")[0];
+    ApiHelper.get(playlistUrl, "LessonsApi").then(data => {
       if (!playlist || JSON.stringify(playlist) !== JSON.stringify(data)) {
         if (data===null) setLoadFailed(true);
         setPlaylist(data);
         CachedData.setAsyncStorage("playlist", playlist);
       }
-    });
+    }).catch(() => { setLoadFailed(true) });
   }
 
   const startDownload = () => {

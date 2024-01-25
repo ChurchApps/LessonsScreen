@@ -11,7 +11,9 @@ export const LessonDetailsScreen = (props: Props) => {
 
   const handleStart = (venueId:string) => {
     Utilities.trackEvent("Stream Lesson", { lesson: props.lesson?.title });
-    ApiHelper.get("/venues/playlist/" + venueId, "LessonsApi").then(data => {
+    let url = "/venues/playlist/" + venueId;
+    url += "?resolution=" + CachedData.resolution;
+    ApiHelper.get(url, "LessonsApi").then(data => {
       CachedData.setAsyncStorage("playlist", data);
       CachedData.messageFiles = getFiles(data);
       props.navigateTo("player", { program: props.program, study: props.study, lesson: props.lesson });
