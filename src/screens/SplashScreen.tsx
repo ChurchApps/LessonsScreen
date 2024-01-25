@@ -10,6 +10,7 @@ export const SplashScreen = (props: Props) => {
   const checkStorage = async () => {
     Utilities.trackEvent("Splash Screen");
     CachedData.church = await CachedData.getAsyncStorage("church");
+    CachedData.resolution = await CachedData.getAsyncStorage("resolution") || "720";
 
     if (CachedData.church) props.navigateTo("selectRoom");
     else props.navigateTo("programs");

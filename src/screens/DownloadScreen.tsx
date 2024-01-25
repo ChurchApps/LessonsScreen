@@ -1,7 +1,6 @@
-//import AsyncStorage from "@react-native-community/async-storage";
 import React, { useEffect } from "react"
-import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground, Dimensions } from "react-native"
-import { ApiHelper, ClassroomInterface, PlaylistFileInterface, PlaylistInterface } from "@churchapps/mobilehelper";
+import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native"
+import { ApiHelper, ClassroomInterface, LessonPlaylistFileInterface, LessonPlaylistInterface } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
 import { DimensionHelper } from "@churchapps/mobilehelper";
 import LinearGradient from "react-native-linear-gradient";
@@ -9,7 +8,7 @@ import LinearGradient from "react-native-linear-gradient";
 type Props = { navigateTo(page: string): void; };
 
 export const DownloadScreen = (props: Props) => {
-  const [playlist, setPlaylist] = React.useState<PlaylistInterface>(null);
+  const [playlist, setPlaylist] = React.useState<LessonPlaylistInterface>(null);
   const [totalItems, setTotalItems] = React.useState(CachedData.totalCachableItems);
   const [cachedItems, setCachedItems] = React.useState(CachedData.cachedItems);
   const [ready, setReady] = React.useState(false);
@@ -23,7 +22,7 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const getFiles = () => {
-    const result: PlaylistFileInterface[] = [];
+    const result: LessonPlaylistFileInterface[] = [];
     playlist?.messages?.forEach(m => {
       m.files?.forEach(f => { result.push(f) })
     });
@@ -72,16 +71,20 @@ export const DownloadScreen = (props: Props) => {
     }
   }
 
-
   const loadData = () => {
     CachedData.getAsyncStorage("playlist").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setPlaylist(playlist) });
-    ApiHelper.get("/classrooms/playlist/" + CachedData.room.id, "LessonsApi").then(data => {
+
+    const date = new Date();
+    let playlistUrl = "/classrooms/playlist/" + CachedData.room.id;
+    playlistUrl += "?resolution=" + CachedData.resolution;
+    playlistUrl += "?date=" + date.toISOString().split("T")[0];
+    ApiHelper.get(playlistUrl, "LessonsApi").then(data => {
       if (!playlist || JSON.stringify(playlist) !== JSON.stringify(data)) {
         if (data===null) setLoadFailed(true);
         setPlaylist(data);
         CachedData.setAsyncStorage("playlist", playlist);
       }
-    });
+    }).catch(() => { setLoadFailed(true) });
   }
 
   const startDownload = () => {

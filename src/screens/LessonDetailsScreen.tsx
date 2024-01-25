@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { View, Text, TouchableHighlight, BackHandler, ImageBackground } from "react-native"
-import { ApiHelper, LessonInterface, PlaylistFileInterface, PlaylistInterface, ProgramInterface, StudyInterface, VenueInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { ApiHelper, LessonInterface, LessonPlaylistFileInterface, LessonPlaylistInterface, ProgramInterface, StudyInterface, VenueInterface, DimensionHelper } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -11,15 +11,17 @@ export const LessonDetailsScreen = (props: Props) => {
 
   const handleStart = (venueId:string) => {
     Utilities.trackEvent("Stream Lesson", { lesson: props.lesson?.title });
-    ApiHelper.get("/venues/playlist/" + venueId, "LessonsApi").then(data => {
+    let url = "/venues/playlist/" + venueId;
+    url += "?resolution=" + CachedData.resolution;
+    ApiHelper.get(url, "LessonsApi").then(data => {
       CachedData.setAsyncStorage("playlist", data);
       CachedData.messageFiles = getFiles(data);
       props.navigateTo("player", { program: props.program, study: props.study, lesson: props.lesson });
     });
   }
 
-  const getFiles = (playlist:PlaylistInterface) => {
-    const result: PlaylistFileInterface[] = [];
+  const getFiles = (playlist:LessonPlaylistInterface) => {
+    const result: LessonPlaylistFileInterface[] = [];
     playlist?.messages?.forEach(m => {
       m.files?.forEach(f => { result.push(f) })
     });

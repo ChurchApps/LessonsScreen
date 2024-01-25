@@ -1,11 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ChurchInterface, ClassroomInterface, PlaylistFileInterface } from "@churchapps/mobilehelper";
+import { ChurchInterface, ClassroomInterface, LessonPlaylistFileInterface } from "@churchapps/mobilehelper";
 import RNFS from "react-native-fs";
 
 export class CachedData {
   static church: ChurchInterface;
   static room: ClassroomInterface;
-  static messageFiles: PlaylistFileInterface[];
+  static messageFiles: LessonPlaylistFileInterface[];
 
   static totalCachableItems: number = 0;
   static cachedItems: number = 0;
@@ -13,6 +13,7 @@ export class CachedData {
 
   static navExpanded = false;
   static currentScreen = "";
+  static resolution: "720" | "1080" = "720";
 
   static async getAsyncStorage(key: string) {
     const json = await AsyncStorage.getItem(key);
@@ -24,7 +25,7 @@ export class CachedData {
     await AsyncStorage.setItem(key, JSON.stringify(obj));
   }
 
-  static async prefetch(files: PlaylistFileInterface[], changeCallback: (cached: number, total: number) => void) {
+  static async prefetch(files: LessonPlaylistFileInterface[], changeCallback: (cached: number, total: number) => void) {
     this.cachedItems = 0;
     let i = 0;
     this.totalCachableItems = files.length;
@@ -32,7 +33,9 @@ export class CachedData {
 
     for (const f of files) {
       try {
+        console.log("Downloading: " + f.url);
         await this.load(f);
+        console.log("Downloaded", f.url)
       } catch (e) {
         console.log("Download Failed: " + e.toString());
       }
@@ -49,12 +52,12 @@ export class CachedData {
     return fullPath;
   }
 
-  static async load(file: PlaylistFileInterface) {
+  static async load(file: LessonPlaylistFileInterface) {
     const fullPath = this.getFilePath(file.url);
     if (!await RNFS.exists(fullPath)) await this.download(file, fullPath);
   }
 
-  private static async download(file: PlaylistFileInterface, diskPath: string) {
+  private static async download(file: LessonPlaylistFileInterface, diskPath: string) {
     const idx = diskPath.lastIndexOf("/");
     const folder = diskPath.substring(0, idx);
     if (!await RNFS.exists(folder)) await RNFS.mkdir(folder);
