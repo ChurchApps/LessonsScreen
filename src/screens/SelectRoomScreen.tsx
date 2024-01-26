@@ -10,6 +10,7 @@ type Props = { navigateTo(page: string): void; };
 export const SelectRoomScreen = (props: Props) => {
   const [rooms, setRooms] = React.useState<ClassroomInterface[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [offlineCheck, setOfflineCheck] = React.useState(false);
 
   const handleSelect = (room: ClassroomInterface) => {
     CachedData.room = room;
@@ -28,7 +29,6 @@ export const SelectRoomScreen = (props: Props) => {
     )
   }
 
-
   const getSearchResult = () => {
     if (rooms.length > 0) {
       return (<FlatList data={rooms} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: DimensionHelper.wp("100%") }} hasTVPreferredFocus={true}></FlatList>)
@@ -41,16 +41,18 @@ export const SelectRoomScreen = (props: Props) => {
     }
   }
 
-  const loadData = () => {
+  const loadData = async () => {
     CachedData.getAsyncStorage("rooms").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setRooms(cached) });
     setLoading(true);
 
-    console.log("/classrooms/public/church/" + CachedData.church.id)
-    ApiHelper.get("/classrooms/public/church/" + CachedData.church.id, "LessonsApi").then(data => {
+    try {
+      const data = await ApiHelper.get("/classrooms/public/church/" + CachedData.church.id, "LessonsApi")
       setRooms(data);
       CachedData.setAsyncStorage("rooms", rooms);
-      setLoading(false);
-    });
+    } catch (ex) {
+      if (ex.toString().indexOf("Network request failed") > -1) props.navigateTo("offline");
+    }
+    setLoading(false);
   }
 
 
@@ -65,11 +67,13 @@ export const SelectRoomScreen = (props: Props) => {
   const init = () => {
     Utilities.trackEvent("Select Room Screen");
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    setTimeout(() => { setOfflineCheck(true) }, 5000);
     loadData();
     return destroy;
   }
 
   useEffect(init, [])
+  useEffect(() => { if (offlineCheck && loading) props.navigateTo("offline"); }, [offlineCheck] )
 
   return (
     <View style={Styles.menuScreen}>

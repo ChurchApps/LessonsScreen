@@ -14,6 +14,8 @@ export const DownloadScreen = (props: Props) => {
   const [ready, setReady] = React.useState(false);
   const [refreshKey, setRefreshKey] = React.useState("");
   const [loadFailed, setLoadFailed] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const [offlineCheck, setOfflineCheck] = React.useState(false);
   let refreshTimer: number = null;
 
   const updateCounts = (cached: number, total: number): void => {
@@ -72,6 +74,7 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const loadData = () => {
+    setLoading(true);
     CachedData.getAsyncStorage("playlist").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setPlaylist(playlist) });
 
     const date = new Date();
@@ -80,20 +83,27 @@ export const DownloadScreen = (props: Props) => {
     playlistUrl += "?date=" + date.toISOString().split("T")[0];
     ApiHelper.get(playlistUrl, "LessonsApi").then(data => {
       if (!playlist || JSON.stringify(playlist) !== JSON.stringify(data)) {
-        if (data===null) setLoadFailed(true);
         setPlaylist(data);
         CachedData.setAsyncStorage("playlist", playlist);
       }
-    }).catch(() => { setLoadFailed(true) });
+    }).catch((ex) => {
+      if (ex.toString().indexOf("Network request failed") > -1) props.navigateTo("offline");
+      setLoadFailed(true);
+    }).finally(() => {
+      setLoading(false);
+    });
   }
 
   const startDownload = () => {
-    const files = getFiles();
-    CachedData.messageFiles = files;
-    setReady(false);
-    CachedData.prefetch(files, updateCounts).then(() => {
-      setReady(true)
-    });
+    if (playlist?.messages?.length > 0) {
+      const files = getFiles();
+      CachedData.messageFiles = files;
+      CachedData.setAsyncStorage("messageFiles", files);
+      setReady(false);
+      CachedData.prefetch(files, updateCounts).then(() => {
+        setReady(true)
+      });
+    }
   }
 
   const destroy = () => {
@@ -107,6 +117,7 @@ export const DownloadScreen = (props: Props) => {
       setRefreshKey(new Date().getTime().toString());
     }, 60 * 60 * 1000);
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    setTimeout(() => { setOfflineCheck(true) }, 5000);
     return destroy;
   }
 
@@ -117,8 +128,7 @@ export const DownloadScreen = (props: Props) => {
   useEffect(init, [])
   useEffect(loadData, [refreshKey])
   useEffect(startDownload, [playlist])
-
-
+  useEffect(() => { if (offlineCheck && loading) props.navigateTo("offline"); }, [offlineCheck] )
 
   const background = {uri: playlist?.lessonImage || "about:blank"};
 

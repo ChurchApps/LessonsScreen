@@ -33,9 +33,9 @@ export class CachedData {
 
     for (const f of files) {
       try {
-        console.log("Downloading: " + f.url);
+        //console.log("Downloading: " + f.url);
         await this.load(f);
-        console.log("Downloaded", f.url)
+        //console.log("Downloaded", f.url)
       } catch (e) {
         console.log("Download Failed: " + e.toString());
       }

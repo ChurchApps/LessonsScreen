@@ -23,6 +23,7 @@ public class MainActivity extends ReactActivity {
     super.onCreate(savedInstanceState);
     hideNavigationBar();
     stopBackgroundAudio();
+
   }
 
   protected void stopBackgroundAudio() {

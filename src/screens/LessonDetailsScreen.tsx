@@ -16,6 +16,7 @@ export const LessonDetailsScreen = (props: Props) => {
     ApiHelper.get(url, "LessonsApi").then(data => {
       CachedData.setAsyncStorage("playlist", data);
       CachedData.messageFiles = getFiles(data);
+      CachedData.setAsyncStorage("messageFiles", CachedData.messageFiles);
       props.navigateTo("player", { program: props.program, study: props.study, lesson: props.lesson });
     });
   }
