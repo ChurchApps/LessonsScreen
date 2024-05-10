@@ -25,6 +25,8 @@ export const Message = (props: Props) => {
         break;
     }
 
+    if (props.file.url.indexOf("externalVideos") > -1) result = "video";
+
     //console.log("Message Type:", result, props.file.url.split("?")[0])
     return result;
   }

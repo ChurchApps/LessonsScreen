@@ -55,6 +55,7 @@ export class CachedData {
   static async load(file: LessonPlaylistFileInterface) {
     let fullPath = this.getFilePath(file.url);
     fullPath = decodeURIComponent(fullPath);
+    console.log("DOWNLOADING: ", file.url, fullPath)
     if (!await RNFS.exists(fullPath)) await this.download(file, fullPath);
   }
 
