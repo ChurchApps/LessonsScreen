@@ -1,14 +1,37 @@
-# LessonsScreen
 
-A TV app for presenting Lessons.church content. Visit <a href="https://lessons.church/">Lessons.church</a> to learn more.
+<img align="right" width="150" src="https://raw.githubusercontent.com/ChurchApps/LessonsApp/main/public/images/logo.png">
 
-## Contributing
+# Lessons Screen
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+> **Lessons Screen** is the companion app for [Lessons.church](https://github.com/ChurchApps/LessonsApp/). It runs on any Android TV device and will pre-fetch each weeks lesson in the classroom so they're ready to be displayed on Sunday without needing an Internet connection.  The lessons can be scheduled in advance for classrooms and customized.  
 
-#### Join us on [Slack](https://join.slack.com/t/livechurchsolutions/shared_invite/zt-i88etpo5-ZZhYsQwQLVclW12DKtVflg).
+## Preview
 
-## Running on Dev
+<div style="display: flex;gap: 10px;">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/LessonsScreen/assets/1447203/848078b5-69dc-4575-826f-47d5e4ac4f9e">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/LessonsScreen/assets/1447203/f9aa6b4f-ae54-4a80-a82d-d28355b56ca0">
+</div>
+<div style="display: flex;gap: 10px;margin-top: 10px;">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/LessonsScreen/assets/1447203/ce2a8889-603e-4248-b1dd-43e201e7a151">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/LessonsScreen/assets/1447203/b3d234fb-6f88-4ee2-873c-c5b70449fb90">
+</div>
+
+## Get Involved
+
+#### Help Support Us
+The only reason this program is free is because of the generous support from users. If you want to support us to keep this free, please head over to [ChurchApps](https://churchapps/partner) or [sponsor us on GitHub](https://github.com/sponsors/ChurchApps/). Thank you so much!
+
+#### Join the Community
+We have a great community for end-users on [Facebook](https://www.facebook.com/groups/276757487737882).  It's a good way to ask questions, get tips and follow new updates.  Come join us!
+
+#### Report and Issue
+If you discover an issue or have a feature request, simply submit it to our [issues log](https://github.com/ChurchApps/ChurchAppsSupport).  Don't be shy, that's how the program gets better.
+
+#### Join us on Slack
+If you would like to get involved contributing in any way, head over to our [Slack Channel](https://join.slack.com/t/livechurchsolutions/shared_invite/zt-i88etpo5-ZZhYsQwQLVclW12DKtVflg) and introduce yourself.  We'd love to hear from you.
+
+#### Start Coding
+If you'd like to set up the project locally, see our [development guide](https://churchapps.org/dev).  For this app:
 
 1. **Update .env** - to point to production or your dev environment.
 2. **Start React Native** - Run `npm start` to start the React Native server.
