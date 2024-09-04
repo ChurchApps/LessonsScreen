@@ -81,6 +81,7 @@ export const DownloadScreen = (props: Props) => {
     let playlistUrl = "/classrooms/playlist/" + CachedData.room.id;
     playlistUrl += "?resolution=" + CachedData.resolution;
     playlistUrl += "?date=" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    //console.log("Playlist URL: " + playlistUrl);
     ApiHelper.get(playlistUrl, "LessonsApi").then(data => {
       if (!playlist || JSON.stringify(playlist) !== JSON.stringify(data)) {
         setPlaylist(data);
