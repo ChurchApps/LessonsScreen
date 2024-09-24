@@ -7,7 +7,7 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import KeepAwake from "react-native-keep-awake";
 import { Message, SelectMessage } from "../components";
 
-type Props = { navigateTo(page: string, data?:any): void; program?: ProgramInterface, study?: StudyInterface, lesson?:LessonInterface };
+type Props = { navigateTo(page: string, data?: any): void; program?: ProgramInterface, study?: StudyInterface, lesson?: LessonInterface };
 
 export const PlayerScreen = (props: Props) => {
 
@@ -27,16 +27,28 @@ export const PlayerScreen = (props: Props) => {
     }
   }
 
+  // const handlePlayPause = () => {
+  //   PlayerHelper.pendingPause = false;
+  //   if (PlayerHelper.timer) {
+  //     stopTimer();
+  //     setPaused(true);
+  //   } else {
+  //     startTimer();
+  //     setPaused(false);
+  //   }
+  // }
+
   const handlePlayPause = () => {
-    PlayerHelper.pendingPause = false;
-    if (PlayerHelper.timer) {
+    const newPausedState = !paused;
+    setPaused(newPausedState);
+    PlayerHelper.pendingPause = newPausedState;
+
+    if (newPausedState) {
       stopTimer();
-      setPaused(true);
     } else {
       startTimer();
-      setPaused(false);
     }
-  }
+  };
 
   const handleRemotePress = async (pendingKey: string) => {
     switch (pendingKey) {
@@ -73,7 +85,7 @@ export const PlayerScreen = (props: Props) => {
   const handleBack = () => {
     if (!showSelectMessage) {
       stopTimer();
-      if (props.lesson) props.navigateTo("lessonDetails", {program: props.program, study: props.study, lesson: props.lesson});
+      if (props.lesson) props.navigateTo("lessonDetails", { program: props.program, study: props.study, lesson: props.lesson });
       else props.navigateTo("download");
     }
   }
@@ -100,10 +112,22 @@ export const PlayerScreen = (props: Props) => {
     }
   }
 
+  // const startTimer = () => {
+  //   if (PlayerHelper.timer) clearTimeout(PlayerHelper.timer);
+  //   if (!CachedData.messageFiles[messageIndex].loopVideo) PlayerHelper.timer = setTimeout(goForward, CachedData.messageFiles[messageIndex].seconds * 1000)
+  // }
+
   const startTimer = () => {
     if (PlayerHelper.timer) clearTimeout(PlayerHelper.timer);
-    if (!CachedData.messageFiles[messageIndex].loopVideo) PlayerHelper.timer = setTimeout(goForward, CachedData.messageFiles[messageIndex].seconds * 1000)
-  }
+
+    try {
+      if (!CachedData.messageFiles[messageIndex].loopVideo) {
+        PlayerHelper.timer = setTimeout(goForward, CachedData.messageFiles[messageIndex].seconds * 1000);
+      }
+    } catch (error) {
+      setTimeout(startTimer, 5000);
+    }
+  };
 
   const handleMessageSelect = (index: number) => {
     if (paused) setPaused(false);
@@ -118,8 +142,14 @@ export const PlayerScreen = (props: Props) => {
 
   React.useEffect(init, [])
   React.useEffect(startTimer, [messageIndex])
+  // React.useEffect(() => {
+  //   if (PlayerHelper.pendingPause) handlePlayPause();
+  // }, [triggerPauseCheck]);
+
   React.useEffect(() => {
-    if (PlayerHelper.pendingPause) handlePlayPause();
+    if (PlayerHelper.pendingPause !== paused) {
+      handlePlayPause();
+    }
   }, [triggerPauseCheck]);
 
   if (showSelectMessage) {
@@ -130,8 +160,8 @@ export const PlayerScreen = (props: Props) => {
       <GestureRecognizer onSwipeLeft={handleRight} onSwipeRight={handleLeft} onSwipeDown={handleUp} onSwipeUp={handleBack} config={config} style={{ flex: 1 }}>
         <Pressable onPress={handlePressablePress}>
           <KeepAwake />
-          <Message file={CachedData.messageFiles[messageIndex]} downloaded={!props.lesson} paused={paused}  />
-          <TextInput autoFocus={true} style={{ display:"none" }} showSoftInputOnFocus={false} returnKeyType="none" />
+          <Message file={CachedData.messageFiles[messageIndex]} downloaded={!props.lesson} paused={paused} />
+          <TextInput autoFocus={true} style={{ display: "none" }} showSoftInputOnFocus={false} returnKeyType="none" />
         </Pressable>
       </GestureRecognizer>
     )
@@ -139,3 +169,4 @@ export const PlayerScreen = (props: Props) => {
 
 
 }
+
