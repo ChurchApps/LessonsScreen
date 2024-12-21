@@ -2,12 +2,15 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "lib": ["es6","DOM"],     
+    "lib": [
+      "es6",
+      "DOM"
+    ],
     "moduleResolution": "node",
     "jsx": "react-jsx",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "experimentalDecorators": true, 
+    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
