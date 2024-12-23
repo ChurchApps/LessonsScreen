@@ -4,7 +4,6 @@ import { View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, Ac
 import { ApiHelper, ChurchInterface, DimensionHelper } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
-import GestureRecognizer from "react-native-swipe-gestures";
 
 type Props = { navigateTo(page: string): void; };
 
