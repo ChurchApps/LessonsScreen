@@ -1,9 +1,10 @@
 //import AsyncStorage from "@react-native-community/async-storage";
 import React, { useEffect } from "react"
-import {  View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, ActivityIndicator, BackHandler } from "react-native"
+import { View, Text, FlatList, TouchableHighlight, ListRenderItem, TextInput, ActivityIndicator, BackHandler, useTVEventHandler } from "react-native"
 import { ApiHelper, ChurchInterface, DimensionHelper } from "@churchapps/mobilehelper";
 import { CachedData, Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
+import GestureRecognizer from "react-native-swipe-gestures";
 
 type Props = { navigateTo(page: string): void; };
 
@@ -13,6 +14,9 @@ export const SelectChurchScreen = (props: Props) => {
   const [searchText, setSearchText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [autoFocus, setAutoFocus] = React.useState(false);
+
+  const [isInputFocus, setIsInputFocus] = React.useState(true);
+
   let textRef: TextInput = null;
 
   const searchApiCall = (text: String) => {
@@ -38,7 +42,7 @@ export const SelectChurchScreen = (props: Props) => {
   const renderItem: ListRenderItem<ChurchInterface> = (data) => {
     const church = data.item;
     return (
-      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(church) }} hasTVPreferredFocus={data.index === 0}>
+      <TouchableHighlight style={Styles.menuClickable} underlayColor={"#03a9f4"} onPress={() => { handleSelect(church) }} hasTVPreferredFocus={!isInputFocus}>
         <Text style={Styles.whiteText}>{church.name}</Text>
       </TouchableHighlight>
     )
@@ -54,7 +58,7 @@ export const SelectChurchScreen = (props: Props) => {
     if (churches.length > 0) {
       return (<FlatList data={churches} renderItem={renderItem} keyExtractor={(item) => item.id?.toString() || ""} style={{ width: DimensionHelper.wp("100%") }}></FlatList>)
     } else return (<>
-      <Text style={{ ...Styles.smallWhiteText, width:"100%" }}>{getNoResultsMessage()}</Text>
+      <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>{getNoResultsMessage()}</Text>
     </>);
   }
 
@@ -81,18 +85,41 @@ export const SelectChurchScreen = (props: Props) => {
   useEffect(init, [])
   useEffect(() => { if (autoFocus) textRef.focus() }, [autoFocus]);
 
+  const handleTVKeyPress = (evt: any) => {
+    if (evt.eventType === 'select' && !isInputFocus) {
+      textRef.focus();
+    }
+  };
+
+  useTVEventHandler(handleTVKeyPress);
+
   return (
     <View style={Styles.menuScreen}>
       <MenuHeader headerText="Find Your Church" />
-
-      <View style={{ ...Styles.menuWrapper, flex: 5 }}>
-        <TextInput autoFocus={autoFocus} style={{ ...Styles.textInputStyle, width: "100%", marginTop: DimensionHelper.hp("4%"), marginBottom: DimensionHelper.hp("4%") }} placeholder={'Church name'} autoCapitalize="none" autoCorrect={false} keyboardType="default" placeholderTextColor={'lightgray'} value={searchText} onChangeText={(text) => { setSearchText(text) }} ref={(r) => textRef = r}  returnKeyType="none" />
+      <View style={{ ...Styles.menuWrapper, flex: 5 }} hasTVPreferredFocus={true}>
+        <TextInput autoFocus={autoFocus}
+          hasTVPreferredFocus={true}
+          onFocus={() => { setIsInputFocus(true) }}
+          onBlur={() => { setIsInputFocus(false) }}
+          style={{
+            ...Styles.textInputStyle,
+            width: "100%", marginTop: DimensionHelper.hp("4%"),
+            marginBottom: DimensionHelper.hp("4%")
+          }}
+          placeholder={'Church name'}
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="default"
+          placeholderTextColor={'lightgray'}
+          value={searchText}
+          onChangeText={(text) => { setSearchText(text) }}
+          ref={(r) => textRef = r}
+          returnKeyType="done"
+        />
       </View>
-
       <View style={{ ...Styles.menuWrapper, flex: 20 }}>
         {getSearchResult()}
       </View>
-
     </View>
   )
 
