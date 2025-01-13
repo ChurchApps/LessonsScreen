@@ -82,7 +82,7 @@ android {
         applicationId "church.lessons.screen"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4194311
+        versionCode 4194312
         versionName "2.3.0"
     }
     signingConfigs {
