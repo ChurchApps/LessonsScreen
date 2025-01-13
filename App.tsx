@@ -4,12 +4,10 @@ import CodePush from "react-native-code-push";
 import { EnvironmentHelper } from "./src/helpers/EnvironmentHelper";
 import { LogBox } from "react-native";
 import { ErrorHelper } from "@churchapps/mobilehelper";
-import React from "react";
 
 const CODE_PUSH_OPTIONS = {
   checkFrequency: CodePush.CheckFrequency.ON_APP_START
 }
-
 
 EnvironmentHelper.init();
 
@@ -30,7 +28,6 @@ const app = () => {
       case CodePush.SyncStatus.UPDATE_INSTALLED: console.log("UPDATE_INSTALLED"); break;
       case CodePush.SyncStatus.UP_TO_DATE: console.log("UP_TO_DATE"); break;
     }
-    console.log('Codepush sync status', status);
   }
 
   useEffect(() => { ErrorHelper.init(); }, []);

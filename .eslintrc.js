@@ -1,17 +1,17 @@
-{
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
-  "plugins": [
+module.exports = {
+  extends: ["eslint:recommended", "plugin:react/recommended"],
+  plugins: [
     "react",
     "react-native"
   ],
-  "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+  parser: "@babel/eslint-parser",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
     },
-    "ecmaVersion": 2023
+    ecmaVersion: 2023
   },
-  "rules": {
+  rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "@next/next/no-img-element": "off",
     "@next/next/no-html-link-for-pages": "off",
@@ -35,4 +35,4 @@
     "no-unused-vars": "off",
     "no-useless-catch": "off"
   }
-}
+};

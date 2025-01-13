@@ -25,7 +25,7 @@ export const Styles = StyleSheet.create({
 
   menuScreen: { alignItems: "center", justifyContent: "center", flex: 1, backgroundColor: "#000000", width: "100%" },
 
-  menuHeader: { height: DimensionHelper.hp("10%"), flexDirection: "column", color: "#FFFFFF", width: "100%" },
+  menuHeader: { height: DimensionHelper.hp("10%"), flexDirection: "column", color: "#FFFFFF", width: "100%" , justifyContent:'center', alignItems:'center'},
 
 
   menuFooter: { height: DimensionHelper.hp("8%"), flexDirection: "column", color: "#FFFFFF", backgroundColor: "#343a40", padding: 5 },
