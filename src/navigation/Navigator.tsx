@@ -10,6 +10,7 @@ import { DimensionHelper } from "@churchapps/mobilehelper";
 import { View } from "react-native";
 import { NavWrapper } from "./NavWrapper";
 import { OfflineScreen } from "../screens/OfflineScreen";
+import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 
 export const Navigator = () => {
   const [currentScreen, setCurrentScreen] = React.useState("splash");
@@ -36,6 +37,7 @@ export const Navigator = () => {
     case "studies": screen = (<StudiesScreen navigateTo={handleNavigate} program={currentData?.program} />); break;
     case "lessons": screen = (<LessonsScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} />); break;
     case "lessonDetails": screen = (<LessonDetailsScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} lesson={currentData?.lesson} />); break;
+    case "PrivacyPolicy": screen = (<PrivacyPolicyScreen navigateTo={handleNavigate} /> ); break;
   }
 
   let viewStyle = {};
