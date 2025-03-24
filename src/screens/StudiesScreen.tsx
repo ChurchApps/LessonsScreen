@@ -72,7 +72,7 @@ export const StudiesScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Studies Screen");
+    // Utilities.trackEvent("Studies Screen");
     loadData();
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return destroy;

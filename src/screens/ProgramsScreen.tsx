@@ -70,7 +70,7 @@ export const ProgramsScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Program Screen");
+    // Utilities.trackEvent("Program Screen");
     loadData();
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return destroy;

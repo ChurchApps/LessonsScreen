@@ -71,7 +71,7 @@ export const SelectChurchScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Select Church Screen");
+    // Utilities.trackEvent("Select Church Screen");
     if (textRef) setTimeout(() => {
       setAutoFocus(true);
     }, 1000);

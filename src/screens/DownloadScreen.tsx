@@ -32,7 +32,7 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const handleStart = () => {
-    Utilities.trackEvent("Start Lesson", { lesson: playlist?.lessonTitle });
+    // Utilities.trackEvent("Start Lesson", { lesson: playlist?.lessonTitle });
     props.navigateTo("player");
   }
 
@@ -113,7 +113,7 @@ export const DownloadScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Download Screen");
+    // Utilities.trackEvent("Download Screen");
     refreshTimer = window.setInterval(() => {
       setRefreshKey(new Date().getTime().toString());
     }, 60 * 60 * 1000);

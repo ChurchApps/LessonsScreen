@@ -73,7 +73,7 @@ export const LessonsScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Lessons Screen");
+    // Utilities.trackEvent("Lessons Screen");
     loadData();
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return destroy;

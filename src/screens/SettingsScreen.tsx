@@ -27,7 +27,7 @@ export const SettingsScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Mode Screen");
+    // Utilities.trackEvent("Mode Screen");
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return destroy;
   }

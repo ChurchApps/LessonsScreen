@@ -18,7 +18,7 @@ export const PlayerScreen = (props: Props) => {
 
 
   const init = () => {
-    Utilities.trackEvent("Player Screen");
+    // Utilities.trackEvent("Player Screen");
     TVEventControl.enableTVMenuKey();
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return () => {
