@@ -21,15 +21,29 @@
       "splash": {
         "image": "./assets/images/icon-1920x720.png"
       },
-      "package": "church.lessons.screen"
+      "package": "church.lessons.screen",
+      "versionCode": 4194313,
+      "runtimeVersion": "2.4.0"
     },
     "ios": {
       "splash": {
         "image": "./assets/images/icon-1920x720.png"
+      },
+      "runtimeVersion": {
+        "policy": "appVersion"
       }
     },
     "newArchEnabled": true,
     "name": "LessonsScreen",
-    "slug": "LessonsScreen"
+    "slug": "LessonsScreen",
+    "owner": "churchapps",
+    "extra": {
+      "eas": {
+        "projectId": "3bba64bf-afb5-45af-8170-653bd011a340"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3bba64bf-afb5-45af-8170-653bd011a340"
+    }
   }
 }
