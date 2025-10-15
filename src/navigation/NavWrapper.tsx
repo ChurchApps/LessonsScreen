@@ -57,7 +57,7 @@ export const NavWrapper = (props: Props) => {
     const keyCode = evt && (evt.keyCode || evt.which);
     const isRight = eventType === 'right' || keyCode === 22;
     if (isRight && props.sidebarExpanded) {
-      props.sidebarState(!props.sidebarExpanded);
+      props.sidebarState(false);
     }
   };
   useTVEventHandler(tvEventHandler as any);

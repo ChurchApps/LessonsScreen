@@ -1,5 +1,5 @@
 import {DimensionHelper} from '@churchapps/mobilehelper';
-import React from 'react';
+import React, { useState } from 'react';
 import {Text, TouchableHighlight, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Styles} from '../helpers';
@@ -17,9 +17,14 @@ type Props = {
 
 //eslint-disable-next-line
 export const NavItem = React.forwardRef((props: Props, ref) => {
-  // const [highlighted, setHighlighted] = useState(false);
+  const [highlighted, setHighlighted] = useState(true);
 
   const handleFocusChange = (focused: boolean) => {
+    if (!focused) {
+      setHighlighted(false)
+      setTimeout(() => setHighlighted(true), 1000); // Keep highlighted state for a short while after blur to avoid flicker when quickly moving between items
+    }
+    
     // Only expand the sidebar when an item receives focus. Don't collapse on blur here
     if (focused) props.setExpanded(true);
     // setHighlighted(focused);
@@ -54,11 +59,11 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
           ? 'rgba(3,169,244,0.08)'
           : 'transparent',
       }}
-      hasTVPreferredFocus={props.expanded && props.selected}
-      onFocus={() => {
+      hasTVPreferredFocus={props.expanded && props.selected && highlighted}
+      onFocus={() => {        
         handleFocusChange(true);
       }}
-      onBlur={() => {
+      onBlur={() => {        
         handleFocusChange(false);
       }}
       ref={ref as any}
