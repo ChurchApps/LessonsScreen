@@ -54,7 +54,7 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
           ? 'rgba(3,169,244,0.08)'
           : 'transparent',
       }}
-      hasTVPreferredFocus={false}
+      hasTVPreferredFocus={props.expanded && props.selected}
       onFocus={() => {
         handleFocusChange(true);
       }}

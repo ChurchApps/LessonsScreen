@@ -65,8 +65,7 @@ export const SelectChurchScreen = (props: Props) => {
         underlayColor={'rgba(3,169,244,0.12)'}
         onPress={() => {
           handleSelect(church);
-        }}
-        hasTVPreferredFocus={!props.sidebarExpanded && !isInputFocus}>
+        }}>
         <Text style={{...Styles.smallWhiteText, paddingVertical: 6}}>
           {church.name}
         </Text>
@@ -89,6 +88,7 @@ export const SelectChurchScreen = (props: Props) => {
     if (churches.length > 0) {
       return (
         <FlatList
+          hasTVPreferredFocus={!props.sidebarExpanded && !isInputFocus}
           data={churches}
           renderItem={renderItem}
           keyExtractor={item => item.id?.toString() || ''}

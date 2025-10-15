@@ -10,6 +10,7 @@ export const ProgramsScreen = (props: Props) => {
 
   const [programs, setPrograms] = React.useState<ProgramInterface[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [focusedId, setFocusedId] = React.useState(null);
 
   const styles:any = {
     list: {
@@ -21,7 +22,7 @@ export const ProgramsScreen = (props: Props) => {
       flex: 1,
       maxWidth: "33%",
       alignItems: "center",
-      padding: 5,
+      padding: 7,
       borderRadius: 10,
     }
   };
@@ -36,11 +37,10 @@ export const ProgramsScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-
     const program = data.item as ProgramInterface;
+
     return (
-      // hasTVPreferredFocus={data.index === 0 && !props.sidebarExpanded}
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(150, 200, 255, 0.4)"} onPress={() => { handleSelect(program)  }}>
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(10, 80, 150, 0.8)"} onPress={() => { handleSelect(program)  }} onFocus={() => setFocusedId(data.id)} hasTVPreferredFocus={!props.sidebarExpanded && data.index === 0 && focusedId !== data.id}>
         <Image style={{ height:DimensionHelper.hp("33%"), width:"100%", borderRadius: 8, }} resizeMode="cover" source={{ uri: program.image }} />
       </TouchableHighlight>
     )

@@ -11,6 +11,7 @@ export const LessonsScreen = (props: Props) => {
 
   const [lessons, setLessons] = React.useState<LessonInterface[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [focusedId, setFocusedId] = React.useState(null);
 
   const styles:any = {
     list: {
@@ -22,11 +23,10 @@ export const LessonsScreen = (props: Props) => {
       flex: 1,
       maxWidth: "33%",
       alignItems: "center",
-      padding: 5,
+      padding: 7,
       borderRadius: 10,
     }
   };
-
 
   const loadData = () => {
     ApiHelper.get("/lessons/public/study/" + props.study.id, "LessonsApi").then(data => { setLessons(data); setLoading(false); });
@@ -37,10 +37,10 @@ export const LessonsScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-
     const lesson = data.item as LessonInterface;
+
     return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(150, 200, 255, 0.4)"} onPress={() => { handleSelect(lesson)  }}>
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(10, 80, 150, 0.8)"} onPress={() => { handleSelect(lesson)  }}onFocus={() => setFocusedId(data.id)} hasTVPreferredFocus={data.index === 0 && focusedId !== data.id}>
         <View style={{width:"100%"}}>
           <Image style={{ height:DimensionHelper.hp("33%"), width:"100%", borderRadius: 8 }} resizeMode="cover" source={{ uri: lesson.image }} />
           <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{lesson.title}</Text>

@@ -20,11 +20,9 @@ type Props = {
 };
 
 export const NavWrapper = (props: Props) => {
-  // const [expanded, setExpanded] = useState(CachedData.navExpanded);
   const settingsRef = useRef(null);
   const browseRef = useRef(null);
   const animatedWidth = useRef(
-    // new Animated.Value(CachedData.navExpanded ? 22 : 8),
     new Animated.Value(props.sidebarExpanded ? 22 : 8),
   ).current;
 
@@ -33,22 +31,8 @@ export const NavWrapper = (props: Props) => {
     outputRange: ['8%', '22%'],
   });
 
-  // Change expanded state and animate sidebar width
-  // const changeExpanded = (expanded: boolean) => {
-  //   // CachedData.navExpanded = expanded;
-  //   // setExpanded(CachedData.navExpanded);
-  //   props.sidebarState(expanded);
-  //   Animated.timing(animatedWidth, {
-  //     toValue: expanded ? 22 : 8,
-  //     duration: 240,
-  //     easing: Easing.out(Easing.cubic),
-  //     useNativeDriver: false,
-  //   }).start();
-  // };
-
   useEffect(() => {
-    if (CachedData.currentScreen && !highlightedItem)
-      highlightedItem = CachedData.currentScreen;
+    if (props.sidebarExpanded && CachedData.currentScreen) highlightTab(CachedData.currentScreen);
 
     Animated.timing(animatedWidth, {
       toValue: props.sidebarExpanded ? 22 : 8,
@@ -69,7 +53,6 @@ export const NavWrapper = (props: Props) => {
 
   // TV-specific: useTVEventHandler catches DPAD events reliably on TV platforms
   const tvEventHandler = (evt: any) => {
-    // evt.eventType may be 'right', 'left', etc. Some platforms include keyCode
     const eventType = evt && (evt.eventType || evt.eventName || evt.type);
     const keyCode = evt && (evt.keyCode || evt.which);
     const isRight = eventType === 'right' || keyCode === 22;
@@ -79,24 +62,25 @@ export const NavWrapper = (props: Props) => {
   };
   useTVEventHandler(tvEventHandler as any);
 
-  // width managed by animated value
-
   const logo = props.sidebarExpanded
     ? require('../images/logo-sidebar.png')
     : require('../images/logo-icon.png');
 
   let highlightedItem = 'browse';
-  switch (CachedData.currentScreen) {
-    case 'selectRoom':
-    case 'selectChurch':
-    case 'download':
-    case 'player':
-      highlightedItem = 'church';
-      break;
-    case 'settings':
-      highlightedItem = 'settings';
-      break;
-  }
+  const highlightTab = (tab: string) => {
+    switch (tab) {
+      case 'selectRoom':
+      case 'selectChurch':
+      case 'download':
+      case 'player':
+        highlightedItem = 'church';
+        break;
+      case 'settings':
+        highlightedItem = 'settings';
+        break;
+    }
+  };
+  highlightTab(CachedData.currentScreen);
 
   const getContent = () => (
     <View
