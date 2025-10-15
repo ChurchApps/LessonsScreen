@@ -4,7 +4,7 @@ import { ApiHelper, ProgramInterface, DimensionHelper } from "@churchapps/mobile
 import { Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
 
-type Props = { navigateTo(page: string, data?:any): void; };
+type Props = { navigateTo(page: string, data?:any): void; sidebarState: (state: boolean) => void; sidebarExpanded?: boolean; };
 
 export const ProgramsScreen = (props: Props) => {
 
@@ -21,7 +21,8 @@ export const ProgramsScreen = (props: Props) => {
       flex: 1,
       maxWidth: "33%",
       alignItems: "center",
-      padding: 10,
+      padding: 5,
+      borderRadius: 10,
     }
   };
 
@@ -38,8 +39,9 @@ export const ProgramsScreen = (props: Props) => {
 
     const program = data.item as ProgramInterface;
     return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(program)  }} hasTVPreferredFocus={data.index===0}>
-        <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
+      // hasTVPreferredFocus={data.index === 0 && !props.sidebarExpanded}
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(150, 200, 255, 0.4)"} onPress={() => { handleSelect(program)  }}>
+        <Image style={{ height:DimensionHelper.hp("33%"), width:"100%", borderRadius: 8, }} resizeMode="cover" source={{ uri: program.image }} />
       </TouchableHighlight>
     )
   }
@@ -62,7 +64,8 @@ export const ProgramsScreen = (props: Props) => {
 
 
   const handleBack = () => {
-    props.navigateTo("splash");
+    // props.navigateTo("splash");
+    props.sidebarState(true)
   }
 
   const destroy = () => {

@@ -22,7 +22,8 @@ export const LessonsScreen = (props: Props) => {
       flex: 1,
       maxWidth: "33%",
       alignItems: "center",
-      padding: 10,
+      padding: 5,
+      borderRadius: 10,
     }
   };
 
@@ -39,9 +40,9 @@ export const LessonsScreen = (props: Props) => {
 
     const lesson = data.item as LessonInterface;
     return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(lesson)  }} hasTVPreferredFocus={data.index===0}>
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(150, 200, 255, 0.4)"} onPress={() => { handleSelect(lesson)  }}>
         <View style={{width:"100%"}}>
-          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: lesson.image }} />
+          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%", borderRadius: 8 }} resizeMode="cover" source={{ uri: lesson.image }} />
           <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{lesson.title}</Text>
         </View>
       </TouchableHighlight>

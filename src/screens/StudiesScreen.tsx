@@ -22,7 +22,8 @@ export const StudiesScreen = (props: Props) => {
       flex: 1,
       maxWidth: "33%",
       alignItems: "center",
-      padding: 10,
+      padding: 5,
+      borderRadius: 10,
     }
   };
 
@@ -38,9 +39,9 @@ export const StudiesScreen = (props: Props) => {
 
     const study = data.item as StudyInterface;
     return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(study)  }} hasTVPreferredFocus={data.index===0}>
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(150, 200, 255, 0.4)"} onPress={() => { handleSelect(study)  }}>
         <View style={{width:"100%"}}>
-          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
+          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%", borderRadius: 8 }} resizeMode="cover" source={{ uri: study.image }} />
           <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{study.name}</Text>
         </View>
       </TouchableHighlight>
