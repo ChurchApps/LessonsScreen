@@ -21,8 +21,9 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
 
   const handleFocusChange = (focused: boolean) => {
     if (!focused) {
+      // prevent highlighting again when deselecting
       setHighlighted(false)
-      setTimeout(() => setHighlighted(true), 1000); // Keep highlighted state for a short while after blur to avoid flicker when quickly moving between items
+      setTimeout(() => setHighlighted(true), 200);
     }
     
     // Only expand the sidebar when an item receives focus. Don't collapse on blur here
