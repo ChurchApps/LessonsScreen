@@ -11,6 +11,7 @@ export const StudiesScreen = (props: Props) => {
 
   const [studies, setStudies] = React.useState<StudyInterface[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [focusedId, setFocusedId] = React.useState(null);
 
   const styles:any = {
     list: {
@@ -22,7 +23,8 @@ export const StudiesScreen = (props: Props) => {
       flex: 1,
       maxWidth: "33%",
       alignItems: "center",
-      padding: 10,
+      padding: 7,
+      borderRadius: 10,
     }
   };
 
@@ -35,12 +37,12 @@ export const StudiesScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-
     const study = data.item as StudyInterface;
+
     return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(study)  }} hasTVPreferredFocus={data.index===0}>
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(10, 80, 150, 0.8)"} onPress={() => { handleSelect(study)  }} onFocus={() => setFocusedId(data.id)} hasTVPreferredFocus={data.index === 0 && focusedId !== data.id}>
         <View style={{width:"100%"}}>
-          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: study.image }} />
+          <Image style={{ height:DimensionHelper.hp("33%"), width:"100%", borderRadius: 8 }} resizeMode="cover" source={{ uri: study.image }} />
           <Text style={{ ...Styles.smallWhiteText, alignSelf: "center" }}>{study.name}</Text>
         </View>
       </TouchableHighlight>

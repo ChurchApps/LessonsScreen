@@ -5,7 +5,11 @@ import { ApiHelper, ClassroomInterface, DimensionHelper } from "@churchapps/mobi
 import { CachedData, Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
 
-type Props = { navigateTo(page: string): void; };
+type Props = {
+  navigateTo(page: string): void; 
+  sidebarState(state: boolean): void;
+  sidebarExpanded?: boolean;
+};
 
 export const SelectRoomScreen = (props: Props) => {
   const [rooms, setRooms] = React.useState<ClassroomInterface[]>([]);
@@ -58,6 +62,7 @@ export const SelectRoomScreen = (props: Props) => {
 
   const handleBack = () => {
     //props.navigateTo("selectChurch");
+    props.sidebarState(true);
   }
 
   const destroy = () => {
