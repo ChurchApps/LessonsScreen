@@ -8,7 +8,7 @@ type Props = { navigateTo(page: string): void; };
 
 export const SplashScreen = (props: Props) => {
   const checkStorage = async () => {
-    Utilities.trackEvent("Splash Screen");
+    // Utilities.trackEvent("Splash Screen");
     CachedData.church = await CachedData.getAsyncStorage("church");
     CachedData.resolution = await CachedData.getAsyncStorage("resolution") || "720";
 

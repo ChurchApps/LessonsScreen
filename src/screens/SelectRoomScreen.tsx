@@ -70,7 +70,7 @@ export const SelectRoomScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Select Room Screen");
+    // Utilities.trackEvent("Select Room Screen");
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     setTimeout(() => { setOfflineCheck(true) }, 5000);
     loadData();

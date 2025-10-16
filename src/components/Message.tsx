@@ -8,7 +8,8 @@ import Video from "react-native-video";
 type Props = {
   file: LessonPlaylistFileInterface,
   downloaded: boolean,
-  paused: boolean
+  paused: boolean,
+  onProgress?: (data: { currentTime: number; playableDuration: number }) => void
 };
 
 
@@ -19,6 +20,10 @@ export const Message = (props: Props) => {
   React.useEffect(() => {
     setInternalPaused(props.paused);
   }, [props.paused]);
+
+  React.useEffect(() => {
+    setInternalPaused(props.paused);
+  }, [props.file]);
 
   // const getMessageType = () => {
   //   const parts = props.file.url.split("?")[0].split(".");
@@ -61,7 +66,17 @@ export const Message = (props: Props) => {
 
   const getVideo = () => {
     const filePath = (props.downloaded) ? "file://" + CachedData.getFilePath(props.file.url) : props.file.url;
-    return (<Video source={{ uri: filePath }} repeat={props.file.loopVideo} resizeMode="cover" style={{ width: DimensionHelper.wp("100%"), height: DimensionHelper.hp("100%") }} poster={(props.downloaded) ? "" : "https://lessons.church/images/loading.png"} paused={internalPaused} />)
+    return (<Video
+      source={{ uri: filePath }}
+      repeat={props.file.loopVideo}
+      resizeMode="cover"
+      style={{ width: DimensionHelper.wp("100%"), height: DimensionHelper.hp("100%") }}
+      poster={(props.downloaded) ? "" : "https://lessons.church/images/loading.png"}
+      paused={internalPaused}
+      playInBackground={false}
+      playWhenInactive={false}
+      onProgress={onProgress}
+    />)
   }
 
   const getImage = () => {

@@ -1,25 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "lib": [
-      "es6",
-      "DOM"
-    ],
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "outDir": "./dist",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "strictNullChecks": false,
-    "declaration": true,
-    "noUnusedLocals": true,
-    "allowJs": true
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  "compilerOptions": {},
+  "extends": "expo/tsconfig.base"
 }

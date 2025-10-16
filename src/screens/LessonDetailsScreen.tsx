@@ -10,7 +10,7 @@ export const LessonDetailsScreen = (props: Props) => {
   const [venues, setVenues] = React.useState<VenueInterface[]>([]);
 
   const handleStart = (venueId:string) => {
-    Utilities.trackEvent("Stream Lesson", { lesson: props.lesson?.title });
+    // Utilities.trackEvent("Stream Lesson", { lesson: props.lesson?.title });
     let url = "/venues/playlist/" + venueId;
     url += "?resolution=" + CachedData.resolution;
     ApiHelper.get(url, "LessonsApi").then(data => {
@@ -65,7 +65,7 @@ export const LessonDetailsScreen = (props: Props) => {
   }
 
   const init = () => {
-    Utilities.trackEvent("Lesson Details Screen");
+    // Utilities.trackEvent("Lesson Details Screen");
     BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     loadData();
     return destroy;
