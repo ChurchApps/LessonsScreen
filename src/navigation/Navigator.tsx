@@ -16,6 +16,7 @@ export const Navigator = () => {
   const [currentScreen, setCurrentScreen] = React.useState("splash");
   const [currentData, setCurrentData] = React.useState<any>(null);
   const [dimensions, setDimensions] = React.useState("1,1");
+  const [sidebarExpanded, setSidebarState] = React.useState(false);
 
   const handleNavigate = (page: string, data?:any) => {
     if (data) setCurrentData(data); else setCurrentData(null);
@@ -23,17 +24,21 @@ export const Navigator = () => {
     CachedData.currentScreen = page;
   }
 
+  const sidebarState = (state: boolean = true) => {
+    setSidebarState(state);
+  }
+
   let screen = <></>
   switch (currentScreen) {
     case "splash": screen = (<SplashScreen navigateTo={handleNavigate} />); break;
-    case "settings": screen = (<SettingsScreen navigateTo={handleNavigate} />); break;
-    case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} />); break;
-    case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} />); break;
+    case "settings": screen = (<SettingsScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
+    case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
+    case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
     case "offline": screen = (<OfflineScreen navigateTo={handleNavigate} />); break;
     case "download": screen = (<DownloadScreen navigateTo={handleNavigate} />); break;
     case "player": screen = (<PlayerScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} lesson={currentData?.lesson} />); break;
 
-    case "programs": screen = (<ProgramsScreen navigateTo={handleNavigate} />); break;
+    case "programs": screen = (<ProgramsScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
     case "studies": screen = (<StudiesScreen navigateTo={handleNavigate} program={currentData?.program} />); break;
     case "lessons": screen = (<LessonsScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} />); break;
     case "lessonDetails": screen = (<LessonDetailsScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} lesson={currentData?.lesson} />); break;
@@ -68,7 +73,7 @@ export const Navigator = () => {
     </View>)
   } else {
     return (<View style={Styles.maincontainer}>
-      <NavWrapper screen={screen} navigateTo={handleNavigate} />
+      <NavWrapper screen={screen} navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />
     </View>);
   }
 
