@@ -4,12 +4,13 @@ import { ApiHelper, ProgramInterface, DimensionHelper } from "@churchapps/mobile
 import { Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
 
-type Props = { navigateTo(page: string, data?:any): void; };
+type Props = { navigateTo(page: string, data?:any): void; sidebarState: (state: boolean) => void; sidebarExpanded?: boolean; };
 
 export const ProgramsScreen = (props: Props) => {
 
   const [programs, setPrograms] = React.useState<ProgramInterface[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [focusedId, setFocusedId] = React.useState(null);
 
   const styles:any = {
     list: {
@@ -21,7 +22,8 @@ export const ProgramsScreen = (props: Props) => {
       flex: 1,
       maxWidth: "33%",
       alignItems: "center",
-      padding: 10,
+      padding: 7,
+      borderRadius: 10,
     }
   };
 
@@ -35,11 +37,11 @@ export const ProgramsScreen = (props: Props) => {
   }
 
   const getCard = (data:any) => {
-
     const program = data.item as ProgramInterface;
+
     return (
-      <TouchableHighlight style={{ ...styles.item }} underlayColor={"#03a9f4"} onPress={() => { handleSelect(program)  }} hasTVPreferredFocus={data.index===0}>
-        <Image style={{ height:DimensionHelper.hp("33%"), width:"100%" }} resizeMode="cover" source={{ uri: program.image }} />
+      <TouchableHighlight style={{ ...styles.item }} underlayColor={"rgba(10, 80, 150, 0.8)"} onPress={() => { handleSelect(program)  }} onFocus={() => setFocusedId(data.id)} hasTVPreferredFocus={!props.sidebarExpanded && data.index === 0 && focusedId !== data.id}>
+        <Image style={{ height:DimensionHelper.hp("33%"), width:"100%", borderRadius: 8, }} resizeMode="cover" source={{ uri: program.image }} />
       </TouchableHighlight>
     )
   }
@@ -62,7 +64,8 @@ export const ProgramsScreen = (props: Props) => {
 
 
   const handleBack = () => {
-    props.navigateTo("splash");
+    // props.navigateTo("splash");
+    props.sidebarState(true)
   }
 
   const destroy = () => {
