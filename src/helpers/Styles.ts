@@ -8,6 +8,7 @@ export const Styles = StyleSheet.create({
   splashImage: { maxWidth:DimensionHelper.wp("70%"), alignSelf: "center" },
 
   maincontainer: { alignItems: "center", justifyContent: "center", flex: 1, backgroundColor: "#000000" },
+  navAccent: { backgroundColor: "#000000" },
 
   H1: { color: "#FFFFFF", fontSize: DimensionHelper.hp("4.5%"), fontFamily: StyleConstants.RobotoBold },
   H2: { color: "#FFFFFF", fontSize: DimensionHelper.wp("3.5%"), fontFamily: StyleConstants.RobotoBold, fontWeight: "bold" },
