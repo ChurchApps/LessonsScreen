@@ -1,5 +1,17 @@
 pluginManagement {
-    includeBuild(new File(["node", "--print", "require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().toString())
+    def rnGradlePluginPath = new File(["node", "--print", "require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile()
+    includeBuild(rnGradlePluginPath.toString())
+
+    // Include expo-modules-autolinking gradle-plugin if it exists
+    try {
+        def autolininkingDir = new File(["node", "--print", "require.resolve('expo-modules-autolinking/package.json')"].execute(null, rootDir).text.trim()).getParentFile()
+        def expoGradlePlugin = new File(autolininkingDir, "gradle-plugin")
+        if (expoGradlePlugin.exists()) {
+            includeBuild(expoGradlePlugin)
+        }
+    } catch (Exception e) {
+        // expo-modules-autolinking gradle-plugin not found, this is ok for older versions
+    }
 }
 plugins { id("com.facebook.react.settings") }
 
