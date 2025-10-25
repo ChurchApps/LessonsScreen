@@ -1,8 +1,6 @@
-
-import Analytics from "appcenter-analytics";
 import { CachedData } from "./CachedData";
 
-
+// TODO: Replace with your chosen analytics solution (Firebase Analytics, etc.)
 export class Utilities {
 
   static trackEvent(name: string, data?: any) {
@@ -12,7 +10,11 @@ export class Utilities {
     props.church = CachedData.church?.name;
     props.classRoom = CachedData.room?.name;
     props.appVersion = pkg.version;
-    Analytics.trackEvent(name, props);
+
+    // Analytics implementation removed (AppCenter shutdown)
+    // Add your analytics provider here:
+    // Example: analytics().logEvent(name, props);
+    console.log('Analytics Event:', name, props);
   }
 
 
