@@ -23,7 +23,7 @@
       },
       "package": "church.lessons.screen",
       "versionCode": 4194313,
-      "runtimeVersion": "2.4.0"
+      "runtimeVersion": "2.7.0"
     },
     "ios": {
       "splash": {
