@@ -1,6 +1,6 @@
 {
   "name": "LessonsScreen",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",

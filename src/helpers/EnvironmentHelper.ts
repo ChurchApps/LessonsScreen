@@ -28,7 +28,7 @@ export class EnvironmentHelper {
 
   // NOTE - None of these values are secret
   static initProd = () => {
-    EnvironmentHelper.MembershipApi = "https://membershipapi.churchapps.org";
+    EnvironmentHelper.MembershipApi = "https://api.churchapps.org/membership";
     EnvironmentHelper.LessonsApi = "https://api.lessons.church";
   }
 
