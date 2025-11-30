@@ -15,6 +15,14 @@
             "topShelfWide2x": "./assets/images/icon-4640x1440.png"
           }
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "lessons-screen",
+          "organization": "churchapps"
+        }
       ]
     ],
     "android": {
@@ -22,8 +30,8 @@
         "image": "./assets/images/icon-1920x720.png"
       },
       "package": "church.lessons.screen",
-      "versionCode": 4194313,
-      "runtimeVersion": "2.7.0"
+      "versionCode": 4194314,
+      "runtimeVersion": "2.8.0"
     },
     "ios": {
       "splash": {

@@ -1,7 +1,8 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require('expo/metro-config');
+const {
+  getSentryExpoConfig
+} = require("@sentry/react-native/metro");
 
-const config = getDefaultConfig(__dirname);
+const config = getSentryExpoConfig(__dirname);
 
 // When enabled, the optional code below will allow Metro to resolve
 // and bundle source files with TV-specific extensions
