@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {DimensionHelper, StyleConstants} from '@churchapps/mobilehelper';
+import {DimensionHelper} from './DimensionHelper';
+import {StyleConstants} from './StyleConstants';
 
 export const Styles = StyleSheet.create({
   //Splash

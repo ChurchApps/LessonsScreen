@@ -1,7 +1,7 @@
 //import AsyncStorage from "@react-native-community/async-storage";
 import React, { useEffect } from "react"
 import {  View, Text, TouchableHighlight,  BackHandler } from "react-native"
-import {  DimensionHelper } from "@churchapps/mobilehelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
 import { CachedData, Styles } from "../helpers";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -11,18 +11,15 @@ export const OfflineScreen = (props: Props) => {
   const [refreshKey, setRefreshKey] = React.useState(0);
 
   console.log(refreshKey)
-  const destroy = () => {
-    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
-  }
 
   const init = () => {
-    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     CachedData.getAsyncStorage("messageFiles").then((cached: any) => {
       CachedData.messageFiles = cached;
-      setRefreshKey(refreshKey + 1);
+      setRefreshKey(prev => prev + 1);
       console.log("messagefiles", cached);
-    });
-    return destroy;
+    }).catch((err) => console.error("Failed to load cached messageFiles:", err));
+    return () => backHandler.remove();
   }
 
   const handleBack = () => {

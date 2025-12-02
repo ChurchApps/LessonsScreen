@@ -3,7 +3,7 @@ import { Navigator } from "./src/navigation/Navigator";
 
 import { EnvironmentHelper } from "./src/helpers/EnvironmentHelper";
 import { LogBox } from "react-native";
-import { ErrorHelper } from "@churchapps/mobilehelper";
+import { ErrorHelper } from "./src/helpers/ErrorHelper";
 import * as Updates from "expo-updates";
 import * as Sentry from '@sentry/react-native';
 

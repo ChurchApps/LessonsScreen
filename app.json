@@ -35,7 +35,7 @@
     ],
     "android": {
       "package": "church.lessons.screen",
-      "versionCode": 4194327,
+      "versionCode": 4194341,
       "permissions": [
         "android.permission.INTERNET",
         "android.permission.READ_EXTERNAL_STORAGE",

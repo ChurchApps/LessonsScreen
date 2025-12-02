@@ -1,4 +1,4 @@
-import {DimensionHelper} from '@churchapps/mobilehelper';
+import {DimensionHelper} from '../helpers/DimensionHelper';
 import {
   Animated,
   Easing,

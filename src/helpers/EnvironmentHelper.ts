@@ -1,5 +1,10 @@
+// Uncomment to use environment variables from .env file
 // import { ACCESS_API, LESSONS_API } from "@env"
-import { ApiHelper } from "@churchapps/mobilehelper"
+import { ApiHelper } from "./ApiHelper";
+
+// Declare these as fallbacks when not using @env imports
+declare const ACCESS_API: string | undefined;
+declare const LESSONS_API: string | undefined;
 
 
 

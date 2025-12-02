@@ -1,8 +1,9 @@
 import React, { useEffect } from "react"
 import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native"
-import { ApiHelper, ClassroomInterface, LessonPlaylistFileInterface, LessonPlaylistInterface } from "@churchapps/mobilehelper";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
+import { LessonPlaylistFileInterface, LessonPlaylistInterface } from "../interfaces";
 import { CachedData, Styles, Utilities } from "../helpers";
-import { DimensionHelper } from "@churchapps/mobilehelper";
 import LinearGradient from "react-native-linear-gradient";
 
 type Props = { navigateTo(page: string): void; };
@@ -50,8 +51,8 @@ export const DownloadScreen = (props: Props) => {
           <Text style={Styles.H2}>{playlist.lessonName}:</Text>
           <Text style={Styles.H3}>{playlist.lessonTitle}</Text>
           <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{playlist.lessonDescription}</Text>
-          <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: DimensionHelper.wp("14%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
-            <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Start Lesson</Text>
+          <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: DimensionHelper.wp("18%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart() }} hasTVPreferredFocus={true}>
+            <Text style={{ ...Styles.smallWhiteText, width: "100%" }} numberOfLines={1}>Start Lesson</Text>
           </TouchableHighlight>
           {getVersion()}
         </>);
@@ -63,8 +64,8 @@ export const DownloadScreen = (props: Props) => {
             <Text style={Styles.H2}>{playlist.lessonName}:</Text>
             <Text style={Styles.H3}>{playlist.lessonTitle}</Text>
             <Text style={{...Styles.smallerWhiteText, color:"#CCCCCC" }}>{playlist.lessonDescription}</Text>
-            <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#999999", width: DimensionHelper.wp("28%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#999999"}>
-              <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>Downloading item {cachedItems} of {totalItems}</Text>
+            <TouchableHighlight style={{ ...Styles.smallMenuClickable, backgroundColor: "#999999", width: DimensionHelper.wp("35%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#999999"}>
+              <Text style={{ ...Styles.smallWhiteText, width: "100%" }} numberOfLines={1}>Downloading item {cachedItems} of {totalItems}</Text>
             </TouchableHighlight>
             {getVersion()}
           </>
@@ -75,7 +76,9 @@ export const DownloadScreen = (props: Props) => {
 
   const loadData = () => {
     setLoading(true);
-    CachedData.getAsyncStorage("playlist").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setPlaylist(playlist) });
+    CachedData.getAsyncStorage("playlist").then((cached: LessonPlaylistInterface) => {
+      if (cached) setPlaylist(cached);
+    }).catch((err) => console.error("Failed to load cached playlist:", err));
 
     const date = new Date();
     let playlistUrl = "/classrooms/playlist/" + CachedData.room.id;
@@ -85,7 +88,7 @@ export const DownloadScreen = (props: Props) => {
     ApiHelper.get(playlistUrl, "LessonsApi").then(data => {
       if (!playlist || JSON.stringify(playlist) !== JSON.stringify(data)) {
         setPlaylist(data);
-        CachedData.setAsyncStorage("playlist", playlist);
+        CachedData.setAsyncStorage("playlist", data);
       }
     }).catch((ex) => {
       if (ex.toString().indexOf("Network request failed") > -1) props.navigateTo("offline");
@@ -107,29 +110,27 @@ export const DownloadScreen = (props: Props) => {
     }
   }
 
-  const destroy = () => {
-    if (refreshTimer) window.clearInterval(refreshTimer);
-    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
+  const handleBack = () => {
+    props.navigateTo("selectRoom");
   }
 
   const init = () => {
     // Utilities.trackEvent("Download Screen");
-    refreshTimer = window.setInterval(() => {
+    const timer = setInterval(() => {
       setRefreshKey(new Date().getTime().toString());
     }, 60 * 60 * 1000);
-    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     setTimeout(() => { setOfflineCheck(true) }, 5000);
-    return destroy;
-  }
-
-  const handleBack = () => {
-    props.navigateTo("selectRoom");
+    return () => {
+      clearInterval(timer);
+      backHandler.remove();
+    };
   }
 
   useEffect(init, [])
   useEffect(loadData, [refreshKey])
   useEffect(startDownload, [playlist])
-  useEffect(() => { if (offlineCheck && loading) props.navigateTo("offline"); }, [offlineCheck] )
+  useEffect(() => { if (offlineCheck && loading) props.navigateTo("offline"); }, [offlineCheck])
 
   const background = {uri: playlist?.lessonImage || "about:blank"};
 

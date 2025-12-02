@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import { View, Text, TouchableHighlight, BackHandler, ImageBackground } from "react-native"
-import { ApiHelper, LessonInterface, LessonPlaylistFileInterface, LessonPlaylistInterface, ProgramInterface, StudyInterface, VenueInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
+import { LessonInterface, LessonPlaylistFileInterface, LessonPlaylistInterface, ProgramInterface, StudyInterface, VenueInterface } from "../interfaces";
 import { CachedData, Styles, Utilities } from "../helpers";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -60,19 +62,15 @@ export const LessonDetailsScreen = (props: Props) => {
 
   }
 
-  const destroy = () => {
-    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
+  const handleBack = () => {
+    props.navigateTo("lessons", {program: props.program, study: props.study});
   }
 
   const init = () => {
     // Utilities.trackEvent("Lesson Details Screen");
-    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     loadData();
-    return destroy;
-  }
-
-  const handleBack = () => {
-    props.navigateTo("lessons", {program: props.program, study: props.study});
+    return () => backHandler.remove();
   }
 
   useEffect(init, [])

@@ -1,4 +1,4 @@
-import {DimensionHelper} from '@churchapps/mobilehelper';
+import {DimensionHelper} from '../helpers/DimensionHelper';
 import {useEffect, useState} from 'react';
 import {
   BackHandler,
@@ -34,9 +34,8 @@ export const SettingsScreen = (props: Props) => {
 
   useEffect(() => {
     Utilities.trackEvent('Mode Screen');
-    BackHandler.addEventListener('hardwareBackPress', handleBack);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', handleBack);
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBack);
+    return () => backHandler.remove();
   }, []);
 
   //return (<Text style={{ ...Styles.smallWhiteText, flex: 1, alignSelf: "center", textAlign: "right", paddingRight: 10 }}>This is a test of menu header text that just goes on and on. This is a test of menu header text that just goes on and on</Text>)

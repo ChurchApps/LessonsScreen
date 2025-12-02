@@ -1,5 +1,5 @@
-import {DimensionHelper} from '@churchapps/mobilehelper';
-import React, { useState } from 'react';
+import {DimensionHelper} from '../helpers/DimensionHelper';
+import React, { useState, useRef } from 'react';
 import {Text, TouchableHighlight, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Styles} from '../helpers';
@@ -17,23 +17,23 @@ type Props = {
 
 //eslint-disable-next-line
 export const NavItem = React.forwardRef((props: Props, ref) => {
-  const [highlighted, setHighlighted] = useState(true);
+  // Track if this is the initial mount - only use hasTVPreferredFocus on first render
+  const isInitialMount = useRef(true);
+  const [, forceUpdate] = useState(0);
 
   const handleFocusChange = (focused: boolean) => {
-    if (!focused) {
-      // prevent highlighting again when deselecting
-      setHighlighted(false)
-      setTimeout(() => setHighlighted(true), 200);
+    // After first focus event, disable hasTVPreferredFocus to allow normal navigation
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      forceUpdate(n => n + 1);
     }
-    
-    // Only expand the sidebar when an item receives focus. Don't collapse on blur here
-    if (focused) props.setExpanded(true);
-    // setHighlighted(focused);
-    if (props.onPress) props.onPress();
+    // Expand sidebar when NavItem receives focus (user navigated left to sidebar)
+    if (focused) {
+      props.setExpanded(true);
+    }
   };
 
   let color = props.selected ? '#03a9f4' : '#94a3b8';
-  // if (highlighted) color = '#ffffff';
 
   const iconContainer = {
     width: DimensionHelper.wp('8%'),
@@ -60,11 +60,11 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
           ? 'rgba(3,169,244,0.08)'
           : 'transparent',
       }}
-      hasTVPreferredFocus={props.expanded && props.selected && highlighted}
-      onFocus={() => {        
+      hasTVPreferredFocus={isInitialMount.current && props.expanded && props.selected}
+      onFocus={() => {
         handleFocusChange(true);
       }}
-      onBlur={() => {        
+      onBlur={() => {
         handleFocusChange(false);
       }}
       ref={ref as any}
@@ -88,6 +88,7 @@ export const NavItem = React.forwardRef((props: Props, ref) => {
         </View>
         {props.expanded && (
           <Text
+            numberOfLines={1}
             style={{
               ...Styles.smallWhiteText,
               color: color,
