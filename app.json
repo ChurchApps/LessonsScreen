@@ -1,10 +1,18 @@
 {
   "expo": {
+    "name": "Lessons.church",
+    "slug": "LessonsScreen",
+    "version": "3.0.0",
+    "orientation": "landscape",
+    "icon": "./assets/images/icon.png",
+    "scheme": "church.lessons.screen",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "plugins": [
       [
         "@react-native-tvos/config-tv",
         {
-          "androidTVBanner": "./assets/images/icon-400x240.png",
+          "androidTVBanner": "./assets/images/tv_banner.png",
           "appleTVImages": {
             "icon": "./assets/images/icon-1280x768.png",
             "iconSmall": "./assets/images/icon-400x240.png",
@@ -20,38 +28,41 @@
         "@sentry/react-native/expo",
         {
           "url": "https://sentry.io/",
-          "project": "lessons-screen",
-          "organization": "churchapps"
+          "project": "lessonsscreen",
+          "organization": "church-apps"
         }
       ]
     ],
     "android": {
-      "splash": {
-        "image": "./assets/images/icon-1920x720.png"
-      },
       "package": "church.lessons.screen",
-      "versionCode": 4194314,
-      "runtimeVersion": "2.8.0"
+      "versionCode": 4194327,
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "edgeToEdgeEnabled": true,
+      "splash": {
+        "image": "./assets/images/splash.png"
+      }
     },
     "ios": {
       "splash": {
-        "image": "./assets/images/icon-1920x720.png"
-      },
-      "runtimeVersion": {
-        "policy": "appVersion"
+        "image": "./assets/images/splash.png"
       }
     },
-    "newArchEnabled": true,
-    "name": "LessonsScreen",
-    "slug": "LessonsScreen",
-    "owner": "churchapps",
     "extra": {
       "eas": {
         "projectId": "3bba64bf-afb5-45af-8170-653bd011a340"
       }
     },
+    "runtimeVersion": "3.0.0",
     "updates": {
-      "url": "https://u.expo.dev/3bba64bf-afb5-45af-8170-653bd011a340"
-    }
+      "url": "https://u.expo.dev/3bba64bf-afb5-45af-8170-653bd011a340",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 5000
+    },
+    "owner": "churchapps"
   }
 }
