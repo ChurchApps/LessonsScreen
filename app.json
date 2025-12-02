@@ -28,8 +28,8 @@
         "@sentry/react-native/expo",
         {
           "url": "https://sentry.io/",
-          "project": "lessonsscreen",
-          "organization": "church-apps"
+          "project": "lessons-screen",
+          "organization": "churchapps"
         }
       ]
     ],
