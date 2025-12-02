@@ -11,11 +11,9 @@ import {
   BackHandler,
   useTVEventHandler,
 } from 'react-native';
-import {
-  ApiHelper,
-  ChurchInterface,
-  DimensionHelper,
-} from '@churchapps/mobilehelper';
+import { ApiHelper } from '../helpers/ApiHelper';
+import { DimensionHelper } from '../helpers/DimensionHelper';
+import { ChurchInterface } from '../interfaces';
 import {CachedData, Styles, Utilities} from '../helpers';
 import {MenuHeader} from '../components';
 
@@ -35,7 +33,7 @@ export const SelectChurchScreen = (props: Props) => {
 
   const textRef = React.useRef<TextInput | null>(null);
 
-  const searchApiCall = (text: String) => {
+  const searchApiCall = (text: string) => {
     if (text.length < 4) {
       setChurches([]);
     } else {
@@ -46,6 +44,9 @@ export const SelectChurchScreen = (props: Props) => {
       ).then(data => {
         setLoading(false);
         setChurches(data);
+      }).catch((err) => {
+        setLoading(false);
+        console.error("Failed to search churches:", err);
       });
     }
   };
@@ -109,13 +110,6 @@ export const SelectChurchScreen = (props: Props) => {
     props.sidebarState(true);
   };
 
-  const destroy = () => {
-    BackHandler.removeEventListener('hardwareBackPress', () => {
-      handleBack();
-      return true;
-    });
-  };
-
   const init = () => {
     Utilities.trackEvent('Select Church Screen');
     if (textRef.current && !props.sidebarExpanded)
@@ -123,11 +117,11 @@ export const SelectChurchScreen = (props: Props) => {
         setAutoFocus(true);
       }, 1000);
 
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       handleBack();
       return true;
     });
-    return destroy;
+    return () => backHandler.remove();
   };
 
   useEffect(() => {

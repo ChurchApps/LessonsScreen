@@ -6,7 +6,7 @@ import { StudiesScreen } from "../screens/StudiesScreen";
 import { LessonsScreen } from "../screens/LessonsScreen";
 import { LessonDetailsScreen } from "../screens/LessonDetailsScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
-import { DimensionHelper } from "@churchapps/mobilehelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
 import { View } from "react-native";
 import { NavWrapper } from "./NavWrapper";
 import { OfflineScreen } from "../screens/OfflineScreen";

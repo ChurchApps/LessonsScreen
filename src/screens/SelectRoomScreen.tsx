@@ -1,7 +1,9 @@
 //import AsyncStorage from "@react-native-community/async-storage";
 import React, { useEffect } from "react"
 import {  View, Text, FlatList, TouchableHighlight, ListRenderItem, ActivityIndicator, BackHandler } from "react-native"
-import { ApiHelper, ClassroomInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
+import { ClassroomInterface } from "../interfaces";
 import { CachedData, Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
 
@@ -46,13 +48,15 @@ export const SelectRoomScreen = (props: Props) => {
   }
 
   const loadData = async () => {
-    CachedData.getAsyncStorage("rooms").then((cached: ClassroomInterface[]) => { if (cached?.length > 0) setRooms(cached) });
+    CachedData.getAsyncStorage("rooms").then((cached: ClassroomInterface[]) => {
+      if (cached?.length > 0) setRooms(cached);
+    }).catch((err) => console.error("Failed to load cached rooms:", err));
     setLoading(true);
 
     try {
       const data = await ApiHelper.get("/classrooms/public/church/" + CachedData.church.id, "LessonsApi")
       setRooms(data);
-      CachedData.setAsyncStorage("rooms", rooms);
+      CachedData.setAsyncStorage("rooms", data);
     } catch (ex) {
       if (ex.toString().indexOf("Network request failed") > -1) props.navigateTo("offline");
     }
@@ -65,16 +69,12 @@ export const SelectRoomScreen = (props: Props) => {
     props.sidebarState(true);
   }
 
-  const destroy = () => {
-    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
-  }
-
   const init = () => {
     // Utilities.trackEvent("Select Room Screen");
-    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     setTimeout(() => { setOfflineCheck(true) }, 5000);
     loadData();
-    return destroy;
+    return () => backHandler.remove();
   }
 
   useEffect(init, [])

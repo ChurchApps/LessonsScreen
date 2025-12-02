@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import { Image, View, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
-import { ApiHelper, ProgramInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
+import { ProgramInterface } from "../interfaces";
 import { Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
 
@@ -68,15 +70,11 @@ export const ProgramsScreen = (props: Props) => {
     props.sidebarState(true)
   }
 
-  const destroy = () => {
-    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
-  }
-
   const init = () => {
     // Utilities.trackEvent("Program Screen");
     loadData();
-    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
-    return destroy;
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    return () => backHandler.remove();
   }
 
   useEffect(init, [])

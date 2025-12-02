@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { HWEvent, TVEventControl, BackHandler, useTVEventHandler, Pressable, TextInput, View, StyleSheet, Animated, Dimensions } from "react-native";
 // @ts-expect-error
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { LessonInterface, ProgramInterface, StudyInterface } from "@churchapps/mobilehelper";
+import { LessonInterface, ProgramInterface, StudyInterface } from "../interfaces";
 import { CachedData, Utilities } from "../helpers";
 import { PlayerHelper } from "../helpers/PlayerHelper";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -43,10 +43,10 @@ export const PlayerScreen = (props: Props) => {
   const init = () => {
     // Utilities.trackEvent("Player Screen");
     TVEventControl.enableTVMenuKey();
-    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
     return () => {
       TVEventControl.disableTVMenuKey();
-      BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
+      backHandler.remove();
     }
   }
 

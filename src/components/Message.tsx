@@ -1,8 +1,8 @@
 import React from "react"
 import { CachedData } from "../helpers";
-import { LessonPlaylistFileInterface } from "@churchapps/mobilehelper";
+import { LessonPlaylistFileInterface } from "../interfaces";
 import { Image } from "react-native";
-import { DimensionHelper } from "@churchapps/mobilehelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
 import Video from "react-native-video";
 
 type Props = {

@@ -1,7 +1,9 @@
 
 import React, { useEffect } from "react"
 import { Image, View, Text, FlatList, TouchableHighlight, ActivityIndicator, BackHandler } from "react-native"
-import { ApiHelper, LessonInterface, ProgramInterface, StudyInterface, DimensionHelper } from "@churchapps/mobilehelper";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { DimensionHelper } from "../helpers/DimensionHelper";
+import { LessonInterface, ProgramInterface, StudyInterface } from "../interfaces";
 import { Styles, Utilities } from "../helpers";
 import { MenuHeader } from "../components";
 
@@ -69,15 +71,11 @@ export const LessonsScreen = (props: Props) => {
     props.navigateTo("studies", {program: props.program});
   }
 
-  const destroy = () => {
-    BackHandler.removeEventListener("hardwareBackPress", () => { handleBack(); return true });
-  }
-
   const init = () => {
     // Utilities.trackEvent("Lessons Screen");
     loadData();
-    BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
-    return destroy;
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => { handleBack(); return true });
+    return () => backHandler.remove();
   }
 
   useEffect(init, [])
