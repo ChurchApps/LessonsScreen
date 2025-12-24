@@ -18,8 +18,8 @@ export class EnvironmentHelper {
 
   static init = () => {
     //EnvironmentHelper.initDev();
-    EnvironmentHelper.initStaging();
-    //EnvironmentHelper.initProd();
+    //EnvironmentHelper.initStaging();
+    EnvironmentHelper.initProd();
 
     ApiHelper.apiConfigs = [
       { keyName: "MembershipApi", url: EnvironmentHelper.MembershipApi, jwt: "", permisssions: [] },

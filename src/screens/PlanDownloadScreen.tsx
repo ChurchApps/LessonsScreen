@@ -28,12 +28,13 @@ export const PlanDownloadScreen = (props: Props) => {
 
     venueData.sections?.forEach(section => {
       section.actions?.forEach(action => {
-        if (action.actionType === "Play" || action.actionType === "Add-on") {
+        const actionType = action.actionType?.toLowerCase();
+        if (actionType === "play" || actionType === "add-on") {
           action.files?.forEach(file => {
             result.push({
               id: file.id,
               name: file.name,
-              url: file.streamUrl || file.url || "",
+              url: file.url || "",
               seconds: file.seconds || 10,
               fileType: file.fileType
             });
@@ -134,18 +135,23 @@ export const PlanDownloadScreen = (props: Props) => {
     try {
       // Load current plan by planTypeId
       const planTypeId = CachedData.planTypeId;
+      console.log("Loading plan for planTypeId:", planTypeId);
       if (!planTypeId) {
+        console.log("No planTypeId found, failing");
         setLoadFailed(true);
         setLoading(false);
         return;
       }
 
+      console.log("Fetching from DoingApi: /plans/public/current/" + planTypeId);
       const currentPlan: PlanInterface = await ApiHelper.getAnonymous(
         `/plans/public/current/${planTypeId}`,
         "DoingApi"
       );
+      console.log("Got plan:", JSON.stringify(currentPlan));
 
       if (!currentPlan) {
+        console.log("No plan returned, failing");
         setLoadFailed(true);
         setLoading(false);
         return;
@@ -156,14 +162,19 @@ export const PlanDownloadScreen = (props: Props) => {
       await CachedData.setAsyncStorage("currentPlan", currentPlan);
 
       // If plan has venue content, load it
+      console.log("Plan contentType:", currentPlan.contentType, "contentId:", currentPlan.contentId);
       if (currentPlan.contentType === "venue" && currentPlan.contentId) {
+        console.log("Fetching from LessonsApi: /venues/public/feed/" + currentPlan.contentId);
         const venueData: FeedVenueInterface = await ApiHelper.getAnonymous(
           `/venues/public/feed/${currentPlan.contentId}`,
           "LessonsApi"
         );
+        console.log("Got venue data:", JSON.stringify(venueData));
         setVenue(venueData);
         CachedData.planVenue = venueData;
         await CachedData.setAsyncStorage("planVenue", venueData);
+      } else {
+        console.log("Plan does not have venue content type");
       }
     } catch (ex) {
       console.error("Error loading plan:", ex);
@@ -177,17 +188,21 @@ export const PlanDownloadScreen = (props: Props) => {
   };
 
   const startDownload = async () => {
+    console.log("startDownload called, venue:", venue ? "exists" : "null");
     if (venue) {
       const files = getFilesFromVenue(venue);
+      console.log("Files to download:", files.length, JSON.stringify(files.slice(0, 3))); // Log first 3
       if (files.length > 0) {
         CachedData.messageFiles = files;
         await CachedData.setAsyncStorage("messageFiles", files);
         setReady(false);
         CachedData.prefetch(files, updateCounts).then(() => {
+          console.log("Prefetch complete");
           setReady(true);
         });
       } else {
         // No media files, still mark as ready
+        console.log("No files to download, marking ready");
         CachedData.messageFiles = [];
         setReady(true);
       }
