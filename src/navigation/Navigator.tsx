@@ -36,7 +36,7 @@ export const Navigator = () => {
     case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
     case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
     case "planPairing": screen = (<PlanPairingScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
-    case "planDownload": screen = (<PlanDownloadScreen navigateTo={handleNavigate} />); break;
+    case "planDownload": screen = (<PlanDownloadScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
     case "offline": screen = (<OfflineScreen navigateTo={handleNavigate} />); break;
     case "download": screen = (<DownloadScreen navigateTo={handleNavigate} />); break;
     case "player": screen = (<PlayerScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} lesson={currentData?.lesson} />); break;
@@ -66,7 +66,7 @@ export const Navigator = () => {
   useEffect(init, []);
   if (dimensions!=="1,1") console.log(dimensions);
 
-  const fullScreenScreens = ["splash", "player", "download", "lessonDetails", "planDownload"];
+  const fullScreenScreens = ["splash", "player", "download", "lessonDetails"];
 
   if (fullScreenScreens.indexOf(currentScreen)>-1) {
     return (<View style={Styles.splashMaincontainer}>

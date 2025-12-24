@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, Alert, ImageBackground } from "react-native";
+import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native";
 import { ApiHelper, CachedData, Styles } from "../helpers";
 import { DimensionHelper } from "../helpers/DimensionHelper";
 import { PlanInterface, FeedVenueInterface, LessonPlaylistFileInterface } from "../interfaces";
 import LinearGradient from "react-native-linear-gradient";
 
-type Props = { navigateTo(page: string): void; };
+type Props = {
+  navigateTo(page: string): void;
+  sidebarState: (state: boolean) => void;
+  sidebarExpanded?: boolean;
+};
 
 export const PlanDownloadScreen = (props: Props) => {
   const [plan, setPlan] = React.useState<PlanInterface | null>(null);
@@ -209,28 +213,8 @@ export const PlanDownloadScreen = (props: Props) => {
     }
   };
 
-  const handleUnpair = async () => {
-    // Clear all pairing data
-    CachedData.planTypeId = null;
-    CachedData.pairedChurchId = null;
-    CachedData.currentPlan = null;
-    CachedData.planVenue = null;
-    await CachedData.setAsyncStorage("planTypeId", null);
-    await CachedData.setAsyncStorage("pairedChurchId", null);
-    await CachedData.setAsyncStorage("currentPlan", null);
-    await CachedData.setAsyncStorage("planVenue", null);
-    props.navigateTo("planPairing");
-  };
-
   const handleBack = () => {
-    Alert.alert(
-      "Unpair Device",
-      "Are you sure you want to unpair this device? You will need to pair again to view content.",
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "Unpair", style: "destructive", onPress: handleUnpair }
-      ]
-    );
+    props.sidebarState(true);
   };
 
   const init = () => {

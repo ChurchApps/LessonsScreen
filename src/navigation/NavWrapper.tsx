@@ -22,25 +22,35 @@ type Props = {
 export const NavWrapper = (props: Props) => {
   const settingsRef = useRef(null);
   const browseRef = useRef(null);
+
+  // Screens where sidebar fully hides when collapsed
+  const fullScreenModeScreens = ['planDownload'];
+  const isFullScreenMode = fullScreenModeScreens.includes(CachedData.currentScreen);
+
+  const getTargetWidth = () => {
+    if (props.sidebarExpanded) return 22;
+    return isFullScreenMode ? 0 : 8;
+  };
+
   const animatedWidth = useRef(
-    new Animated.Value(props.sidebarExpanded ? 22 : 8),
+    new Animated.Value(getTargetWidth()),
   ).current;
 
   const animatedWidthPercent = animatedWidth.interpolate({
-    inputRange: [8, 22],
-    outputRange: ['8%', '22%'],
+    inputRange: [0, 8, 22],
+    outputRange: ['0%', '8%', '22%'],
   });
 
   useEffect(() => {
     if (props.sidebarExpanded && CachedData.currentScreen) highlightTab(CachedData.currentScreen);
 
     Animated.timing(animatedWidth, {
-      toValue: props.sidebarExpanded ? 22 : 8,
+      toValue: getTargetWidth(),
       duration: 240,
       easing: Easing.out(Easing.cubic),
       useNativeDriver: false,
     }).start();
-  }, [props.sidebarExpanded]);
+  }, [props.sidebarExpanded, CachedData.currentScreen]);
 
   const handleClick = (id: string) => {
     props.navigateTo(id);
@@ -146,6 +156,8 @@ export const NavWrapper = (props: Props) => {
     </View>
   );
 
+  const sidebarHidden = isFullScreenMode && !props.sidebarExpanded;
+
   //#29235c
   return (
     <View style={{display: 'flex', flexDirection: 'row'}}>
@@ -154,8 +166,9 @@ export const NavWrapper = (props: Props) => {
           width: animatedWidthPercent,
           paddingTop: DimensionHelper.hp('0.5%'),
           backgroundColor: Styles.navAccent.backgroundColor,
+          overflow: 'hidden',
         }}>
-        {getContent()}
+        {!sidebarHidden && getContent()}
       </Animated.View>
       <View
         style={{
@@ -165,7 +178,7 @@ export const NavWrapper = (props: Props) => {
         }}>
         <View
           style={{
-            width: DimensionHelper.wp('92%'),
+            width: sidebarHidden ? DimensionHelper.wp('100%') : DimensionHelper.wp('92%'),
             height: DimensionHelper.hp('100%'),
             backgroundColor: 'transparent',
           }}>
