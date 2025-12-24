@@ -30,7 +30,9 @@ class ApiHelperClass {
 
   async post(path: string, data: any, keyName: string): Promise<any> {
     const config = this.getConfig(keyName);
-    const response = await axios.post(config.url + path, data);
+    const fullUrl = config.url + path;
+    console.log("POST request to:", fullUrl);
+    const response = await axios.post(fullUrl, data);
     return response.data;
   }
 }

@@ -10,11 +10,23 @@ export const SplashScreen = (props: Props) => {
   const checkStorage = async () => {
     // Utilities.trackEvent("Splash Screen");
     CachedData.church = await CachedData.getAsyncStorage("church");
+    CachedData.room = await CachedData.getAsyncStorage("room");
     CachedData.resolution = await CachedData.getAsyncStorage("resolution") || "720";
 
-    if (CachedData.church) props.navigateTo("selectRoom");
-    else props.navigateTo("programs");
+    // Check for plan pairing
+    CachedData.planTypeId = await CachedData.getAsyncStorage("planTypeId");
+    CachedData.pairedChurchId = await CachedData.getAsyncStorage("pairedChurchId");
 
+    if (CachedData.planTypeId) {
+      // Device is paired to a plan
+      props.navigateTo("planDownload");
+    } else if (CachedData.church && CachedData.room) {
+      // Device is paired to a classroom
+      props.navigateTo("download");
+    } else {
+      // Show pairing code screen (primary action)
+      props.navigateTo("planPairing");
+    }
   }
 
   React.useEffect(() => {

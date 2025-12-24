@@ -93,3 +93,53 @@ export interface LessonPlaylistFileInterface {
   loop?: boolean;
   loopVideo?: boolean;
 }
+
+export interface DeviceInterface {
+  id?: string;
+  deviceId?: string;
+  churchId?: string;
+  contentType?: string;
+  contentId?: string;
+  pairingCode?: string;
+}
+
+export interface PlanInterface {
+  id?: string;
+  churchId?: string;
+  planTypeId?: string;
+  name?: string;
+  serviceDate?: Date;
+  contentType?: string;
+  contentId?: string;
+}
+
+export interface FeedVenueInterface {
+  id?: string;
+  lessonId?: string;
+  name?: string;
+  lessonName?: string;
+  lessonDescription?: string;
+  sections?: FeedSectionInterface[];
+}
+
+export interface FeedSectionInterface {
+  id?: string;
+  name?: string;
+  actions?: FeedActionInterface[];
+}
+
+export interface FeedActionInterface {
+  id?: string;
+  actionType?: string;
+  content?: string;
+  files?: FeedFileInterface[];
+}
+
+export interface FeedFileInterface {
+  id?: string;
+  name?: string;
+  url?: string;
+  streamUrl?: string;
+  seconds?: number;
+  fileType?: string;
+}

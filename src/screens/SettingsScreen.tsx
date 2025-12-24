@@ -112,6 +112,31 @@ export const SettingsScreen = (props: Props) => {
             Privacy Policy
           </Text>
         </TouchableHighlight>
+
+        <View style={{marginTop: DimensionHelper.hp('4%')}}>
+          <Text style={{...Styles.smallWhiteText, textAlign: 'left', marginBottom: DimensionHelper.hp('1%')}}>
+            Pairing Options:
+          </Text>
+          <TouchableHighlight
+            style={{...Styles.menuClickable, marginBottom: DimensionHelper.hp('1%')}}
+            underlayColor={'#03a9f4'}
+            onPress={async () => {
+              // Clear classroom pairing data
+              CachedData.church = null;
+              CachedData.room = null;
+              CachedData.planTypeId = null;
+              CachedData.pairedChurchId = null;
+              await CachedData.setAsyncStorage('church', null);
+              await CachedData.setAsyncStorage('room', null);
+              await CachedData.setAsyncStorage('planTypeId', null);
+              await CachedData.setAsyncStorage('pairedChurchId', null);
+              props.navigateTo('planPairing');
+            }}>
+            <Text style={{...Styles.smallWhiteText, textAlign: 'left'}}>
+              Pair to Plan
+            </Text>
+          </TouchableHighlight>
+        </View>
       </View>
 
       {/* Version text */}

@@ -1,12 +1,10 @@
 import React, { useRef } from "react";
 import { HWEvent, TVEventControl, BackHandler, useTVEventHandler, Pressable, TextInput, View, StyleSheet, Animated, Dimensions } from "react-native";
-// @ts-expect-error
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { LessonInterface, ProgramInterface, StudyInterface } from "../interfaces";
 import { CachedData, Utilities } from "../helpers";
 import { PlayerHelper } from "../helpers/PlayerHelper";
 import GestureRecognizer from "react-native-swipe-gestures";
-// @ts-expect-error
 import KeepAwake from "react-native-keep-awake";
 import { Message, SelectMessage } from "../components";
 

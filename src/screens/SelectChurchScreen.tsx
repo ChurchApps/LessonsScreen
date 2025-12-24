@@ -107,7 +107,7 @@ export const SelectChurchScreen = (props: Props) => {
 
   const handleBack = () => {
     CachedData.church = null;
-    props.sidebarState(true);
+    props.navigateTo("planPairing");
   };
 
   const init = () => {
@@ -157,7 +157,7 @@ export const SelectChurchScreen = (props: Props) => {
         }}
         hasTVPreferredFocus={!props.sidebarExpanded}>
         <TextInput
-          ref={r => (textRef.current = r)}
+          ref={r => { textRef.current = r; }}
           autoFocus={!props.sidebarExpanded && autoFocus}
           hasTVPreferredFocus={!props.sidebarExpanded}
           onFocus={() => setIsInputFocus(true)}

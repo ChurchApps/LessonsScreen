@@ -1,11 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ChurchInterface, ClassroomInterface, LessonPlaylistFileInterface } from "../interfaces";
+import { ChurchInterface, ClassroomInterface, LessonPlaylistFileInterface, PlanInterface, FeedVenueInterface } from "../interfaces";
 import RNFS from "react-native-fs";
 
 export class CachedData {
   static church: ChurchInterface;
   static room: ClassroomInterface;
   static messageFiles: LessonPlaylistFileInterface[];
+
+  // Plan pairing data
+  static planTypeId: string | null = null;
+  static pairedChurchId: string | null = null;
+  static currentPlan: PlanInterface | null = null;
+  static planVenue: FeedVenueInterface | null = null;
 
   static totalCachableItems: number = 0;
   static cachedItems: number = 0;

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { CachedData, Styles } from "../helpers";
-import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, PlayerScreen } from "../screens";
+import { DownloadScreen, SelectChurchScreen, SelectRoomScreen, SplashScreen, PlayerScreen, SelectPairingModeScreen, PlanPairingScreen, PlanDownloadScreen } from "../screens";
 import { ProgramsScreen } from "../screens/ProgramsScreen";
 import { StudiesScreen } from "../screens/StudiesScreen";
 import { LessonsScreen } from "../screens/LessonsScreen";
@@ -32,8 +32,11 @@ export const Navigator = () => {
   switch (currentScreen) {
     case "splash": screen = (<SplashScreen navigateTo={handleNavigate} />); break;
     case "settings": screen = (<SettingsScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
+    case "selectPairingMode": screen = (<SelectPairingModeScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
     case "selectChurch": screen = (<SelectChurchScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
     case "selectRoom": screen = (<SelectRoomScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
+    case "planPairing": screen = (<PlanPairingScreen navigateTo={handleNavigate} sidebarState={sidebarState} sidebarExpanded={sidebarExpanded} />); break;
+    case "planDownload": screen = (<PlanDownloadScreen navigateTo={handleNavigate} />); break;
     case "offline": screen = (<OfflineScreen navigateTo={handleNavigate} />); break;
     case "download": screen = (<DownloadScreen navigateTo={handleNavigate} />); break;
     case "player": screen = (<PlayerScreen navigateTo={handleNavigate} program={currentData?.program} study={currentData?.study} lesson={currentData?.lesson} />); break;
@@ -63,7 +66,7 @@ export const Navigator = () => {
   useEffect(init, []);
   if (dimensions!=="1,1") console.log(dimensions);
 
-  const fullScreenScreens = ["splash", "player", "download", "lessonDetails"];
+  const fullScreenScreens = ["splash", "player", "download", "lessonDetails", "planDownload"];
 
   if (fullScreenScreens.indexOf(currentScreen)>-1) {
     return (<View style={Styles.splashMaincontainer}>

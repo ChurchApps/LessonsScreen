@@ -65,8 +65,9 @@ export const SelectRoomScreen = (props: Props) => {
 
 
   const handleBack = () => {
-    //props.navigateTo("selectChurch");
-    props.sidebarState(true);
+    CachedData.church = null;
+    CachedData.room = null;
+    props.navigateTo("planPairing");
   }
 
   const init = () => {

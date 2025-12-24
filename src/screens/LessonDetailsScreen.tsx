@@ -44,7 +44,7 @@ export const LessonDetailsScreen = (props: Props) => {
   }
 
   const getContent = () => {
-    const buttons:JSX.Element[] = [];
+    const buttons:React.JSX.Element[] = [];
     venues?.forEach((v, idx) => {
       buttons.push(<TouchableHighlight key={v.id} style={{ ...Styles.smallMenuClickable, backgroundColor: "#0086d1", width: DimensionHelper.wp("35%"), marginTop: DimensionHelper.hp("1%"), borderRadius:5 }} underlayColor={"#03a9f4"} onPress={() => { handleStart(v.id) }} hasTVPreferredFocus={idx===0}>
         <Text style={{ ...Styles.smallWhiteText, width: "100%" }}>{v.name}</Text>
