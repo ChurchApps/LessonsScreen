@@ -76,6 +76,8 @@ export const Message = (props: Props) => {
       playInBackground={false}
       playWhenInactive={false}
       onProgress={props.onProgress}
+      controls={false}
+      disableFocus={true}
     />)
   }
 
