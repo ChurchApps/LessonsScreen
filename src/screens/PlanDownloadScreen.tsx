@@ -67,14 +67,14 @@ export const PlanDownloadScreen = (props: Props) => {
   };
 
   // Recursively collect relatedIds from planItems in sorted order
-  // Returns array of { id, type } where type is 'action', 'item' (section), or other
+  // Returns array of { id, type } where type is 'action', 'item' (section), 'addOn', or other
   const collectRelatedIds = (items: PlanItemInterface[]): { id: string, itemType: string }[] => {
     const relatedIds: { id: string, itemType: string }[] = [];
     const sortedItems = [...items].sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     for (const item of sortedItems) {
-      // 'item' type means it references a section, 'action' means it references an action
-      if (item.relatedId && (item.itemType === "action" || item.itemType === "item")) {
+      // 'item' type means it references a section, 'action' means it references an action, 'addOn' means it references an add-on
+      if (item.relatedId && (item.itemType === "action" || item.itemType === "item" || item.itemType === "addOn")) {
         relatedIds.push({ id: item.relatedId, itemType: item.itemType });
       }
       if (item.children && item.children.length > 0) {
@@ -108,10 +108,10 @@ export const PlanDownloadScreen = (props: Props) => {
             // 'item' type references a section - get all play files from that section
             files = sectionMap.get(id);
             console.log("Looking for sectionId:", id, "found files:", files?.length || 0);
-          } else if (itemType === "action") {
-            // 'action' type references a specific action
+          } else if (itemType === "action" || itemType === "addOn") {
+            // 'action' and 'addOn' types reference a specific action
             files = actionMap.get(id);
-            console.log("Looking for actionId:", id, "found files:", files?.length || 0);
+            console.log("Looking for actionId:", id, "(type:", itemType, ") found files:", files?.length || 0);
           }
 
           if (files) {
