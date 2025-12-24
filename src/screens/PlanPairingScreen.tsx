@@ -17,6 +17,7 @@ export const PlanPairingScreen = (props: Props) => {
   const [error, setError] = useState<string>("");
   const pollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const deviceIdRef = useRef<string>("");
+  const pollGenerationRef = useRef<number>(0);
 
   // Animated values for the pulsing glow effect
   const pulseAnim = useRef(new Animated.Value(0.3)).current;
@@ -51,6 +52,14 @@ export const PlanPairingScreen = (props: Props) => {
   };
 
   const initPairing = async () => {
+    // Clear any existing poll and increment generation to invalidate stale polls
+    if (pollTimeoutRef.current) {
+      clearTimeout(pollTimeoutRef.current);
+      pollTimeoutRef.current = null;
+    }
+    pollGenerationRef.current += 1;
+    const currentGeneration = pollGenerationRef.current;
+
     try {
       setLoading(true);
       setError("");
@@ -69,7 +78,7 @@ export const PlanPairingScreen = (props: Props) => {
       setLoading(false);
       fadeIn();
       startPulseAnimation();
-      startPairingPoll(deviceId);
+      startPairingPoll(currentGeneration);
     } catch (err) {
       console.error("Failed to initialize pairing:", err);
       setError("Failed to generate pairing code. Please try again.");
@@ -77,15 +86,24 @@ export const PlanPairingScreen = (props: Props) => {
     }
   };
 
-  const startPairingPoll = (deviceId: string) => {
+  const startPairingPoll = (generation: number) => {
     const poll = async () => {
+      // Stop if this poll is from an old generation
+      if (generation !== pollGenerationRef.current) {
+        console.log("Stopping stale poll, generation:", generation, "current:", pollGenerationRef.current);
+        return;
+      }
+
+      const currentDeviceId = deviceIdRef.current;
+      if (!currentDeviceId) return;
+
       try {
         const status: DeviceInterface & { paired: boolean } = await ApiHelper.getAnonymous(
-          `/devices/status/${deviceId}`,
+          `/devices/status/${currentDeviceId}`,
           "MessagingApi"
         );
 
-        console.log("Polling deviceId:", deviceId, "status:", JSON.stringify(status));
+        console.log("Polling deviceId:", currentDeviceId, "status:", JSON.stringify(status));
 
         if (status.paired && status.contentType === "planType") {
           CachedData.planTypeId = status.contentId;
