@@ -119,6 +119,7 @@ export interface FeedVenueInterface {
   name?: string;
   lessonName?: string;
   lessonDescription?: string;
+  lessonImage?: string;
   sections?: FeedSectionInterface[];
 }
 

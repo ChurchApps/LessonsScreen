@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native";
+import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, Alert, ImageBackground } from "react-native";
 import { ApiHelper, CachedData, Styles } from "../helpers";
 import { DimensionHelper } from "../helpers/DimensionHelper";
 import { PlanInterface, FeedVenueInterface, LessonPlaylistFileInterface } from "../interfaces";
@@ -209,8 +209,28 @@ export const PlanDownloadScreen = (props: Props) => {
     }
   };
 
+  const handleUnpair = async () => {
+    // Clear all pairing data
+    CachedData.planTypeId = null;
+    CachedData.pairedChurchId = null;
+    CachedData.currentPlan = null;
+    CachedData.planVenue = null;
+    await CachedData.setAsyncStorage("planTypeId", null);
+    await CachedData.setAsyncStorage("pairedChurchId", null);
+    await CachedData.setAsyncStorage("currentPlan", null);
+    await CachedData.setAsyncStorage("planVenue", null);
+    props.navigateTo("planPairing");
+  };
+
   const handleBack = () => {
-    props.navigateTo("selectPairingMode");
+    Alert.alert(
+      "Unpair Device",
+      "Are you sure you want to unpair this device? You will need to pair again to view content.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Unpair", style: "destructive", onPress: handleUnpair }
+      ]
+    );
   };
 
   const init = () => {
@@ -251,33 +271,67 @@ export const PlanDownloadScreen = (props: Props) => {
     );
   }
 
+  const backgroundImage = venue?.lessonImage;
+
+  const contentOverlay = (
+    <LinearGradient
+      colors={["rgba(0, 0, 0, 1)", "rgba(0, 0, 0, 0)"]}
+      start={{ x: 0, y: 1 }}
+      end={{ x: 1, y: 0 }}
+      style={{ flex: 1 }}
+    >
+      <View style={{ flex: 9, justifyContent: "flex-end", flexDirection: "column" }}>
+        <View
+          style={{
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            paddingLeft: DimensionHelper.wp("5%")
+          }}
+        >
+          <View style={{ maxWidth: "60%" }}>{getContent()}</View>
+        </View>
+      </View>
+      <View style={{ flex: 1 }}></View>
+    </LinearGradient>
+  );
+
+  // If we have a background image, show it with overlay gradient
+  if (backgroundImage) {
+    return (
+      <View style={{ ...Styles.menuScreen, flex: 1, flexDirection: "row" }}>
+        <ImageBackground
+          source={{ uri: backgroundImage }}
+          resizeMode="cover"
+          style={{ flex: 1, width: "100%" }}
+        >
+          {contentOverlay}
+        </ImageBackground>
+      </View>
+    );
+  }
+
+  // Otherwise show a nice gradient background
   return (
     <View style={{ ...Styles.menuScreen, flex: 1, flexDirection: "row" }}>
-      <ImageBackground
-        source={{ uri: venue?.lessonDescription ? "about:blank" : "about:blank" }}
-        resizeMode="cover"
+      <LinearGradient
+        colors={["#0f1724", "#1a2a4a", "#0a1628"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
         style={{ flex: 1, width: "100%" }}
       >
-        <LinearGradient
-          colors={["rgba(0, 0, 0, 1)", "rgba(0, 0, 0, 0)"]}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 1, y: 0 }}
-          style={{ flex: 1 }}
-        >
-          <View style={{ flex: 9, justifyContent: "flex-end", flexDirection: "column" }}>
-            <View
-              style={{
-                justifyContent: "flex-start",
-                flexDirection: "row",
-                paddingLeft: DimensionHelper.wp("5%")
-              }}
-            >
-              <View style={{ maxWidth: "60%" }}>{getContent()}</View>
-            </View>
+        <View style={{ flex: 9, justifyContent: "flex-end", flexDirection: "column" }}>
+          <View
+            style={{
+              justifyContent: "flex-start",
+              flexDirection: "row",
+              paddingLeft: DimensionHelper.wp("5%")
+            }}
+          >
+            <View style={{ maxWidth: "60%" }}>{getContent()}</View>
           </View>
-          <View style={{ flex: 1 }}></View>
-        </LinearGradient>
-      </ImageBackground>
+        </View>
+        <View style={{ flex: 1 }}></View>
+      </LinearGradient>
     </View>
   );
 };

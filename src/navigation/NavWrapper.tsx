@@ -47,7 +47,11 @@ export const NavWrapper = (props: Props) => {
   };
 
   const handleChurchClick = () => {
-    if (CachedData.church) handleClick('selectRoom');
+    // If paired to a plan, go directly to plan download screen
+    if (CachedData.planTypeId) handleClick('planDownload');
+    // If paired to a classroom, show room selection
+    else if (CachedData.church) handleClick('selectRoom');
+    // Not paired at all, go to church search
     else handleClick('selectChurch');
   };
 
@@ -72,6 +76,7 @@ export const NavWrapper = (props: Props) => {
       case 'selectRoom':
       case 'selectChurch':
       case 'download':
+      case 'planDownload':
       case 'player':
         highlightedItem = 'church';
         break;

@@ -83,6 +83,7 @@ export const PlayerScreen = (props: Props) => {
     if (!showSelectMessage) {
       stopTimer();
       if (props.lesson) props.navigateTo("lessonDetails", { program: props.program, study: props.study, lesson: props.lesson });
+      else if (CachedData.planTypeId) props.navigateTo("planDownload");
       else props.navigateTo("download");
     }
   }
