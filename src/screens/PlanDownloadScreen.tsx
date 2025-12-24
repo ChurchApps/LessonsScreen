@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, TouchableHighlight, ActivityIndicator, BackHandler, ImageBackground } from "react-native";
 import { ApiHelper, CachedData, Styles } from "../helpers";
 import { DimensionHelper } from "../helpers/DimensionHelper";
-import { PlanInterface, FeedVenueInterface, LessonPlaylistFileInterface } from "../interfaces";
+import { PlanInterface, FeedVenueInterface, LessonPlaylistFileInterface, PlanItemInterface } from "../interfaces";
 import LinearGradient from "react-native-linear-gradient";
 
 type Props = {
@@ -14,6 +14,7 @@ type Props = {
 export const PlanDownloadScreen = (props: Props) => {
   const [plan, setPlan] = React.useState<PlanInterface | null>(null);
   const [venue, setVenue] = React.useState<FeedVenueInterface | null>(null);
+  const [planItems, setPlanItems] = React.useState<PlanItemInterface[]>([]);
   const [totalItems, setTotalItems] = React.useState(0);
   const [cachedItems, setCachedItems] = React.useState(0);
   const [ready, setReady] = React.useState(false);
@@ -27,9 +28,106 @@ export const PlanDownloadScreen = (props: Props) => {
     setTotalItems(total);
   };
 
-  const getFilesFromVenue = (venueData: FeedVenueInterface): LessonPlaylistFileInterface[] => {
-    const result: LessonPlaylistFileInterface[] = [];
+  // Build maps for both actionId -> files and sectionId -> files
+  const buildFileMaps = (venueData: FeedVenueInterface): { actionMap: Map<string, LessonPlaylistFileInterface[]>, sectionMap: Map<string, LessonPlaylistFileInterface[]> } => {
+    const actionMap = new Map<string, LessonPlaylistFileInterface[]>();
+    const sectionMap = new Map<string, LessonPlaylistFileInterface[]>();
 
+    venueData.sections?.forEach(section => {
+      const sectionFiles: LessonPlaylistFileInterface[] = [];
+
+      section.actions?.forEach(action => {
+        const actionType = action.actionType?.toLowerCase();
+        if (actionType === "play" || actionType === "add-on") {
+          const files: LessonPlaylistFileInterface[] = [];
+          action.files?.forEach(file => {
+            const fileEntry: LessonPlaylistFileInterface = {
+              id: file.id,
+              name: file.name,
+              url: file.url || "",
+              seconds: file.seconds || 10,
+              fileType: file.fileType
+            };
+            files.push(fileEntry);
+            sectionFiles.push(fileEntry); // Also add to section files
+          });
+          if (action.id) {
+            actionMap.set(action.id, files);
+          }
+        }
+      });
+
+      // Store all play files for this section
+      if (section.id) {
+        sectionMap.set(section.id, sectionFiles);
+      }
+    });
+
+    return { actionMap, sectionMap };
+  };
+
+  // Recursively collect relatedIds from planItems in sorted order
+  // Returns array of { id, type } where type is 'action', 'item' (section), or other
+  const collectRelatedIds = (items: PlanItemInterface[]): { id: string, itemType: string }[] => {
+    const relatedIds: { id: string, itemType: string }[] = [];
+    const sortedItems = [...items].sort((a, b) => (a.sort || 0) - (b.sort || 0));
+
+    for (const item of sortedItems) {
+      // 'item' type means it references a section, 'action' means it references an action
+      if (item.relatedId && (item.itemType === "action" || item.itemType === "item")) {
+        relatedIds.push({ id: item.relatedId, itemType: item.itemType });
+      }
+      if (item.children && item.children.length > 0) {
+        relatedIds.push(...collectRelatedIds(item.children));
+      }
+    }
+
+    return relatedIds;
+  };
+
+  const getFilesFromVenue = (venueData: FeedVenueInterface, customPlanItems?: PlanItemInterface[]): LessonPlaylistFileInterface[] => {
+    const { actionMap, sectionMap } = buildFileMaps(venueData);
+    console.log("actionMap size:", actionMap.size, "keys:", Array.from(actionMap.keys()));
+    console.log("sectionMap size:", sectionMap.size, "keys:", Array.from(sectionMap.keys()));
+
+    // If we have planItems, use them to determine order and which actions/sections to include
+    if (customPlanItems && customPlanItems.length > 0) {
+      const relatedIds = collectRelatedIds(customPlanItems);
+      console.log("Collected relatedIds from planItems:", relatedIds);
+
+      // If planItems exist but have no related IDs, fall back to full venue
+      if (relatedIds.length === 0) {
+        console.log("No related IDs found in planItems, using full venue");
+      } else {
+        const result: LessonPlaylistFileInterface[] = [];
+
+        for (const { id, itemType } of relatedIds) {
+          let files: LessonPlaylistFileInterface[] | undefined;
+
+          if (itemType === "item") {
+            // 'item' type references a section - get all play files from that section
+            files = sectionMap.get(id);
+            console.log("Looking for sectionId:", id, "found files:", files?.length || 0);
+          } else if (itemType === "action") {
+            // 'action' type references a specific action
+            files = actionMap.get(id);
+            console.log("Looking for actionId:", id, "found files:", files?.length || 0);
+          }
+
+          if (files) {
+            result.push(...files);
+          }
+        }
+
+        if (result.length > 0) {
+          return result;
+        }
+        console.log("No files found for planItems, falling back to full venue");
+      }
+    }
+
+    // No planItems or no matching items - return all files from venue in original order
+    const result: LessonPlaylistFileInterface[] = [];
     venueData.sections?.forEach(section => {
       section.actions?.forEach(action => {
         const actionType = action.actionType?.toLowerCase();
@@ -165,6 +263,23 @@ export const PlanDownloadScreen = (props: Props) => {
       CachedData.currentPlan = currentPlan;
       await CachedData.setAsyncStorage("currentPlan", currentPlan);
 
+      // Fetch planItems for the plan
+      if (currentPlan.id && currentPlan.churchId) {
+        try {
+          console.log("Fetching planItems for plan:", currentPlan.id);
+          const items: PlanItemInterface[] = await ApiHelper.getAnonymous(
+            `/planItems/presenter/${currentPlan.churchId}/${currentPlan.id}`,
+            "DoingApi"
+          );
+          console.log("Got planItems:", items?.length || 0);
+          setPlanItems(items || []);
+          await CachedData.setAsyncStorage("planItems", items || []);
+        } catch (err) {
+          console.log("Failed to fetch planItems, will use full venue:", err);
+          setPlanItems([]);
+        }
+      }
+
       // If plan has venue content, load it
       console.log("Plan contentType:", currentPlan.contentType, "contentId:", currentPlan.contentId);
       if (currentPlan.contentType === "venue" && currentPlan.contentId) {
@@ -192,9 +307,10 @@ export const PlanDownloadScreen = (props: Props) => {
   };
 
   const startDownload = async () => {
-    console.log("startDownload called, venue:", venue ? "exists" : "null");
+    console.log("startDownload called, venue:", venue ? "exists" : "null", "planItems:", planItems?.length || 0);
     if (venue) {
-      const files = getFilesFromVenue(venue);
+      // Pass planItems to get files in the customized order (if any)
+      const files = getFilesFromVenue(venue, planItems);
       console.log("Files to download:", files.length, JSON.stringify(files.slice(0, 3))); // Log first 3
       if (files.length > 0) {
         CachedData.messageFiles = files;
@@ -237,7 +353,8 @@ export const PlanDownloadScreen = (props: Props) => {
 
   useEffect(init, []);
   useEffect(() => { loadData(); }, [refreshKey]);
-  useEffect(() => { if (venue) startDownload(); }, [venue]);
+  // Start download when venue is loaded (planItems will already be set by then)
+  useEffect(() => { if (venue) startDownload(); }, [venue, planItems]);
   useEffect(() => {
     if (offlineCheck && loading) props.navigateTo("offline");
   }, [offlineCheck]);

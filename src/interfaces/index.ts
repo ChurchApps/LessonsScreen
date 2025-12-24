@@ -113,6 +113,21 @@ export interface PlanInterface {
   contentId?: string;
 }
 
+export interface PlanItemInterface {
+  id?: string;
+  churchId?: string;
+  planId?: string;
+  parentId?: string;
+  sort?: number;
+  itemType?: string;
+  relatedId?: string;
+  label?: string;
+  description?: string;
+  seconds?: number;
+  link?: string;
+  children?: PlanItemInterface[];
+}
+
 export interface FeedVenueInterface {
   id?: string;
   lessonId?: string;
